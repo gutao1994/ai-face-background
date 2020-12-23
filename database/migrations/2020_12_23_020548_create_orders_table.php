@@ -19,9 +19,10 @@ class CreateOrdersTable extends Migration
             $table->text('facialfeatures_data')->nullable()->comment('面部特征分析API返回的数据');
             $table->text('skinanalyze')->nullable()->comment('皮肤分析API返回的数据');
             $table->text('detect_data')->nullable()->comment('Detect API返回的数据');
-            $table->text('thousandlandmark_data')->nullable()->comment('稠密关键点API');
+            $table->text('thousandlandmark_data')->nullable()->comment('稠密关键点API返回的数据');
             $table->tinyInteger('api_step_status')->unsigned()->default(0)->comment('api调用进度');
             $table->tinyInteger('api_error_count')->unsigned()->default(0)->comment('api调用错误次数');
+            $table->tinyInteger('status')->unsigned()->default(0)->comment('订单状态 1未完成 2已完成 3失败');
             $table->timestamps();
         });
     }
