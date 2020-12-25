@@ -6,10 +6,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Encore\Admin\Traits\DefaultDatetimeFormat;
 
 class WxUser extends Authenticatable
 {
     use HasFactory, Notifiable;
+    use DefaultDatetimeFormat;
 
     protected $table = 'wx_users';
 
