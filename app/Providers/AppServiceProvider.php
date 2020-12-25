@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        DB::listen(function ($query) {
+            if (
+                (stripos($query->sql, 'select') === false && stripos($query->sql, 'admin') === false) ||
+                config('app.env') != 'production'
+            ) {
+                Log::info('查询日志：' . $query->sql . ' 参数:' . json_encode($query->bindings, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . ' 时间:' . $query->time . 'ms');
+            }
+        });
     }
 }
+
+
