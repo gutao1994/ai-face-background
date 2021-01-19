@@ -18,9 +18,19 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
+$api = app()->make(\Dingo\Api\Routing\Router::class);
+
+$api->version('v1', [
+    'namespace' => 'App\Http\Controllers\Api',
+], function ($api) {
+
+    $api->group(['middleware' => 'api.auth'], function ($api) {
+
+    });
 
 
 
+});
 
 
 

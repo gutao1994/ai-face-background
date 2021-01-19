@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Encore\Admin\Traits\DefaultDatetimeFormat;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class WxUser extends Authenticatable
+class WxUser extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
     use DefaultDatetimeFormat;
@@ -44,4 +45,17 @@ class WxUser extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+
+
 }
