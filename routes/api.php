@@ -24,7 +24,13 @@ $api->version('v1', [
     'namespace' => 'App\Http\Controllers\Api',
 ], function ($api) {
 
+    $api->post('login', 'UserController@login'); //用户登陆
+
     $api->group(['middleware' => 'api.auth'], function ($api) {
+
+        $api->post('order/pay/wx/prepay', 'OrderController@wxPrepay'); //生成订单微信预支付信息
+
+
 
     });
 
@@ -33,8 +39,15 @@ $api->version('v1', [
 });
 
 
+Route::group([
+    'namespace' => 'App\Http\Controllers\Api',
+], function (\Illuminate\Routing\Router $router) {
+
+    $router->post('order/pay/wx/prepay/notify', 'OrderController@wxPrepayNotify'); //微信支付-异步回调通知
 
 
+
+});
 
 
 
