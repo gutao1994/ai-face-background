@@ -24,6 +24,62 @@ class OrderController extends ApiController
 
     }
 
+    /**
+     * 上传头像图片
+     */
+    public function actionImg()
+    {
+
+    }
+
+    /**
+     * 面部特征分析
+     */
+    public function actionFacialFeatures()
+    {
+
+    }
+
+    /**
+     * 皮肤分析
+     */
+    public function actionSkinAnalyze()
+    {
+
+    }
+
+    /**
+     * Detect
+     */
+    public function actionDetect()
+    {
+
+    }
+
+    /**
+     * 获取面相分析结果
+     */
+    public function actionResult()
+    {
+
+    }
+
+    /**
+     * 订单详情
+     */
+    public function orderDetail()
+    {
+
+    }
+
+    /**
+     * 订单列表
+     */
+    public function orderList()
+    {
+
+    }
+
 
 
 }
