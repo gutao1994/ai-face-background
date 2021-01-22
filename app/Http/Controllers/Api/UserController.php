@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
+use App\Http\Requests\Api\Login;
 
 class UserController extends ApiController
 {
@@ -11,9 +12,10 @@ class UserController extends ApiController
     /**
      * 用户登陆
      */
-    public function login()
+    public function login(Login $request)
     {
-
+        $app = \EasyWeChat::miniProgram();
+        dd($app);
     }
 
     /**
