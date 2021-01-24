@@ -15,7 +15,10 @@ class UserController extends ApiController
     public function login(Login $request)
     {
         $app = \EasyWeChat::miniProgram();
-        dd($app);
+        $sessionKey = $app->auth->session($request->code);
+        $decryptedData = $app->encryptor->decryptData($sessionKey, $request->iv, $request->encryptedData);
+
+        return $this->response->array(['data' => $token]);
     }
 
     /**
