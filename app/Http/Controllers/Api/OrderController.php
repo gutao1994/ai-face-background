@@ -5,15 +5,41 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
+/**
+ * @property \App\Services\OrderService $orderService
+ */
 class OrderController extends ApiController
 {
 
     /**
      * 生成订单微信预支付信息
      */
-    public function wxPrepay()
+    public function wxPrepay(Request $request)
     {
+        try {
+            $app = \EasyWeChat::payment();
 
+            $result = $app->order->unify([
+                'body' => '支付2元开始看面相',
+                'out_trade_no' => $this->orderService->genOrderNum(),
+                'total_fee' => config('aiface.order_price') * 100,
+                'spbill_create_ip' => $request->ip(),
+                'notify_url' => url('api/order/pay/wx/prepay/notify'),
+                'trade_type' => 'JSAPI',
+                'openid' => $this->user->openid,
+            ]);
+
+            if (
+                $result['return_code'] !== 'SUCCESS' ||
+                $result['result_code'] !== 'SUCCESS'
+            ) throw new \Exception('请求支付失败');
+
+            $res = $app->jssdk->bridgeConfig($result['prepay_id'], false);
+
+            return $this->response->array($res);
+        } catch (\Exception $exception) {
+            $this->response->errorInternal();
+        }
     }
 
     /**
