@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
+use Dingo\Api\Exception\ResourceException;
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Transformers\OrderTransformer;
 
 /**
  * @property \App\Services\OrderService $orderService
@@ -19,9 +22,11 @@ class OrderController extends ApiController
         try {
             $app = \EasyWeChat::payment();
 
+            $outTradeNo = $this->orderService->genOrderNum();
+
             $result = $app->order->unify([
                 'body' => '支付2元开始看面相',
-                'out_trade_no' => $this->orderService->genOrderNum(),
+                'out_trade_no' => $outTradeNo,
                 'total_fee' => config('aiface.order_price') * 100,
                 'spbill_create_ip' => $request->ip(),
                 'notify_url' => url('api/order/pay/wx/prepay/notify'),
@@ -36,7 +41,7 @@ class OrderController extends ApiController
 
             $res = $app->jssdk->bridgeConfig($result['prepay_id'], false);
 
-            return $this->response->array($res);
+            return $this->response->array($res + ['no' => $outTradeNo]);
         } catch (\Exception $exception) {
             $this->response->errorInternal();
         }
@@ -93,9 +98,20 @@ class OrderController extends ApiController
     /**
      * 订单详情
      */
-    public function orderDetail()
+    public function orderDetail(Request $request)
     {
+        $id = $request->input('id', '');
+        $no = $request->input('no', '');
 
+        if ($id) {
+            $order = Order::query()->where('user_id', $this->user->id)->where('id', $id)->first();
+        } elseif ($no) {
+            $order = Order::query()->where('user_id', $this->user->id)->where('no', $no)->first();
+        } else {
+            throw new ResourceException('不合法的查询');
+        }
+
+        return $this->response->item($order, new OrderTransformer());
     }
 
     /**
