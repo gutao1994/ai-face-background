@@ -5,20 +5,31 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Login;
+use Tymon\JWTAuth\JWTAuth;
 
+/**
+ * @property \App\Logics\UserLogic $userLogic
+ */
 class UserController extends ApiController
 {
 
     /**
      * 用户登陆
      */
-    public function login(Login $request)
+    public function login(Login $request, JWTAuth $auth)
     {
-        $app = \EasyWeChat::miniProgram();
-        $sessionKey = $app->auth->session($request->code);
-        $decryptedData = $app->encryptor->decryptData($sessionKey, $request->iv, $request->encryptedData);
+        try {
+            $app = \EasyWeChat::miniProgram();
 
-        return $this->response->array(['data' => $token]);
+            $sessionKey = $app->auth->session($request->code);
+            $decryptedData = $app->encryptor->decryptData($sessionKey['session_key'], $request->iv, $request->encryptedData);
+
+            $user = $this->userLogic->updateUser($decryptedData);
+
+            return $this->response->array(['token' => $auth->fromUser($user)]);
+        } catch (\Exception $exception) {
+            $this->response->errorInternal();
+        }
     }
 
     /**
