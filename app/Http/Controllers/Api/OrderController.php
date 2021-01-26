@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
+use App\Models\WxUser;
 use Dingo\Api\Exception\ResourceException;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Transformers\OrderTransformer;
+use Illuminate\Support\Facades\DB;
+use App\Models\ShareCommissionLog;
 
 /**
  * @property \App\Services\OrderService $orderService
+ * @property \App\Logics\UserLogic $userLogic
+ * @property \App\Logics\ShareLogic $shareLogic
  */
 class OrderController extends ApiController
 {
@@ -32,6 +37,10 @@ class OrderController extends ApiController
                 'notify_url' => url('api/order/pay/wx/prepay/notify'),
                 'trade_type' => 'JSAPI',
                 'openid' => $this->user->openid,
+                'attach' => json_encode([
+                    'user_id' => $this->user->id,
+                    'share_user_id' => $request->input('share_user_id', 0),
+                ]),
             ]);
 
             if (
@@ -52,7 +61,39 @@ class OrderController extends ApiController
      */
     public function wxPrepayNotify()
     {
+        $app = \EasyWeChat::payment();
 
+        $response = $app->handlePaidNotify(function ($message, $fail) {
+            if ($message['return_code'] === 'SUCCESS') { //此字段是通信标识
+
+                if ($message['result_code'] === 'SUCCESS') { //业务结果，支付成功
+
+                    $order = Order::query()->where('no', $message['out_trade_no'])->first();
+
+                    if (!empty($order)) return true;
+
+                    $attach = json_decode($message['attach'], true);
+                    $shareUser = $this->userLogic->checkShareUser($attach['user_id'], $attach['share_user_id']);
+
+                    $order = Order::query()->create([
+                        'no' => $message['out_trade_no'],
+                        'user_id' => $attach['user_id'],
+                        'share_user_id' => $shareUser ? $shareUser->id : 0,
+                        'amount' => $message['total_fee'],
+                        'status' => 10,
+                    ]);
+
+                    if ($shareUser)
+                        $this->shareLogic->shareCommission($shareUser, $attach['user_id'], $order);
+                }
+
+                return true;
+            } else {
+                return $fail('通信失败，请稍后再通知我');
+            }
+        });
+
+        return $response;
     }
 
     /**

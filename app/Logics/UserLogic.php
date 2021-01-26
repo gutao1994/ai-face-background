@@ -32,6 +32,25 @@ class UserLogic
         return $user;
     }
 
+    /**
+     * 检查分享的用户是否正常
+     */
+    public function checkShareUser($userId, $shareUserId)
+    {
+        if (empty($shareUserId))
+            return false;
+
+        if ($userId == $shareUserId) //不能为同一个用户
+            return false;
+
+        $shareUser = WxUser::query()->find($shareUserId);
+
+        if (empty($shareUser) || $shareUser->share_permission != 1) //用户不存在 或者 没有分享返现权限
+            return false;
+
+        return $shareUser;
+    }
+
 
 
 }
