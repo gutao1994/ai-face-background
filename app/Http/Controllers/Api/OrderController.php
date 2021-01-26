@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
-use App\Models\WxUser;
 use Dingo\Api\Exception\ResourceException;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Transformers\OrderTransformer;
-use Illuminate\Support\Facades\DB;
-use App\Models\ShareCommissionLog;
+use App\Http\Requests\Api\UploadImg;
 
 /**
  * @property \App\Services\OrderService $orderService
  * @property \App\Logics\UserLogic $userLogic
  * @property \App\Logics\ShareLogic $shareLogic
+ * @property \App\Services\FacePlusPlusService $facePlusPlusService
  */
 class OrderController extends ApiController
 {
@@ -99,9 +98,11 @@ class OrderController extends ApiController
     /**
      * 上传头像图片
      */
-    public function actionImg()
+    public function actionImg(UploadImg $request)
     {
-
+//        $this->facePlusPlusService->facialfeatures([
+//            'image_file' =>
+//        ]);
     }
 
     /**
