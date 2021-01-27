@@ -26,33 +26,23 @@ class FacePlusPlusService
      */
     public function facialfeatures($params)
     {
-        try {
-            $response = $this->client->post('/facepp/v1/facialfeatures', [
-                'multipart' => $this->buildSendData($params)
-            ]);
-
-            $httpCode = $response->getStatusCode();
-
-
-        } catch (\Exception $exception) {
-
-        }
+        return $this->getResponse($params, '/facepp/v1/facialfeatures');
     }
 
     /**
      * 皮肤分析
      */
-    public function skinanalyze()
+    public function skinanalyze($params)
     {
-
+        return $this->getResponse($params, '/facepp/v1/skinanalyze');
     }
 
     /**
      * detect
      */
-    public function detect()
+    public function detect($params)
     {
-
+        return $this->getResponse($params, '/facepp/v3/detect');
     }
 
     /**
@@ -83,9 +73,24 @@ class FacePlusPlusService
         return $result;
     }
 
+    /**
+     * 获取请求响应
+     */
+    protected function getResponse($params, $uri)
+    {
+        return $this->client->post($uri, [
+            'multipart' => $this->buildSendData($params)
+        ]);
+    }
+
 
 
 }
+
+
+
+
+
 
 
 

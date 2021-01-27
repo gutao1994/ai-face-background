@@ -8,12 +8,17 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Transformers\OrderTransformer;
 use App\Http\Requests\Api\UploadImg;
+use App\Exceptions\RetryException;
+use Illuminate\Support\Facades\Storage;
+use Dingo\Api\Exception\StoreResourceFailedException;
 
 /**
  * @property \App\Services\OrderService $orderService
  * @property \App\Logics\UserLogic $userLogic
  * @property \App\Logics\ShareLogic $shareLogic
  * @property \App\Services\FacePlusPlusService $facePlusPlusService
+ * @property \App\Logics\OrderLogic $orderLogic
+ * @property \App\Services\FileService $fileService
  */
 class OrderController extends ApiController
 {
@@ -100,9 +105,18 @@ class OrderController extends ApiController
      */
     public function actionImg(UploadImg $request)
     {
-//        $this->facePlusPlusService->facialfeatures([
-//            'image_file' =>
-//        ]);
+        try {
+            $path = Storage::putFileAs('imgs', $request->img->path(), $this->fileService->genFileName($request->img));
+
+            $order = $request->requestOrder;
+            $order->img = $path;
+            $order->status = 20;
+            $order->save();
+
+            return response('');
+        } catch (\Exception $exception) {
+            throw new StoreResourceFailedException('上传照片失败');
+        }
     }
 
     /**

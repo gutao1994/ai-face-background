@@ -3,9 +3,12 @@
 namespace App\Logics;
 
 use App\Models\Order;
+use App\Common\HandyClass;
 
 class OrderLogic
 {
+
+    use HandyClass;
 
     /**
      * 按步骤检查订单，同时检查订单用户所属
