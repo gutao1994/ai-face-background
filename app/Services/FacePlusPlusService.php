@@ -83,6 +83,21 @@ class FacePlusPlusService
         ]);
     }
 
+    /**
+     * 解析错误信息
+     */
+    public function parseErrorMessage($message)
+    {
+        if (preg_match('/IMAGE_ERROR_UNSUPPORTED_FORMAT/', $message)) {
+            return '照片的文件格式不符合要求';
+        } elseif ($message == 'NO_FACE_FOUND') {
+            return '没有检测到人脸';
+        } elseif ($message == 'INVALID_IMAGE_FACE') {
+            return '照片人脸角度不符合要求、人脸不完整、出现多个人脸';https://console.faceplusplus.com.cn/documents/118131136
+        }
+
+    }
+
 
 
 }

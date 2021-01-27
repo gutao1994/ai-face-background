@@ -11,6 +11,7 @@ use App\Http\Requests\Api\UploadImg;
 use App\Exceptions\RetryException;
 use Illuminate\Support\Facades\Storage;
 use Dingo\Api\Exception\StoreResourceFailedException;
+use GuzzleHttp\Exception\TransferException;
 
 /**
  * @property \App\Services\OrderService $orderService
@@ -122,9 +123,37 @@ class OrderController extends ApiController
     /**
      * 面部特征分析
      */
-    public function actionFacialFeatures()
+    public function actionFacialFeatures(Request $request)
     {
+        try {
+            $order = $this->orderLogic->checkStepOrder($request->no, $this->user, 20);
 
+            if ($order === false)
+                throw new \Exception('订单错误');
+
+            $response = $this->facePlusPlusService->facialfeatures(['image_url' => Storage::url($order->img)]);
+
+            $httpCode = $response->getStatusCode();
+            $body = $response->getBody()->getContents();
+
+            if ($httpCode == 200) {
+                $order->facialfeatures_data = $body;
+                $order->status = 30;
+                $order->save();
+            } else {
+                $body = json_decode($body, true);
+
+                if ($httpCode == 403 && $body['error_message'] == 'CONCURRENCY_LIMIT_EXCEEDED') { //并发数超过限制
+                    throw new RetryException();
+                }
+            }
+        } catch (TransferException $transferException) {
+            throw new ResourceException('面相分析失败');
+        } catch (RetryException $retryException) {
+            throw $retryException;
+        } catch (\Exception $exception) {
+            throw new ResourceException($exception->getMessage());
+        }
     }
 
     /**
