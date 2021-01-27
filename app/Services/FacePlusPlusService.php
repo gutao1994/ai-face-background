@@ -93,9 +93,36 @@ class FacePlusPlusService
         } elseif ($message == 'NO_FACE_FOUND') {
             return '没有检测到人脸';
         } elseif ($message == 'INVALID_IMAGE_FACE') {
-            return '照片人脸角度不符合要求、人脸不完整、出现多个人脸';https://console.faceplusplus.com.cn/documents/118131136
+            return '照片人脸角度不符合要求 或 人脸不完整 或 出现多个人脸';
+        } elseif (preg_match('/INVALID_IMAGE_SIZE/', $message)) {
+            return '照片像素尺寸太大或太小';
+        } elseif ($message == 'INVALID_IMAGE_URL') {
+            return '照片URL错误或者无效';
+        } elseif ($message == 'INVALID_IMAGE_T') {
+            return '人脸照片无法检测出右眼瞳孔半径';
+        } elseif (preg_match('/IMAGE_FILE_TOO_LARGE/', $message)) {
+            return '照片文件太大';
+        } elseif ($message == 'IMAGE_DOWNLOAD_TIMEOUT') {
+            return '下载图片超时';
+        } elseif ($message == 'AUTHENTICATION_ERROR') {
+            return '服务器出错';
+        } elseif (preg_match('/AUTHORIZATION_ERROR/', $message)) {
+            return '服务器出错';
+        } elseif ($message == 'CONCURRENCY_LIMIT_EXCEEDED') {
+            return '并发数超过限制';
+        } elseif (preg_match('/MISSING_ARGUMENTS/', $message)) {
+            return '服务器出错';
+        } elseif (preg_match('/BAD_ARGUMENTS/', $message)) {
+            return '服务器出错';
+        } elseif ($message == 'COEXISTENCE_ARGUMENTS') {
+            return '服务器出错';
+        } elseif ($message == 'API_NOT_FOUND') {
+            return '服务器出错';
+        } elseif ($message == 'INTERNAL_ERROR') {
+            return '服务器出错';
         }
 
+        return $message;
     }
 
 

@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Transformers\OrderTransformer;
 use App\Http\Requests\Api\UploadImg;
+use App\Exceptions\ActionException;
 use App\Exceptions\RetryException;
+use App\Exceptions\StatusRollbackException;
 use Illuminate\Support\Facades\Storage;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use GuzzleHttp\Exception\TransferException;
@@ -140,17 +142,37 @@ class OrderController extends ApiController
                 $order->facialfeatures_data = $body;
                 $order->status = 30;
                 $order->save();
-            } else {
-                $body = json_decode($body, true);
 
-                if ($httpCode == 403 && $body['error_message'] == 'CONCURRENCY_LIMIT_EXCEEDED') { //并发数超过限制
-                    throw new RetryException();
+                return response('');
+            }
+
+            $body = json_decode($body, true);
+
+            if ($httpCode == 403 && $body['error_message'] == 'CONCURRENCY_LIMIT_EXCEEDED') //并发数超过限制
+                throw new RetryException();
+
+            if ($httpCode == 412 && $body['error_message'] == 'IMAGE_DOWNLOAD_TIMEOUT') { //下载图片超时
+                $this->orderLogic->incrApiErrorCount($order);
+                throw new RetryException();
+            }
+
+            if ($this->orderLogic->isStatusRollback($httpCode, $body['error_message'])) {
+                $this->orderLogic->incrApiErrorCount($order, false);
+
+                if ($order->status == 70) {
+                    $order->save();
+                } else {
+                    $this->orderLogic->statusRollback($order);
                 }
+
+                throw new StatusRollbackException($this->facePlusPlusService->parseErrorMessage($body['error_message']));
+            } else {
+                throw new \Exception($this->facePlusPlusService->parseErrorMessage($body['error_message']));
             }
         } catch (TransferException $transferException) {
             throw new ResourceException('面相分析失败');
-        } catch (RetryException $retryException) {
-            throw $retryException;
+        } catch (ActionException $actionException) {
+            throw $actionException;
         } catch (\Exception $exception) {
             throw new ResourceException($exception->getMessage());
         }

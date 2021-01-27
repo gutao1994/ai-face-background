@@ -12,6 +12,11 @@ return [
      */
     'share_commission_price' => 0.2,
 
+    /**
+     * 允许api调用失败的最大次数
+     */
+    'max_api_error_count' => 15,
+
 
 
 ];

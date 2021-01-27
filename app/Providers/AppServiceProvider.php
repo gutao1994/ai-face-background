@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use App\Exceptions\RetryException;
+use App\Exceptions\ActionException;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,9 +35,10 @@ class AppServiceProvider extends ServiceProvider
             }
         });
 
-        app('api.exception')->register(function (RetryException $exception) {
+        app('api.exception')->register(function (ActionException $exception) {
             return response()->json([
-                'action' => 'retry',
+                'action' => $exception->actionName,
+                'message' => $exception->actionMessage,
             ]);
         });
 
