@@ -22,6 +22,7 @@ use GuzzleHttp\Exception\TransferException;
  * @property \App\Services\FacePlusPlusService $facePlusPlusService
  * @property \App\Logics\OrderLogic $orderLogic
  * @property \App\Services\FileService $fileService
+ * @property \App\Logics\FaceLogic $faceLogic
  */
 class OrderController extends ApiController
 {
@@ -269,9 +270,22 @@ class OrderController extends ApiController
     /**
      * 获取面相分析结果
      */
-    public function actionResult()
+    public function actionResult(Request $request)
     {
+        try {
+            $order = $this->orderLogic->checkStepOrder($request->no, $this->user, 50);
 
+            if ($order === false)
+                throw new \Exception('订单错误');
+
+            $order->face_result = $this->faceLogic->analyse($order);
+            $order->status = 60;
+            $order->save();
+
+            return response('');
+        } catch (\Exception $exception) {
+            throw new ResourceException($exception->getMessage());
+        }
     }
 
     /**
