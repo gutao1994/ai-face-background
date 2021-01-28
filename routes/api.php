@@ -50,6 +50,8 @@ $api->version('v1', [
 
         $api->get('user/commission/log', 'UserController@commissionLog'); //分享佣金记录
 
+        $api->post('user/commission/cashout', 'UserController@commissionCashout'); //申请佣金提现
+
 
 
     });

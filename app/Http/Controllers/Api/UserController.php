@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Api\Login;
 use Tymon\JWTAuth\JWTAuth;
 use App\Models\Order;
+use App\Models\ShareCommissionLog;
 
 /**
  * @property \App\Logics\UserLogic $userLogic
@@ -48,13 +49,31 @@ class UserController extends ApiController
      */
     public function commissionDetail()
     {
+        $lastRecord = ShareCommissionLog::query()
+            ->where('user_id', $this->user->id)
+            ->where('type', 2)
+            ->where('cashout_status', 1)
+            ->first();
 
+        return $this->response->array([
+            'share_commission' => $this->user->share_commission,
+            'cashout_ing' => $lastRecord ? $lastRecord->amount : 0,
+            'share_order_num' => $this->user->share_order_num,
+        ]);
     }
 
     /**
      * 分享佣金记录
      */
     public function commissionLog()
+    {
+
+    }
+
+    /**
+     * 申请佣金提现
+     */
+    public function commissionCashout()
     {
 
     }
