@@ -310,9 +310,20 @@ class OrderController extends ApiController
     /**
      * 订单列表
      */
-    public function orderList()
+    public function orderList(Request $request)
     {
+        $page = $request->input('page', 1);
+        $perPage = $request->input('per_page', 20);
 
+        $orders = Order::query()
+            ->select(['id', 'no', 'img', 'status', 'created_at'])
+            ->where('user_id', $this->user->id)
+            ->orderByDesc('id')
+            ->offset(($page - 1) * $perPage)
+            ->limit($perPage)
+            ->get();
+
+        return $this->response->collection($orders, new OrderTransformer());
     }
 
 
