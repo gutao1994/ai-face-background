@@ -211,7 +211,7 @@ class OrderController extends ApiController
             }
 
             throw new \Exception($this->facePlusPlusService->parseErrorMessage($body['error_message']));
-        } catch (TransferException) {
+        } catch (TransferException $transferException) {
             throw new ResourceException('皮肤分析失败');
         } catch (ActionException $actionException) {
             throw $actionException;
@@ -223,9 +223,47 @@ class OrderController extends ApiController
     /**
      * Detect
      */
-    public function actionDetect()
+    public function actionDetect(Request $request)
     {
+        try {
+            $order = $this->orderLogic->checkStepOrder($request->no, $this->user, 40);
 
+            if ($order === false)
+                throw new \Exception('订单错误');
+
+            $response = $this->facePlusPlusService->detect([
+                'image_url' => Storage::url($order->img),
+                'return_attributes' => 'gender,age,smiling,headpose,facequality,blur,eyestatus,emotion,beauty,mouthstatus,eyegaze,skinstatus',
+            ]);
+            $httpCode = $response->getStatusCode();
+            $body = $response->getBody()->getContents();
+
+            if ($httpCode == 200) {
+                $order->detect_data = $body;
+                $order->status = 50;
+                $order->save();
+
+                return response('');
+            }
+
+            $body = json_decode($body, true);
+
+            if ($httpCode == 403 && $body['error_message'] == 'CONCURRENCY_LIMIT_EXCEEDED') //并发数超过限制
+                throw new RetryException();
+
+            if ($httpCode == 412 && $body['error_message'] == 'IMAGE_DOWNLOAD_TIMEOUT') { //下载图片超时
+                $this->orderLogic->incrApiErrorCount($order);
+                throw new RetryException();
+            }
+
+            throw new \Exception($this->facePlusPlusService->parseErrorMessage($body['error_message']));
+        } catch (TransferException $transferException) {
+            throw new ResourceException('人脸综合分析失败');
+        } catch (ActionException $actionException) {
+            throw $actionException;
+        } catch (\Exception $exception) {
+            throw new ResourceException($exception->getMessage());
+        }
     }
 
     /**
