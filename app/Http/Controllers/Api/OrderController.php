@@ -14,6 +14,7 @@ use App\Exceptions\StatusRollbackException;
 use Illuminate\Support\Facades\Storage;
 use Dingo\Api\Exception\StoreResourceFailedException;
 use GuzzleHttp\Exception\TransferException;
+use Lcobucci\JWT\Parsing\Decoder;
 
 /**
  * @property \App\Services\OrderService $orderService
@@ -305,6 +306,33 @@ class OrderController extends ApiController
         }
 
         return $this->response->item($order, new OrderTransformer());
+    }
+
+    /**
+     * 来自分享的订单详情
+     */
+    public function orderDetailFromShare(Decoder $decoder, Request $request)
+    {
+        try {
+            $shareToken = $request->input('share_token', '');
+            $shareToken = $decoder->base64UrlDecode($shareToken);
+            $shareTokenArr = explode('.', $shareToken);
+
+            if (count($shareTokenArr) != 2)
+                throw new \Exception('解码出错');
+
+            $userId = $decoder->base64UrlDecode($shareTokenArr[0]);
+            $orderNo = $decoder->base64UrlDecode($shareTokenArr[1]);
+
+            $order = Order::query()->where('user_id', $userId)->where('no', $orderNo)->first();
+
+            if (empty($order))
+                throw new \Exception('订单不存在');
+
+            return $this->response->item($order, new OrderTransformer());
+        } catch (\Exception $exception) {
+            throw new ResourceException($exception->getMessage());
+        }
     }
 
     /**

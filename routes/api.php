@@ -52,11 +52,9 @@ $api->version('v1', [
 
         $api->post('user/commission/cashout', 'UserController@commissionCashout'); //申请佣金提现
 
-
-
     });
 
-
+    $api->get('order/detail/from_share', 'OrderController@orderDetailFromShare'); //来自分享的订单详情
 
 });
 
