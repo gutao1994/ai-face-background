@@ -8,6 +8,7 @@ use App\Http\Requests\Api\Login;
 use Tymon\JWTAuth\JWTAuth;
 use App\Models\Order;
 use App\Models\ShareCommissionLog;
+use Dingo\Api\Exception\ResourceException;
 
 /**
  * @property \App\Logics\UserLogic $userLogic
@@ -65,22 +66,68 @@ class UserController extends ApiController
     /**
      * 分享佣金记录
      */
-    public function commissionLog()
+    public function commissionLog(Request $request)
     {
+        $page = $request->input('page', 1);
+        $perPage = $request->input('per_page', 20);
 
+        $logs = ShareCommissionLog::query()
+            ->where('user_id', $this->user->id)
+            ->orderByDesc('id')
+            ->offset(($page - 1) * $perPage)
+            ->limit($perPage)
+            ->get();
+
+        return $this->response->array($logs);
     }
 
     /**
      * 申请佣金提现
      */
-    public function commissionCashout()
+    public function commissionCashout(Request $request)
     {
+        try {
+            $amount = (string)$request->input('amount', 0);
 
+            if (!preg_match('/^[1-9]+0*00$/U', $amount))
+                throw new \Exception('不合法的金额');
+
+            if ($amount > $this->user->share_commission)
+                throw new \Exception('佣金余额不足');
+
+            $this->user->share_commission -= $amount;
+            $this->user->save();
+
+            ShareCommissionLog::query()->create([
+                'user_id' => $this->user->id,
+                'type' => 2,
+                'amount' => $amount,
+                'cashout_status' => 1,
+            ]);
+
+            return response('');
+        } catch (\Exception $exception) {
+            throw new ResourceException($exception->getMessage());
+        }
     }
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
