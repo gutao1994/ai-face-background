@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Http\Requests\Api\Login;
 use Tymon\JWTAuth\JWTAuth;
+use App\Models\Order;
 
 /**
  * @property \App\Logics\UserLogic $userLogic
@@ -37,7 +38,9 @@ class UserController extends ApiController
      */
     public function userDetail()
     {
-
+        return $this->response->array([
+            'order_count' => Order::query()->where('user_id', $this->user->id)->count(),
+        ]);
     }
 
     /**
