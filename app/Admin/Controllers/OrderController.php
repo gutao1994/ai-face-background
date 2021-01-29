@@ -4,24 +4,14 @@ namespace App\Admin\Controllers;
 
 use App\Models\Order;
 use Encore\Admin\Controllers\AdminController;
-use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 
 class OrderController extends AdminController
 {
-    /**
-     * Title for current resource.
-     *
-     * @var string
-     */
-    protected $title = 'Order';
 
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
+    protected $title = '订单管理';
+
     protected function grid()
     {
         $grid = new Grid(new Order());
@@ -44,12 +34,6 @@ class OrderController extends AdminController
         return $grid;
     }
 
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show
-     */
     protected function detail($id)
     {
         $show = new Show(Order::findOrFail($id));
@@ -72,27 +56,19 @@ class OrderController extends AdminController
         return $show;
     }
 
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form()
-    {
-        $form = new Form(new Order());
 
-        $form->text('no', __('No'));
-        $form->number('user_id', __('User id'));
-        $form->number('share_user_id', __('Share user id'));
-        $form->number('amount', __('Amount'));
-        $form->image('img', __('Img'));
-        $form->textarea('facialfeatures_data', __('Facialfeatures data'));
-        $form->textarea('skinanalyze_data', __('Skinanalyze data'));
-        $form->textarea('detect_data', __('Detect data'));
-        $form->switch('api_error_count', __('Api error count'));
-        $form->textarea('face_result', __('Face result'));
-        $form->switch('status', __('Status'));
 
-        return $form;
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

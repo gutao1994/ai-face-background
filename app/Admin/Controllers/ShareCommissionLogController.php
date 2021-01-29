@@ -4,86 +4,74 @@ namespace App\Admin\Controllers;
 
 use App\Models\ShareCommissionLog;
 use Encore\Admin\Controllers\AdminController;
-use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Show;
+use Encore\Admin\Grid\Displayers\Actions;
+use Encore\Admin\Grid\Filter;
+use App\Admin\Actions\Commission\Cashout;
 
 class ShareCommissionLogController extends AdminController
 {
-    /**
-     * Title for current resource.
-     *
-     * @var string
-     */
-    protected $title = 'ShareCommissionLog';
 
-    /**
-     * Make a grid builder.
-     *
-     * @return Grid
-     */
+    protected $title = '分享佣金管理';
+
     protected function grid()
     {
         $grid = new Grid(new ShareCommissionLog());
 
-        $grid->column('id', __('Id'));
-        $grid->column('user_id', __('User id'));
-        $grid->column('type', __('Type'));
-        $grid->column('lower_user_id', __('Lower user id'));
-        $grid->column('lower_user_nickname', __('Lower user nickname'));
-        $grid->column('lower_order_id', __('Lower order id'));
-        $grid->column('amount', __('Amount'));
-        $grid->column('cashout_status', __('Cashout status'));
-        $grid->column('cashout_remark', __('Cashout remark'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('id', 'Id')->sortable();
+        $grid->column('user.nickname', '分享者');
+        $grid->column('type', '记录类型')->using([1 => '获得分享佣金', 2 => '提现分享佣金']);
+        $grid->column('lower_user_nickname', '被分享者');
+        $grid->column('lower_order_id', '被分享者订单')->display(function ($val) {
+            return $val ? '<a href="/admin/order/' . $val . '">查看</a>' : '';
+        });
+        $grid->column('amount', '金额')->money();
+        $grid->column('cashout_status', '提现状态')->display(function ($val) {
+            return $val ? [1 => '提现中', 2 => '提现成功', 3 => '提现失败'][$val] : '';
+        });
+        $grid->column('cashout_remark', '提现备注')->stringMaxLength(8);
+        $grid->column('created_at', '创建时间');
+        $grid->column('updated_at', '最近更新时间');
+
+        $grid->disableExport();
+        $grid->disableColumnSelector();
+        $grid->disableCreateButton();
+        $grid->disableRowSelector();
+
+        $grid->actions(function (Actions $actions) {
+            $actions->disableEdit();
+            $actions->disableDelete();
+            $actions->disableView();
+
+            if ($actions->row->type == 2 && $actions->row->cashout_status == 1) //提现类型 且 状态为提现中
+                $actions->add(new Cashout());
+        });
+
+        $grid->filter(function (Filter $filter) {
+            $filter->disableIdFilter();
+
+            $filter->equal('user_id', '分享者Id');
+            $filter->equal('type', '记录类型')->select([1 => '获得分享佣金', 2 => '提现分享佣金']);
+            $filter->equal('cashout_status', '提现状态')->select([1 => '提现中', 2 => '提现成功', 3 => '提现失败']);
+        });
 
         return $grid;
     }
 
-    /**
-     * Make a show builder.
-     *
-     * @param mixed $id
-     * @return Show
-     */
-    protected function detail($id)
-    {
-        $show = new Show(ShareCommissionLog::findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('user_id', __('User id'));
-        $show->field('type', __('Type'));
-        $show->field('lower_user_id', __('Lower user id'));
-        $show->field('lower_user_nickname', __('Lower user nickname'));
-        $show->field('lower_order_id', __('Lower order id'));
-        $show->field('amount', __('Amount'));
-        $show->field('cashout_status', __('Cashout status'));
-        $show->field('cashout_remark', __('Cashout remark'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
 
-        return $show;
-    }
-
-    /**
-     * Make a form builder.
-     *
-     * @return Form
-     */
-    protected function form()
-    {
-        $form = new Form(new ShareCommissionLog());
-
-        $form->number('user_id', __('User id'));
-        $form->switch('type', __('Type'));
-        $form->number('lower_user_id', __('Lower user id'));
-        $form->text('lower_user_nickname', __('Lower user nickname'));
-        $form->number('lower_order_id', __('Lower order id'));
-        $form->number('amount', __('Amount'));
-        $form->switch('cashout_status', __('Cashout status'));
-        $form->textarea('cashout_remark', __('Cashout remark'));
-
-        return $form;
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

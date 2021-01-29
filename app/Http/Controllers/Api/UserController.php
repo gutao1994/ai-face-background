@@ -9,6 +9,7 @@ use Tymon\JWTAuth\JWTAuth;
 use App\Models\Order;
 use App\Models\ShareCommissionLog;
 use Dingo\Api\Exception\ResourceException;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property \App\Logics\UserLogic $userLogic
@@ -95,6 +96,8 @@ class UserController extends ApiController
             if ($amount > $this->user->share_commission)
                 throw new \Exception('佣金余额不足');
 
+            DB::beginTransaction();
+
             $this->user->share_commission -= $amount;
             $this->user->save();
 
@@ -105,8 +108,11 @@ class UserController extends ApiController
                 'cashout_status' => 1,
             ]);
 
+            DB::commit();
+
             return response('');
         } catch (\Exception $exception) {
+            DB::rollBack();
             throw new ResourceException($exception->getMessage());
         }
     }
