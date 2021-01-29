@@ -4,9 +4,12 @@ namespace App\Admin\Controllers;
 
 use App\Models\WxUser;
 use Encore\Admin\Controllers\AdminController;
-use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Encore\Admin\Grid\Filter;
+use Encore\Admin\Grid\Displayers\Actions;
+use App\Admin\Actions\User\SharePermission;
+use Encore\Admin\Show\Tools;
 
 class WxUserController extends AdminController
 {
@@ -17,47 +20,64 @@ class WxUserController extends AdminController
     {
         $grid = new Grid(new WxUser());
 
-        $grid->column('id', 'Id');
+        $grid->column('id', 'Id')->sortable();
         $grid->column('nickname', '昵称');
-        $grid->column('avatar', '头像')->image('', 56, 50);
-        $grid->column('sex', '性别');
+        $grid->column('avatar', '头像')->image('', 50, 40);
+        $grid->column('sex', '性别')->using([0 => '未知', 1 => '男', 2 => '女']);
         $grid->column('country', '国家');
         $grid->column('province', '省份');
         $grid->column('city', '城市');
         $grid->column('language', '语言');
-        $grid->column('share_permission', '是否有分享返现权限');
-        $grid->column('share_commission', '分享返现佣金');
-        $grid->column('share_total_commission', '分享返现总佣金');
-        $grid->column('share_order_num', '分享成交订单数');
+        $grid->column('share_permission', '分享返现权限')->using([0 => '没有', 1 => '有']);
+        $grid->column('share_commission', '分享佣金')->sortable()->money();
+        $grid->column('share_total_commission', '分享总佣金')->sortable()->money();
+        $grid->column('share_order_num', '分享订单数')->sortable();
         $grid->column('created_at', '创建时间');
 
         $grid->disableExport();
         $grid->disableCreateButton();
         $grid->disableRowSelector();
         $grid->disableColumnSelector();
+
+        $grid->filter(function (Filter $filter) {
+            $filter->like('nickname', '昵称');
+            $filter->equal('share_permission', '分享返现权限')->select([0 => '没有', 1 => '有']);
+        });
+
+        $grid->actions(function (Actions $actions) {
+            $actions->disableDelete();
+            $actions->disableEdit();
+        });
+
         return $grid;
     }
 
     protected function detail($id)
     {
-        $show = new Show(WxUser::query()->findOrFail($id));
+        $user = WxUser::query()->findOrFail($id);
+        $show = new Show($user);
 
-        $show->field('id', __('Id'));
-        $show->field('openid', __('Openid'));
-        $show->field('nickname', __('Nickname'));
-        $show->field('avatar', __('Avatar'));
-        $show->field('sex', __('Sex'));
-        $show->field('country', __('Country'));
-        $show->field('province', __('Province'));
-        $show->field('city', __('City'));
-        $show->field('language', __('Language'));
-        $show->field('share_permission', __('Share permission'));
-        $show->field('share_commission', __('Share commission'));
-        $show->field('share_total_commission', __('Share total commission'));
-        $show->field('share_order_num', __('Share order num'));
-        $show->field('remark', __('Remark'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('id', 'Id');
+        $show->field('nickname', '昵称');
+        $show->field('avatar', '头像')->image();
+        $show->field('sex', '性别')->using([0 => '未知', 1 => '男', 2 => '女']);
+        $show->field('country', '国家');
+        $show->field('province', '省份');
+        $show->field('city', '城市');
+        $show->field('language', '语言');
+        $show->field('share_permission', '分享返现权限')->using([0 => '没有', 1 => '有']);
+        $show->field('share_commission', '分享佣金')->money();
+        $show->field('share_total_commission', '分享总佣金')->money();
+        $show->field('share_order_num', '分享订单数');
+        $show->field('remark', '备注');
+        $show->field('created_at', '创建时间');
+        $show->field('updated_at', '最近更新时间');
+
+        $show->panel()->tools(function (Tools $tools) use ($user) {
+            $tools->disableEdit();
+            $tools->disableDelete();
+            $tools->append(new SharePermission($user));
+        });;
 
         return $show;
     }

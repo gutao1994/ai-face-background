@@ -18,4 +18,18 @@
  *
  */
 
+use Encore\Admin\Grid\Column;
+use Encore\Admin\Show;
+use App\Admin\Extensions\Displayer\Money;
+use App\Admin\Extensions\Show\Money as SMoney;
+
 Encore\Admin\Form::forget(['map', 'editor', 'DateMultiple']);
+
+Column::extend('money', Money::class);
+
+Show::extend('money', SMoney::class);
+
+
+
+
+
