@@ -54,6 +54,11 @@ HTML;
         }
     }
 
+    public function authorize($user, $model)
+    {
+        return $user->isAdministrator();
+    }
+
 
 
 }

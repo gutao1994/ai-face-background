@@ -6,52 +6,82 @@ use App\Models\Order;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Encore\Admin\Grid\Displayers\Actions;
+use Encore\Admin\Grid\Filter;
+use Encore\Admin\Show\Tools;
 
 class OrderController extends AdminController
 {
 
     protected $title = '订单管理';
 
+    protected $status = [
+        10 => '已支付',
+        20 => '完成上传头像',
+        30 => '完成面部特征分析API',
+        40 => '完成皮肤分析API',
+        50 => '完成DetectAPI',
+        60 => '完成面相分析',
+        70 => '失败',
+    ];
+
     protected function grid()
     {
         $grid = new Grid(new Order());
 
-        $grid->column('id', __('Id'));
-        $grid->column('no', __('No'));
-        $grid->column('user_id', __('User id'));
-        $grid->column('share_user_id', __('Share user id'));
-        $grid->column('amount', __('Amount'));
-        $grid->column('img', __('Img'));
-        $grid->column('facialfeatures_data', __('Facialfeatures data'));
-        $grid->column('skinanalyze_data', __('Skinanalyze data'));
-        $grid->column('detect_data', __('Detect data'));
-        $grid->column('api_error_count', __('Api error count'));
-        $grid->column('face_result', __('Face result'));
-        $grid->column('status', __('Status'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('id', 'Id')->sortable();
+        $grid->column('no', '订单号');
+        $grid->column('user.nickname', '订单用户');
+        $grid->column('shareUser.nickname', '分享者用户');
+        $grid->column('amount', '金额')->money();
+        $grid->column('img', '照片')->image('', 50, 40);
+        $grid->column('api_error_count', 'API调用错误次数');
+        $grid->column('status', '订单状态')->using($this->status);
+        $grid->column('created_at', '创建时间');
+
+        $grid->disableRowSelector();
+        $grid->disableCreateButton();
+        $grid->disableColumnSelector();
+        $grid->disableExport();
+
+        $grid->actions(function (Actions $actions) {
+            $actions->disableDelete();
+            $actions->disableEdit();
+        });
+
+        $grid->filter(function (Filter $filter) {
+            $filter->disableIdFilter();
+            $filter->equal('share_user_id', '分享者Id');
+            $filter->equal('user_id', '订单用户Id');
+            $filter->equal('status', '订单状态')->select($this->status);
+        });
 
         return $grid;
     }
 
     protected function detail($id)
     {
-        $show = new Show(Order::findOrFail($id));
+        $show = new Show(Order::query()->findOrFail($id));
 
-        $show->field('id', __('Id'));
-        $show->field('no', __('No'));
-        $show->field('user_id', __('User id'));
-        $show->field('share_user_id', __('Share user id'));
-        $show->field('amount', __('Amount'));
-        $show->field('img', __('Img'));
-        $show->field('facialfeatures_data', __('Facialfeatures data'));
-        $show->field('skinanalyze_data', __('Skinanalyze data'));
-        $show->field('detect_data', __('Detect data'));
-        $show->field('api_error_count', __('Api error count'));
-        $show->field('face_result', __('Face result'));
-        $show->field('status', __('Status'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('id', 'Id');
+        $show->field('no', '订单号');
+        $show->field('user.nickname', '订单用户');
+        $show->field('shareUser.nickname', '分享者用户');
+        $show->field('amount', '金额')->money();
+        $show->field('status', '订单状态')->using($this->status);
+        $show->field('img', '照片')->image();
+        $show->field('api_error_count', 'API调用错误次数');
+        $show->field('face_result', '面相分析结果');
+        $show->field('created_at', '创建时间');
+        $show->field('updated_at', '最近更新时间');
+        $show->field('facialfeatures_data', '面部特征分析API的数据')->json();
+        $show->field('skinanalyze_data', '皮肤分析API的数据')->json();
+        $show->field('detect_data', 'Detect API的数据')->json();
+
+        $show->panel()->tools(function (Tools $tools) {
+            $tools->disableEdit();
+            $tools->disableDelete();
+        });
 
         return $show;
     }

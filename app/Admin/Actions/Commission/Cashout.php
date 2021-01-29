@@ -44,6 +44,11 @@ class Cashout extends RowAction
         $this->textarea('cashout_remark', '提现备注');
     }
 
+    public function authorize($user, $model)
+    {
+        return $user->isAdministrator();
+    }
+
 
 
 }
