@@ -96,6 +96,10 @@ class UserController extends ApiController
             if ($amount > $this->user->share_commission)
                 throw new \Exception('佣金余额不足');
 
+            $lastRecord = ShareCommissionLog::query()->where('user_id', $this->user->id)->where('type', 2)->where('cashout_status', 1)->first();
+            if (!empty($lastRecord))
+                throw new \Exception('请勿重复申请');
+
             DB::beginTransaction();
 
             $this->user->share_commission -= $amount;
