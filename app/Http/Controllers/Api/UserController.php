@@ -79,7 +79,7 @@ class UserController extends ApiController
             ->limit($perPage)
             ->get();
 
-        return $this->response->array($logs);
+        return $this->response->array($logs->toArray());
     }
 
     /**
