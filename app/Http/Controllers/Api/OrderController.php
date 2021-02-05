@@ -212,7 +212,19 @@ class OrderController extends ApiController
                 throw new RetryException();
             }
 
-            throw new \Exception($this->facePlusPlusService->parseErrorMessage($body['error_message']));
+            if ($this->orderLogic->isStatusRollback($httpCode, $body['error_message'])) {
+                $this->orderLogic->incrApiErrorCount($order, false, 4);
+
+                if ($order->status == 70) {
+                    $order->save();
+                } else {
+                    $this->orderLogic->statusRollback($order);
+                }
+
+                throw new StatusRollbackException($this->facePlusPlusService->parseErrorMessage($body['error_message']));
+            } else {
+                throw new \Exception($this->facePlusPlusService->parseErrorMessage($body['error_message']));
+            }
         } catch (TransferException $transferException) {
             throw new ResourceException('皮肤分析失败');
         } catch (ActionException $actionException) {

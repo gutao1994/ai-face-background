@@ -32,9 +32,9 @@ class OrderLogic
     /**
      * 订单api调用失败次数+1
      */
-    public function incrApiErrorCount($order, $save = true)
+    public function incrApiErrorCount($order, $save = true, $count = 1)
     {
-        $order->api_error_count += 1;
+        $order->api_error_count += $count;
 
         if ($order->api_error_count >= config('aiface.max_api_error_count'))
             $order->status = 70;
