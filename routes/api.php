@@ -32,9 +32,9 @@ $api->version('v1', [
 
         $api->post('order/action/img', 'OrderController@actionImg'); //上传头像图片
 
-        $api->post('order/action/facialfeatures', 'OrderController@actionFacialFeatures'); //面部特征分析
-
         $api->post('order/action/skinanalyze', 'OrderController@actionSkinAnalyze'); //皮肤分析
+
+        $api->post('order/action/facialfeatures', 'OrderController@actionFacialFeatures'); //面部特征分析
 
         $api->post('order/action/detect', 'OrderController@actionDetect'); //Detect
 

@@ -125,9 +125,9 @@ class OrderController extends ApiController
     }
 
     /**
-     * 面部特征分析
+     * 皮肤分析
      */
-    public function actionFacialFeatures(Request $request)
+    public function actionSkinAnalyze(Request $request)
     {
         try {
             $order = $this->orderLogic->checkStepOrder($request->no, $this->user, 20);
@@ -135,12 +135,12 @@ class OrderController extends ApiController
             if ($order === false)
                 throw new \Exception('订单错误');
 
-            $response = $this->facePlusPlusService->facialfeatures(['image_url' => Storage::url($order->img)]);
+            $response = $this->facePlusPlusService->skinanalyze(['image_url' => Storage::url($order->img)]);
             $httpCode = $response->getStatusCode();
             $body = $response->getBody()->getContents();
 
             if ($httpCode == 200) {
-                $order->facialfeatures_data = $body;
+                $order->skinanalyze_data = $body;
                 $order->status = 30;
                 $order->save();
 
@@ -171,7 +171,7 @@ class OrderController extends ApiController
                 throw new \Exception($this->facePlusPlusService->parseErrorMessage($body['error_message']));
             }
         } catch (TransferException $transferException) {
-            throw new ResourceException('面部特征分析失败');
+            throw new ResourceException('皮肤分析失败');
         } catch (ActionException $actionException) {
             throw $actionException;
         } catch (\Exception $exception) {
@@ -180,9 +180,9 @@ class OrderController extends ApiController
     }
 
     /**
-     * 皮肤分析
+     * 面部特征分析
      */
-    public function actionSkinAnalyze(Request $request)
+    public function actionFacialFeatures(Request $request)
     {
         try {
             $order = $this->orderLogic->checkStepOrder($request->no, $this->user, 30);
@@ -190,12 +190,12 @@ class OrderController extends ApiController
             if ($order === false)
                 throw new \Exception('订单错误');
 
-            $response = $this->facePlusPlusService->skinanalyze(['image_url' => Storage::url($order->img)]);
+            $response = $this->facePlusPlusService->facialfeatures(['image_url' => Storage::url($order->img)]);
             $httpCode = $response->getStatusCode();
             $body = $response->getBody()->getContents();
 
             if ($httpCode == 200) {
-                $order->skinanalyze_data = $body;
+                $order->facialfeatures_data = $body;
                 $order->status = 40;
                 $order->save();
 
@@ -226,7 +226,7 @@ class OrderController extends ApiController
                 throw new \Exception($this->facePlusPlusService->parseErrorMessage($body['error_message']));
             }
         } catch (TransferException $transferException) {
-            throw new ResourceException('皮肤分析失败');
+            throw new ResourceException('面部特征分析失败');
         } catch (ActionException $actionException) {
             throw $actionException;
         } catch (\Exception $exception) {

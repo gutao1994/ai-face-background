@@ -18,8 +18,8 @@ class OrderController extends AdminController
     protected $status = [
         10 => '已支付',
         20 => '完成上传头像',
-        30 => '完成面部特征分析API',
-        40 => '完成皮肤分析API',
+        30 => '完成皮肤分析API',
+        40 => '完成面部特征分析API',
         50 => '完成DetectAPI',
         60 => '完成面相分析',
         70 => '失败',
@@ -74,8 +74,8 @@ class OrderController extends AdminController
         $show->field('face_result', '面相分析结果');
         $show->field('created_at', '创建时间');
         $show->field('updated_at', '最近更新时间');
-        $show->field('facialfeatures_data', '面部特征分析API的数据')->json();
         $show->field('skinanalyze_data', '皮肤分析API的数据')->json();
+        $show->field('facialfeatures_data', '面部特征分析API的数据')->json();
         $show->field('detect_data', 'Detect API的数据')->json();
 
         $show->panel()->tools(function (Tools $tools) {
