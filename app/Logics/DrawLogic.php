@@ -26,7 +26,7 @@ class DrawLogic
         }
 
         $editor->text($image , 'L1', 26,
-            $data['face']['face_hairline_144']['x'] - 120 - 13,
+            $data['face']['face_hairline_144']['x'] - 60,
             $data['face']['face_hairline_72']['y'] + ($data['nose']['nose_midline_0']['y'] - $data['face']['face_hairline_72']['y']) / 2 - 13, new Color("#FF0000")
         );
 
@@ -36,7 +36,7 @@ class DrawLogic
         }
 
         $editor->text($image , 'L2', 26,
-            $data['face']['face_hairline_144']['x'] - 120 - 13,
+            $data['face']['face_hairline_144']['x'] - 60,
             $data['nose']['nose_midline_0']['y'] + ($data['nose']['nose_right_62']['y'] - $data['nose']['nose_midline_0']['y']) / 2 - 13, new Color("#FF0000")
         );
 
@@ -46,7 +46,7 @@ class DrawLogic
         }
 
         $editor->text($image , 'L3', 26,
-            $data['face']['face_hairline_144']['x'] - 120 - 13,
+            $data['face']['face_hairline_144']['x'] - 60,
             $data['nose']['nose_right_62']['y'] + ($data['face']['face_contour_right_0']['y'] - $data['nose']['nose_right_62']['y']) / 2 - 13, new Color("#FF0000")
         );
 
