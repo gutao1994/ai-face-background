@@ -24,6 +24,7 @@ use Lcobucci\JWT\Parsing\Decoder;
  * @property \App\Logics\OrderLogic $orderLogic
  * @property \App\Services\FileService $fileService
  * @property \App\Logics\FaceLogic $faceLogic
+ * @property \App\Logics\DrawLogic $drawLogic
  */
 class OrderController extends ApiController
 {
@@ -290,6 +291,19 @@ class OrderController extends ApiController
 
             if ($order === false)
                 throw new \Exception('订单错误');
+
+            $localPath = $this->fileService->getOssFile($order->img);
+
+            $localTmpFile = $this->drawLogic->threePartsFiveEyes($localPath, $order->facialfeatures_data);
+            $this->drawLogic->saveDraw($localTmpFile, $order->img, '-three-parts-five-eyes');
+
+            $localTmpFile = $this->drawLogic->faceStructure($localPath, $order->facialfeatures_data);
+            $this->drawLogic->saveDraw($localTmpFile, $order->img, '-face-structure');
+
+            $localTmpFile = $this->drawLogic->fiveSense($localPath, $order->facialfeatures_data);
+            $this->drawLogic->saveDraw($localTmpFile, $order->img, '-five-sense');
+
+            unlink($localPath);
 
             $order->face_result = $this->faceLogic->analyse($order);
             $order->status = 60;

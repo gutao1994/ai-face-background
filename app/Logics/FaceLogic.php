@@ -11,7 +11,7 @@ class FaceLogic
     public function analyse($order)
     {
 
-        return "";
+        return "您的面相太棒了，100分！";
     }
 
 
