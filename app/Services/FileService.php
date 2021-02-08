@@ -32,6 +32,14 @@ class FileService
         return Storage::disk('local')->path($localName);
     }
 
+    /**
+     * 生成完整的oss url路径
+     */
+    public function genOssUrl($path)
+    {
+        return 'https://' . config('filesystems.disks.oss.cdnDomain') . '/' . ltrim($path, '/');
+    }
+
 
 
 }

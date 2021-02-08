@@ -295,13 +295,13 @@ class OrderController extends ApiController
             $localPath = $this->fileService->getOssFile($order->img);
 
             $localTmpFile = $this->drawLogic->threePartsFiveEyes($localPath, $order->facialfeatures_data);
-            $this->drawLogic->saveDraw($localTmpFile, $order->img, '-three-parts-five-eyes');
+            $this->drawLogic->saveDraw($localTmpFile, $this->drawLogic->threePartsFiveEyesSuffix($order->img));
 
             $localTmpFile = $this->drawLogic->faceStructure($localPath, $order->facialfeatures_data);
-            $this->drawLogic->saveDraw($localTmpFile, $order->img, '-face-structure');
+            $this->drawLogic->saveDraw($localTmpFile, $this->drawLogic->faceStructureSuffix($order->img));
 
             $localTmpFile = $this->drawLogic->fiveSense($localPath, $order->facialfeatures_data);
-            $this->drawLogic->saveDraw($localTmpFile, $order->img, '-five-sense');
+            $this->drawLogic->saveDraw($localTmpFile, $this->drawLogic->fiveSenseSuffix($order->img));
 
             unlink($localPath);
 

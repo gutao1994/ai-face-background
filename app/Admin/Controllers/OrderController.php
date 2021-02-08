@@ -9,9 +9,16 @@ use Encore\Admin\Show;
 use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Grid\Filter;
 use Encore\Admin\Show\Tools;
+use App\Common\HandyClass;
 
+/**
+ * @property \App\Services\FileService $fileService
+ * @property \App\Logics\DrawLogic $drawLogic
+ */
 class OrderController extends AdminController
 {
+
+    use HandyClass;
 
     protected $title = '订单管理';
 
@@ -61,7 +68,8 @@ class OrderController extends AdminController
 
     protected function detail($id)
     {
-        $show = new Show(Order::query()->findOrFail($id));
+        $order = Order::query()->findOrFail($id);
+        $show = new Show($order);
 
         $show->field('id', 'Id');
         $show->field('no', '订单号');
@@ -70,6 +78,23 @@ class OrderController extends AdminController
         $show->field('amount', '金额')->money();
         $show->field('status', '订单状态')->using($this->status);
         $show->field('img', '照片')->image();
+
+        if ($order->img && $order->status == 60) {
+            $that = $this;
+
+            $show->field('img-three-parts-five-eyes', '三庭五眼照片')->as(function () use ($that) {
+                return $that->fileService->genOssUrl($that->drawLogic->threePartsFiveEyesSuffix($this->img));
+            })->image();
+
+            $show->field('img-face-structure', '脸部结构照片')->as(function () use ($that) {
+                return $that->fileService->genOssUrl($that->drawLogic->faceStructureSuffix($this->img));
+            })->image();
+
+            $show->field('img-five-sense', '五官照片')->as(function () use ($that) {
+                return $that->fileService->genOssUrl($that->drawLogic->fiveSenseSuffix($this->img));
+            })->image();
+        }
+
         $show->field('api_error_count', 'API调用错误次数');
         $show->field('face_result', '面相分析结果');
         $show->field('created_at', '创建时间');

@@ -294,11 +294,45 @@ class DrawLogic
     /**
      * 保存图片至oss
      */
-    public function saveDraw($localTmpFile, $oriImg, $subFix)
+    public function saveDraw($localTmpFile, $target)
     {
-        $ossPath = preg_replace('/(\.(jpg|jpeg|png|bmp|webp))$/i', $subFix . '$1', $oriImg);
-        Storage::put($ossPath, file_get_contents($localTmpFile));
+        Storage::put($target, file_get_contents($localTmpFile));
         unlink($localTmpFile);
+    }
+
+    /**
+     * 三庭五眼对应的后缀
+     */
+    public function threePartsFiveEyesSuffix($oriImg)
+    {
+        $suffix = '-three-parts-five-eyes';
+        return $this->genOriSuffix($oriImg, $suffix);
+    }
+
+    /**
+     * 脸部结构对应的后缀
+     */
+    public function faceStructureSuffix($oriImg)
+    {
+        $suffix = '-face-structure';
+        return $this->genOriSuffix($oriImg, $suffix);
+    }
+
+    /**
+     * 五官对应的后缀
+     */
+    public function fiveSenseSuffix($oriImg)
+    {
+        $suffix = '-five-sense';
+        return $this->genOriSuffix($oriImg, $suffix);
+    }
+
+    /**
+     * 原图后缀拼接
+     */
+    public function genOriSuffix($oriImg, $suffix)
+    {
+        return preg_replace('/(\.(jpg|jpeg|png|bmp|webp))$/i', $suffix . '$1', $oriImg);
     }
 
 
