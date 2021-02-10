@@ -37,7 +37,9 @@ class OrderController extends AdminController
         $grid = new Grid(new Order());
 
         $grid->column('id', 'Id')->sortable();
-        $grid->column('no', '订单号');
+        $grid->column('no', '订单号')->display(function ($val) {
+            return "<a href='/admin/order/{$this->id}'>{$val}</a>";
+        });
         $grid->column('user.nickname', '订单用户');
         $grid->column('shareUser.nickname', '分享者用户');
         $grid->column('amount', '金额')->money();
