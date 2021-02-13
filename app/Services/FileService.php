@@ -19,7 +19,15 @@ class FileService
      */
     public function genFileName(UploadedFile $file)
     {
-        return $this->orderService->genOrderNum() . '.' . $file->clientExtension();
+        $ext = $file->clientExtension();
+
+        if (empty($ext))
+            $ext = $file->guessExtension();
+
+        if (empty($ext))
+            $ext = 'jpg';
+
+        return $this->orderService->genOrderNum() . '.' . $ext;
     }
 
     /**
