@@ -110,6 +110,9 @@ class FaceLogic
         }
     }
 
+    /**
+     * 男性 0-10
+     */
     protected function male10()
     {
         if ($this->faceupResult == 'faceup_long') { //上庭偏长
@@ -131,67 +134,113 @@ class FaceLogic
             $this->result = '你是一个心思细腻的孩子，做事情通常可以抓住要领，并且善于处理麻烦的事情。所以在学习上，你往往很快就能抓住重点，学习的效率会比其他同学高。你也是一个警觉性、观察力比较强的人，在以后的工作中会比较有谋略，大家都喜欢征求你的想法和意见。';
             $this->result .= '在以后的感情上，你也会比较受女生的欢迎，但是也容易产生一些不必要的感情纠葛，所以家长应该从小培养孩子正确的感情观。';
         } else {
-            $this->result = '';
+            $this->result = '你是一个有福气的孩子，一生都不会有大灾大难，身体也会非常健康，能够顺顺利利地成长。在学习上，你的成绩会比较稳定，父母在你的学习上也可以少操心，是属于能让家长放心的类型。在未来的事业上，会较为地平凡，不会有太大的波动，';
+            $this->result .= '因此在生活上也会比较稳定，不会有太大的波澜起伏。如果想要在事业上做出一番成就，就要做到敢想敢做，有自己独特的想法，而不是人言亦言，跟着别人走，所以家长在孩子小的时候，就要注重培养孩子独立思考的能力。';
         }
 
         return $this->result;
     }
 
+    /**
+     * 女性 0-10
+     */
     protected function female10()
     {
         return $this->result;
     }
 
+    /**
+     * 男性 11-19
+     */
     protected function male19()
     {
         return $this->result;
     }
 
+    /**
+     * 女性 11-19
+     */
     protected function female19()
     {
         return $this->result;
     }
 
+    /**
+     * 男性 20-26
+     */
     protected function male26()
     {
         return $this->result;
     }
 
+    /**
+     * 女性 20-26
+     */
     protected function female26()
     {
         return $this->result;
     }
 
+    /**
+     * 男性 27-35
+     */
     protected function male35()
     {
         return $this->result;
     }
 
+    /**
+     * 女性 27-35
+     */
     protected function female35()
     {
-        if ($this->beauty >= 70) {
-            $this->result .= '你带有多子多福之相，在后代生养问题上，你是可以少操心的，孩子也会聪明，健康，乖顺，懂事，成长顺利，学业也不错。';
-            $this->result .= '同时，你自身也是带有富贵之相的，以后的人生也会较为地顺风顺水，会有一个安逸且快乐的人生。';
+        if ($this->beauty >= 70) { //颜值高
+            $this->result = '你的面相贵气逼人，属于雍容富贵之相，并且天生就带有旺夫运。你的财运会特别好，也愿意用自己的财力帮助他人，因此平时人缘也特别好。性格上，你非常地善解人意，别人和你相处的时候，会感觉轻松自在。';
+            $this->result .= '你以后的人生也会较为地顺风顺水，身体上也会很少生病，会有一个安逸、幸福且快乐的人生。而且你带有多子多福之相，在后代生养问题上，你是可以少操心的，孩子也会聪明，健康，乖顺，懂事，成长顺利，学业也不错。';
+        } elseif (in_array($this->eyebrowType, ['raise_eyebrows', 'round_eyebrows', 'arch_eyebrows'])) { //上挑眉 拱形眉 柳叶眉
+            $this->result = '你是个脾气好、性格温和、看重感情、温柔贤惠、善良体贴的人。你的面相自带福气，自身财运好，会赚钱、会花钱，能够嫁给一个实力强劲，并且对自己好的男人。结婚以后家庭幸福美满，日子会过得很幸福，有人疼有人爱，';
+            $this->result .= '是属于好命的女人。你的人缘也比较好，在平时生活中，你为人大度，待人诚恳，不爱斤斤计较，与人交往具有包容心，会给人一种如沐春风的感觉。';
+        } elseif ($this->faceupResult == 'faceup_long' || $this->noseType == 'thick_nose' || $this->nasolabialFold == 1 || $this->faceType == 'square_face') { //上庭偏长 宽鼻 有法令纹 方形脸
+            $this->result = '你是一个有智慧、有头脑、有才华的女人。你为人处事大方得体，做事认真负责，聪明能干，学习能力强，既有实力又有能力。你擅长与人沟通交流，通常人际关系不错，身边贵人也多，财运也较好。';
+            $this->result .= '你的事业心比较强，无论是自己创业还是打工上班，都是很有成绩和成就的，属于女强人类型。你的性格略微强势，无论是在感情方面还是在职场中，都喜欢占据主导地位，不喜欢被人约束和管制，人生会比较自在与精彩。';
+        } elseif (in_array($this->eyesType, ['round_eyes', 'big_eyes']) || in_array($this->faceType, ['pointed_face', 'oval_face'])) { //圆眼 大眼 瓜子脸 椭圆脸
+            $this->result = '在感情上，你是一个有福相的女人。你会嫁给一个与你真心诚意相爱的男人，你的婚姻会很幸福美满。你是一个会体贴爱人、能为爱人着想、会考虑爱人感受的人。而且你也会尊重爱人在事业上的抉择，并且在背后默默地支持，';
+            $this->result .= '能娶到像你这样的女人，是你爱人的福气。同时，你也很会处理婆媳之间的关系，会孝顺公婆，所以你与公婆的关系也会很和谐，公婆也比较能容忍和尊重你的个性。不会像有些人那样，和公婆的关系搞得很紧张。';
+        } else {
+            $this->result = '你是一个注重家庭的女人。你温婉贤惠，善解人意，为人亲切，待人体贴入微，很会照顾人，充满女人味，是一个典型的贤妻良母类型的女人，颇受身边人的喜爱。你的家庭生活会有些许地平淡，但在平淡的生活中又时常带有小幸福，';
+            $this->result .= '一个平平淡淡且幸福的家庭，才是最让人羡慕的。在后代问题上，你比较看重孩子的教育，也愿意为了教育好孩子而付出更多的心力，但是不会把自己的意愿强加给孩子，你的孩子也会是一个有幸福感的人。';
         }
 
         return $this->result;
     }
 
+    /**
+     * 男性 35-50
+     */
     protected function male50()
     {
         return $this->result;
     }
 
+    /**
+     * 女性 35-50
+     */
     protected function female50()
     {
         return $this->result;
     }
 
+    /**
+     * 男性 >50
+     */
     protected function maleInf()
     {
         return $this->result;
     }
 
+    /**
+     * 女性 >50
+     */
     protected function femaleInf()
     {
         return $this->result;
