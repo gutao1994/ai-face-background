@@ -170,6 +170,23 @@ class FaceLogic
      */
     protected function male26()
     {
+        if ($this->faceupResult == 'faceup_long') { //上庭偏长
+            $this->result = '从你的面相上来看，你中年的运势会很好，事业上会比较成功。你很明确自己的目标，能把握自己未来的方向，知道自己想要什么。你也特别懂得如何去跟别人打交道，人际关系好，会遇到贵人相助。';
+            $this->result .= '在个人感情上，你的情感道路会比较一帆风顺，会与你相爱的人有一个幸福的家庭。你的妻子会是你的贤内助，在你打拼事业的路上，默默地支持你，做你背后的女人。';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } else {
+            $this->result = '';
+            $this->result .= '';
+        }
+
         return $this->result;
     }
 
