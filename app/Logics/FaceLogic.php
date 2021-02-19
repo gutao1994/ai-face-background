@@ -186,6 +186,23 @@ class FaceLogic
      */
     protected function male35()
     {
+        if () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } else {
+            $this->result = '';
+            $this->result .= '';
+        }
+
         return $this->result;
     }
 
