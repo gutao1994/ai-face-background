@@ -205,14 +205,14 @@ class FaceLogic
             $this->result = '你是个性格沉稳，略微带点强势的女生。在工作事业上，你有自己的想法，有自己的目标。你的办事能力较强，做事总是有条不紊，对于工作勇于负责，肯吃苦耐劳，未来在事业上能够做出一番成就，很多男性都比不过你。';
             $this->result .= '在婚姻上，建议你找一个顾家、有家庭责任感、老实本分的男人结婚，这样你们在性格上就能够做到相互弥补，你们的家庭生活就会过得和和美美，小日子也会越来越滋润。';
         } elseif ($this->faceupResult == 'faceup_long' || in_array($this->eyebrowType, ['straight_eyebrows', 'arch_eyebrows']) || $this->eyesType == 'big_eyes') { //上庭偏长 一字眉 柳叶眉 大眼
-            $this->result = '有贵气';
-            $this->result .= 'https://www.fuyuandian.com/article/18480.html https://www.fuyuandian.com/article/32828.html https://www.lnka.cn/article/topic31050.html https://www.lnka.cn/article/topic26484.html';
-        } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness') { //微笑唇 高兴的情绪
-            $this->result = '性格乐观，有福气，会旺夫';
-            $this->result .= 'https://www.fuyuandian.com/article/32485.html https://www.fuyuandian.com/article/14648.html https://www.fuyuandian.com/article/32593.html https://www.fuyuandian.com/article/33190.html';
+            $this->result = '你是一个心灵手巧、聪慧知礼、有教养有担当、富有爱心和正义感的女生。你的面相看起来比较有贵气，是属于富贵好命的面相。在感情上，你年轻时可能会遇人不淑，感情经历可能会比较坎坷不顺，但是最终能够与你步入婚姻殿堂的，';
+            $this->result .= '必是一个值得你托付终身的人。你们会有一个充满幸福与爱的小家庭，生活上不会有太多的忧愁烦恼，基本不会为钱财发愁。除此之外，你会有几个关系一直都很好的闺蜜，在以后的人生中能够相互陪伴、相互扶持。';
+        } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || in_array($this->faceType, ['round_face', 'oval_face'])) { //微笑唇 高兴的情绪 圆形脸 椭圆脸
+            $this->result = '你是一个性格开朗、活泼、自信、乐观的女生。你的面相比较有福气，从一生总体上来看，你的运势会比较不错，身体也会比较健康、少生病，晚年会过得比较安逸，且常有儿孙陪伴。在感情上，你的情感之路不会很坎坷，';
+            $this->result .= '能够比较顺利地与相爱之人步入婚姻殿堂，婚后夫妻之间能够互相包容、相亲相爱。你还是一个有旺夫运的女生，能给丈夫的事业带来好运，使其事业顺利、财运亨通。';
         } else {
-            $this->result = '你是一个重感情的人，不管是闺蜜情还是爱情，都是如此。性格上，你是一个';
-            $this->result .= '';
+            $this->result = '你是一个重感情的女生，不管是闺蜜情还是爱情，都是如此。对于闺蜜好友，你总是能够真心以待，即使她们有这样或那样的缺点，你对她们都能够非常包容与信任。对待爱情，你是那种一旦陷入便很难自拔的人，你会很珍惜你的爱人，';
+            $this->result .= '不会轻易地说分手，事事都会替对方考虑，会非常用心地经营你的爱情。性格上，你是一个有些许内向、慢热的人，你不会很快地与陌生人打成一片，但是一旦与人熟悉之后，便会放开自己的心扉，表达真实的自我。';
         }
 
         return $this->result;
