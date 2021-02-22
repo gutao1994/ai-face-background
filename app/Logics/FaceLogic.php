@@ -179,12 +179,15 @@ class FaceLogic
         } elseif ($this->mouthType == 'thick_lip') { //厚唇
             $this->result = '你是一个性格较为随和的人，你为人忠厚老实并且待人诚恳，做事情能够一步一个脚印，让人感觉非常踏实。你的个人运势也比较不错，到中年或者中晚年的时候，能够厚积薄发，在事业上取得一定的成绩。';
             $this->result .= '更令人羡慕的是，你还是个旺妻命。在你结婚之后，你会给你的妻子带来很多帮助和好运。嫁给你这样的男人，你的妻子在以后的日子里，会过得富裕、舒心、且幸福。';
-        } elseif () {
-            $this->result = '';
-            $this->result .= '';
+        } elseif ($this->eyesType == 'big_eyes') { //大眼
+            $this->result = '你是一个做事能够果断、专注，办事效率高，并且不会轻言放弃的人，无论什么事情，只要去做，就不会轻易地放弃，会坚持到底。在工作上是如此，在感情上更是如此。在感情上，你是一个对待感情认真且非常执着的人，';
+            $this->result .= '与人交往不会轻易地说分手；婚后，对婚姻的忠诚度很高，你要的是天长地久，而不仅仅只是曾经拥有。性格上，你是一个比较外向、开朗、随和、待人热情的人，因此你的人缘也比较不错，是一个比较受欢迎的人。';
+        } elseif ($this->faceType == 'round_face') { //圆形脸
+            $this->result = '你的面相是一个比较有福气的面相，你的人缘和财运都比较不错。在事业上，你时常会有好的机遇，并且容易得到贵人的帮助。性格上，你是一个乐观爽朗、比较随和、容易与人相处的人，你的脾气很好，不易与人起冲突，因此身边总是有不少朋友。';
+            $this->result .= '你的异性缘也较好，对女生们，你总是能够作为一个暖男，嘘寒问暖，温柔体贴，因此女生们都很愿意与你相处。虽然异性缘好，但你的爱情道路会有点坎坷，如果能做到对爱人一心一意、专心致志，你也能够收获一份幸福的婚姻爱情。';
         } else {
-            $this->result = '';
-            $this->result .= '';
+            $this->result = '你是一个做事稳健、凡事都能够想得比较周到的人。在事业上，你会是一个很好的辅佐之才，你通常都是辅佐别人成功，但是自己却比较难成大业。如果想在事业上有所成就，在辅佐他人的同时，也应该注重建立自己的人际关系。';
+            $this->result .= '经过长久的积累之后，你也会有机会成就一番自己的事业。你的异性缘一般，桃花运不是很旺盛，但是却能够遇到能与自己相爱一生、陪伴一生的爱人，这实在是一件非常幸运且幸福的事。';
         }
 
         return $this->result;
@@ -195,6 +198,23 @@ class FaceLogic
      */
     protected function female26()
     {
+        if ($this->beauty >= 70) { //颜值高
+            $this->result = '你是个魅力十足的女生，你的颜值高，容易让人过目不忘，对异性有很大的吸引力和杀伤力，很多异性会主动接近你，身边从来都不乏追求者。你的感情生活比较丰富，在挑选男朋友时会比较小心谨慎，会考察对方的各种条件。';
+            $this->result .= '一旦与异性交往时，也能够做到专一与一心一意，对于其他异性的邀约，也会合理地拒绝。你的婚姻也会比较幸福，能够和一个爱你、懂得呵护、疼惜你的人结婚，婚姻生活会过得甜甜蜜蜜，令人羡慕。';
+        } elseif ($this->nasolabialFold == 1 || $this->faceType == 'square_face' || $this->eyebrowType == 'bushy_eyebrows' || $this->jawType == 'square_jaw') { //有法令纹 方形脸 粗眉 方下巴
+            $this->result = '你是个性格沉稳，略微带点强势的女生。在工作事业上，你有自己的想法，有自己的目标。你的办事能力较强，做事总是有条不紊，对于工作勇于负责，肯吃苦耐劳，未来在事业上能够做出一番成就，很多男性都比不过你。';
+            $this->result .= '在婚姻上，建议你找一个顾家、有家庭责任感、老实本分的男人结婚，这样你们在性格上就能够做到相互弥补，你们的家庭生活就会过得和和美美，小日子也会越来越滋润。';
+        } elseif ($this->faceupResult == 'faceup_long' || in_array($this->eyebrowType, ['straight_eyebrows', 'arch_eyebrows']) || $this->eyesType == 'big_eyes') { //上庭偏长 一字眉 柳叶眉 大眼
+            $this->result = '有贵气';
+            $this->result .= 'https://www.fuyuandian.com/article/18480.html https://www.fuyuandian.com/article/32828.html https://www.lnka.cn/article/topic31050.html https://www.lnka.cn/article/topic26484.html';
+        } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness') { //微笑唇 高兴的情绪
+            $this->result = '性格乐观，有福气，会旺夫';
+            $this->result .= 'https://www.fuyuandian.com/article/32485.html https://www.fuyuandian.com/article/14648.html https://www.fuyuandian.com/article/32593.html https://www.fuyuandian.com/article/33190.html';
+        } else {
+            $this->result = '你是一个重感情的人，不管是闺蜜情还是爱情，都是如此。性格上，你是一个';
+            $this->result .= '';
+        }
+
         return $this->result;
     }
 
