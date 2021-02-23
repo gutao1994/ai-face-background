@@ -101,9 +101,9 @@ class FaceLogic
             return $this->sex == 'Male' ? $this->male19() : $this->female19();
         } elseif ($this->age <= 26) { //20-26
             return $this->sex == 'Male' ? $this->male26() : $this->female26();
-        }elseif ($this->age <= 35) { //27-35
+        } elseif ($this->age <= 35) { //27-35
             return $this->sex == 'Male' ? $this->male35() : $this->female35();
-        } elseif ($this->age <= 50) { //35-50
+        } elseif ($this->age <= 50) { //36-50
             return $this->sex == 'Male' ? $this->male50() : $this->female50();
         } else { //>50
             return $this->sex == 'Male' ? $this->maleInf() : $this->femaleInf();
@@ -272,13 +272,63 @@ class FaceLogic
     }
 
     /**
-     * 男性 35-50
+     * 男性 36-50
      */
     protected function male50()
     {
         if ($this->facedownResult == 'facedown_long') { //下庭偏长
             $this->result = '你是一个性格随和、宽厚的人。在与人相处时，你总是能够做到真诚以待，因此你的人际关系也比较好。在对待自己的事业上，你是一个努力奋斗、积极向上、踏实肯干的人，因此你的工作伙伴都很乐意与你一起共事。';
             $this->result .= '你中晚年的运势会很好，是属于晚年大发的类型，届时将会时来运转，迎来自己事业上的巅峰。你的家庭生活会和和美美，你与你爱人的关系也是较为和睦，不会在感情上有太多坎坷磨难。';
+        } elseif ($this->jawType == 'flat_jaw') { //圆下巴
+            $this->result = '你的面相看起来特别地有福气，是属于比较典型的福气相。你的早年家境较为贫寒，吃过很多苦，但后面经过自己一步步多年地努力打拼，也拥有了一份属于自己的事业，慢慢地积累了不少的财富，生活上会过得比较不错。';
+            $this->result .= '你平时待人都是乐呵呵的，性格也比较好，善于处理自己的情绪，不易与人发生矛盾冲突，有几个关系不错、能够相互帮扶的朋友，在以后的人生中，基本不会再经历太多的风雨。';
+        } elseif ($this->faceType == 'square_face' || $this->jawType == 'square_jaw') { //方形脸 方下巴
+            $this->result = '你是个有韧劲、不怕吃苦、有上进心、做事有毅力有决心的人，只要是自己认定的事情，就会一如既往地坚持下去。同时，你是个刚正不阿、做事情一板一眼、脚踏实地的人，因此总是能给人沉稳、大度、可靠、有力量的感觉。';
+            $this->result .= '你具有很强的责任感，做事情认真负责，生怕自己会出错。而且在家庭方面的责任感更强，对老婆孩子上心、负责，为了家庭的美好生活，会努力地工作赚钱养家，让家庭生活越来越好。';
+        } elseif ($this->beauty >= 70) { //颜值高
+            $this->result = '在你这个年龄段的时候，你的许多同龄人，面容上早已显现出岁月的沧桑，要不成为中年油腻大叔，被人嫌弃；要不过早衰老，颓相尽显。但岁月却没有在你的脸上留下太多的刻痕，对于异性的吸引力，即使是那些年轻的“小鲜肉”，';
+            $this->result .= '也都远远比不上你。岁月带走了你的年少轻狂，悄悄地为你增添了一抹成熟的气息，令人着迷。在以后的日子里，也要继续安安静静地做个岁月静好、安然若素的“美男子”。';
+        } else {
+            $this->result = '你是个为人厚道、诚笃，懂得善待身边人、与人为善的人，因此，你有着相当不错的人缘，在生活和事业上常常能够得到他人的帮助与支持。你经历过非常多的生活上的磨练，造就出了一副坚强的意志和宽阔的胸襟，';
+            $this->result .= '做事情往往能够善始善终，不会轻易摆手、轻言放弃。一旦遇到事业上的挫折时，总能轻松应对，愈挫愈勇。岁月的磨砺，赋予了你足够的智慧与才能，让你在今后的人生中，能够越行越稳，越走越顺。';
+        }
+
+        return $this->result;
+    }
+
+    /**
+     * 女性 36-50
+     */
+    protected function female50()
+    {
+        if ($this->beauty >= 70) { //颜值高
+            $this->result = '岁月匆匆，却依旧带不走你的光彩；时光荏苒，你的容颜依然动人心扉。光阴似箭，时间增长了你的年龄，却沉淀了你的优雅；时间在你脸上刻画了淡淡的细纹，同时也为你带来了成熟的风韵。你是一生都能够美丽且优雅的女人，';
+            $this->result .= '幸福是上天赏赐给你的永远的礼物，荡涤去你身边起落的尘埃，留下不动声色的温柔与从容。你是老天爷的幸运儿，他会让你度过一个幸福快乐的人生，这是其他人很难得到的好运。';
+        } elseif () {
+            $this->result = '';
+            $this->result .= 'https://www.lnka.cn/article/topic30621.html';
+        } elseif ($this->eyePouch == 1 || $this->darkCircle == 1) { //有眼袋 有黑眼圈
+            $this->result = '为家庭全身心投入https://www.fuyuandian.com/article/10692.html';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } else {
+            $this->result = '';
+            $this->result .= '';
+        }
+
+        return $this->result;
+    }
+
+    /**
+     * 男性 >50
+     */
+    protected function maleInf()
+    {
+        if () {
+            $this->result = '';
+            $this->result .= '';
         } elseif () {
             $this->result = '';
             $this->result .= '';
@@ -297,26 +347,27 @@ class FaceLogic
     }
 
     /**
-     * 女性 35-50
-     */
-    protected function female50()
-    {
-        return $this->result;
-    }
-
-    /**
-     * 男性 >50
-     */
-    protected function maleInf()
-    {
-        return $this->result;
-    }
-
-    /**
      * 女性 >50
      */
     protected function femaleInf()
     {
+        if ($this->beauty >= 70) { //颜值高
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } else {
+            $this->result = '';
+            $this->result .= '';
+        }
+
         return $this->result;
     }
 
