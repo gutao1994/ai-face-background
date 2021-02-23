@@ -304,11 +304,11 @@ class FaceLogic
         if ($this->beauty >= 70) { //颜值高
             $this->result = '岁月匆匆，却依旧带不走你的光彩；时光荏苒，你的容颜依然动人心扉。光阴似箭，时间增长了你的年龄，却沉淀了你的优雅；时间在你脸上刻画了淡淡的细纹，同时也为你带来了成熟的风韵。你是一生都能够美丽且优雅的女人，';
             $this->result .= '幸福是上天赏赐给你的永远的礼物，荡涤去你身边起落的尘埃，留下不动声色的温柔与从容。你是老天爷的幸运儿，他会让你度过一个幸福快乐的人生，这是其他人很难得到的好运。';
+        } elseif (in_array($this->eyesType, ['big_eyes', 'round_eyes'])) { //大眼 圆眼
+            $this->result = '你是个很能理解和体谅别人、没什么心机、性格豁达且淡然的人。在生活中，你是个很好相处，并且相处起来很舒服的人，身边总是会有很多玩得好的闺蜜朋友';
+            $this->result .= '';
         } elseif () {
             $this->result = '';
-            $this->result .= 'https://www.lnka.cn/article/topic30621.html';
-        } elseif ($this->eyePouch == 1 || $this->darkCircle == 1) { //有眼袋 有黑眼圈
-            $this->result = '为家庭全身心投入https://www.fuyuandian.com/article/10692.html';
             $this->result .= '';
         } elseif () {
             $this->result = '';
