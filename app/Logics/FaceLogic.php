@@ -124,7 +124,7 @@ class FaceLogic
             } else {
                 $this->result .= '有些时候孩子的意志力会比较不坚定，做事容易优柔寡断，在处理与人交往的事情上会有所欠缺，但却是一个为人正直、能够快速判断是非的人。所以家长平时应该注重提升孩子的意志力，让孩子在将来的人生中不为一些不必要的事情所困扰。';
             }
-        } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness') { //微笑唇 或者 高兴的情绪
+        } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || $this->smile) { //微笑唇 高兴的情绪 有笑容
             $this->result = '你是一个性格开朗、乐观、自信、不爱生气的人，你所在的家庭也是一个氛围良好和睦的家庭。你往往是大家的开心果，身边的人都会很喜欢你。你长大之后，对生活、工作和感情都能够长时间保持激情、热情，总是以积极乐观的心态去面对生活中的人或事。';
             $this->result .= '烦恼、忧愁对你的影响都不大，因为你总是能够自主地调节这类不良的情绪，让积极乐观占据主动，不让这些不良的情绪影响生活和工作，所以你的一生都会生活地很轻松、幸福、快乐。';
         } elseif ($this->eyeinResult == 'eyein_long') { //内眼角间距偏宽
@@ -207,7 +207,7 @@ class FaceLogic
         } elseif ($this->faceupResult == 'faceup_long' || in_array($this->eyebrowType, ['straight_eyebrows', 'arch_eyebrows']) || $this->eyesType == 'big_eyes') { //上庭偏长 一字眉 柳叶眉 大眼
             $this->result = '你是一个心灵手巧、聪慧知礼、有教养有担当、富有爱心和正义感的女生。你的面相看起来比较有贵气，是属于富贵好命的面相。在感情上，你年轻时可能会遇人不淑，感情经历可能会比较坎坷不顺，但是最终能够与你步入婚姻殿堂的，';
             $this->result .= '必是一个值得你托付终身的人。你们会有一个充满幸福与爱的小家庭，生活上不会有太多的忧愁烦恼，基本不会为钱财发愁。除此之外，你会有几个关系一直都很好的闺蜜，在以后的人生中能够相互陪伴、相互扶持。';
-        } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || in_array($this->faceType, ['round_face', 'oval_face'])) { //微笑唇 高兴的情绪 圆形脸 椭圆脸
+        } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || $this->smile || in_array($this->faceType, ['round_face', 'oval_face'])) { //微笑唇 高兴的情绪 有笑容 圆形脸 椭圆脸
             $this->result = '你是一个性格开朗、活泼、自信、乐观的女生。你的面相比较有福气，从一生总体上来看，你的运势会比较不错，身体也会比较健康、少生病，晚年会过得比较安逸，且常有儿孙陪伴。在感情上，你的情感之路不会很坎坷，';
             $this->result .= '能够比较顺利地与相爱之人步入婚姻殿堂，婚后夫妻之间能够互相包容、相亲相爱。你还是一个有旺夫运的女生，能给丈夫的事业带来好运，使其事业顺利、财运亨通。';
         } else {
@@ -310,12 +310,12 @@ class FaceLogic
         } elseif (in_array($this->faceType, ['pointed_face', 'oval_face'])) { //瓜子脸 椭圆脸
             $this->result = '你的脸型较为细长，整个脸的比例比较平均，是很有福气的面相。你在生活中的运气较好，有困难和烦恼的时候，总是能够得到很多人的帮助。对于丈夫，你是他家里的贤内助，事业上的好帮手，能够给丈夫带来好运，';
             $this->result .= '让他在事业上较为顺心；对于后代，你懂得给与耐心的培养、合适的教导，使其在为人处世上能够得体大方、稳重从容。你的晚年能够享受到子女带来的福分，会有一个老有所依、老有所乐的幸福晚年。';
-        } elseif () {
-            $this->result = '';
-            $this->result .= '';
+        } elseif ($this->faceupResult == 'faceup_long' || $this->facedownResult == 'facedown_long' || $this->faceType == 'square_face') { //上庭偏长 下庭偏长 方形脸
+            $this->result = '你是个性格沉稳、意志坚定、目光长远、善于谋划的女性，你有着很强的分析能力和判断能力，比较善于处理各种复杂的人际关系，人缘也比较旺。你有着非常出色的工作才能，善于打理事业，做事情执行力强，在事业上会有着不错的运势，';
+            $this->result .= '财运也非常不错。你在家庭上付出的精力相对会较少，但这一点也不影响你的家庭和谐，因为你懂得如何有效地经营自己的夫妻关系、亲子关系，因此能够做到家庭事业双丰收。';
         } else {
-            $this->result = '你是个很懂得居家过日子的人，对于家庭来说，你是一个贤惠的妻子，也是一个合格的母亲。你心思细腻，做事仔细，考虑周到，家里总是被你打理地井井有条、干干净净，丈夫能够很放心地把家庭里的事情交给你，从而专心去做自己的事业。';
-            $this->result .= '你还是个说话懂得分寸且很有智慧的女性，你知道如何与家中长辈 与子女的感情非常深厚 要懂得爱自己';
+            $this->result = '你是个很懂得居家过日子的人，对于家庭来说，你是一个贤惠的妻子，也是一个合格的母亲。你心思细腻，做事仔细，考虑事情周到，家里总是被你打理地井井有条、干干净净，因此丈夫能够很放心地把家庭里的事情交给你，';
+            $this->result .= '从而专心去做自己的事业。你还是个说话懂得分寸且很有智慧的女性，你知道如何与家中长辈和谐相处，与子女的感情也非常深厚。你是个肯为了家庭全身心付出的人，但是爱家庭的同时，也不要忘了好好地爱自己。';
         }
 
         return $this->result;
@@ -332,14 +332,14 @@ class FaceLogic
         } elseif () {
             $this->result = '';
             $this->result .= '';
+        } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || $this->smile) { //微笑唇 高兴的情绪 有笑容
+            $this->result = '你是一个心胸开阔、乐观开朗、心态非常好的人，虽然年龄一年大过一年，但你却从不会为此感到忧虑，因为你深知一个良好的心态的重要性。正是因为如此，你始终能够保持一个健康、状态良好的身心，';
+            $this->result .= '让你看起来比同一年龄段的人更加年轻、更加精神、更加有气色。正所谓，年龄虽不少，青春志不小；人老心不老，开心便年少；心态永年轻，青春满怀抱。在以后的日子里，也要继续保持住良好的心态，过一个快乐的晚年。';
         } elseif () {
-            $this->result = '';
-            $this->result .= '';
-        } elseif () {
-            $this->result = '';
+            $this->result = '年纪大了也闲不下来的人';
             $this->result .= '';
         } else {
-            $this->result = '';
+            $this->result = '岁月如飞刀，刀刀催人老';
             $this->result .= '';
         }
 
@@ -352,12 +352,12 @@ class FaceLogic
     protected function femaleInf()
     {
         if ($this->beauty >= 70) { //颜值高
-            $this->result = '';
-            $this->result .= '';
+            $this->result = '惟草木之零落兮，恐美人之迟暮。而你却是美人不迟暮，暮年也芳华。你是那么的与众不同，优雅、端庄、美丽这些词语用来形容你的美，永远都不会过时，你身上的那种美，在历经岁月的沉淀、时光的打磨后，更加地醇厚迷人。';
+            $this->result .= '上天对你是那么地偏爱，你的同龄人在你这个年龄段的时候，大多数早已芳华流逝，不余遗香，而你却能够既留下貌美的容颜，又沉淀出岁月的优雅。你会有一个美丽且好运的晚年，这是上天赏赐给你的最好的礼物。';
         } elseif () {
             $this->result = '';
             $this->result .= '';
-        } elseif () {
+        } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || $this->smile) { //微笑唇 高兴的情绪 有笑容
             $this->result = '';
             $this->result .= '';
         } elseif () {
