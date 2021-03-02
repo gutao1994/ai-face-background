@@ -17,6 +17,8 @@ class FaceLogic
 
     protected $beauty;
 
+    protected $skinStatus;
+
     protected $faceupResult;
 
     protected $facemidResult;
@@ -73,6 +75,8 @@ class FaceLogic
         $this->emotion = array_search(max($detect['faces'][0]['attributes']['emotion']), $detect['faces'][0]['attributes']['emotion']); //情绪识别结果
         $this->smile = $detect['faces'][0]['attributes']['smile']['value'] >= $detect['faces'][0]['attributes']['smile']['threshold']; //笑容分析结果
         $this->beauty = max($detect['faces'][0]['attributes']['beauty']['male_score'], $detect['faces'][0]['attributes']['beauty']['female_score']); //颜值识别结果
+        $this->skinStatus = $detect['faces'][0]['attributes']['skinstatus']; //面部特征识别结果
+
         $this->faceupResult = $face['result']['three_parts']['one_part']['faceup_result']; //上庭判断结果
         $this->facemidResult = $face['result']['three_parts']['two_part']['facemid_result']; //中庭判断结果
         $this->facedownResult = $face['result']['three_parts']['three_part']['facedown_result']; //下庭判断结果
@@ -86,6 +90,7 @@ class FaceLogic
         $this->eyesType = $face['result']['eyes']['eyes_type']; //眼型判断结果
         $this->noseType = $face['result']['nose']['nose_type']; //鼻翼判断结果
         $this->mouthType = $face['result']['mouth']['mouth_type']; //唇型判断结果
+
         $this->eyePouch = $skin['result']['eye_pouch']['value']; //眼袋检测结果
         $this->darkCircle = $skin['result']['dark_circle']['value']; //黑眼圈检测结果
         $this->foreheadWrinkle = $skin['result']['forehead_wrinkle']['value']; //抬头纹检测结果
@@ -125,7 +130,7 @@ class FaceLogic
                 $this->result .= '有些时候孩子的意志力会比较不坚定，做事容易优柔寡断，在处理与人交往的事情上会有所欠缺，但却是一个为人正直、能够快速判断是非的人。所以家长平时应该注重提升孩子的意志力，让孩子在将来的人生中不为一些不必要的事情所困扰。';
             }
         } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || $this->smile) { //微笑唇 高兴的情绪 有笑容
-            $this->result = '你是一个性格开朗、乐观、自信、不爱生气的人，你所在的家庭也是一个氛围良好和睦的家庭。你往往是大家的开心果，身边的人都会很喜欢你。你长大之后，对生活、工作和感情都能够长时间保持激情、热情，总是以积极乐观的心态去面对生活中的人或事。';
+            $this->result = '你是一个性格开朗、乐观、自信、不爱生气的孩子，你所在的家庭也是一个氛围良好和睦的家庭。你往往是大家的开心果，身边的人都会很喜欢你。你长大之后，对生活、工作和感情都能够长时间保持激情、热情，总是以积极乐观的心态去面对生活中的人或事。';
             $this->result .= '烦恼、忧愁对你的影响都不大，因为你总是能够自主地调节这类不良的情绪，让积极乐观占据主动，不让这些不良的情绪影响生活和工作，所以你的一生都会生活地很轻松、幸福、快乐。';
         } elseif ($this->eyeinResult == 'eyein_long') { //内眼角间距偏宽
             $this->result = '你是一个很聪明，并且记忆力特别好的小孩，任何事物只要见过一眼便会深深记住。所以在学习上，你会比其他的小孩更加轻松，往往也会取得更好的成绩。在以后的为人上，你会是一个温和敦厚、朴实善良的人，别人和你相处的时候，会很放松自在。';
@@ -326,21 +331,21 @@ class FaceLogic
      */
     protected function maleInf()
     {
-        if () {
-            $this->result = '';
-            $this->result .= '';
-        } elseif () {
-            $this->result = '';
-            $this->result .= '';
+        if (in_array($this->eyebrowType, ['straight_eyebrows', 'round_eyebrows']) || $this->eyesType == 'big_eyes' || $this->skinStatus['health'] >= 60) { //一字眉 拱形眉 大眼 面部特征健康
+            $this->result = '从你的面相上来看，你晚年的运势总体来说会较为不错，而且你的面相也是一副长寿相。你的气场很好，不输于一般的年轻人。身体也比较健康、硬朗，基本上会无病无灾，不会碰到什么大病或者灾难。你的性格开朗，心态也很好，';
+            $this->result .= '能够一直保持年轻态，对未来乐观，再大的事情也能看开，不放在心里，没有心病。你的子孙后代大都是非常孝顺的，懂得尊老爱老，所以能够享受到天伦之乐，家庭氛围也会非常和乐融融。';
+        } elseif ($this->eyebrowType == 'bushy_eyebrows' || $this->noseType == 'thick_nose' || $this->jawType == 'flat_jaw') { //粗眉 宽鼻 圆下巴
+            $this->result = '你的面相是个非常有福气的面相，老年运势较好，不会为钱财所困；身体较为健康，可能会偶有不适，却不会有大的疾病；夫妻之间长年恩爱相伴，白头偕老；子女有出息且孝顺，能够享受到含饴弄孙的乐趣，会有一个安逸、幸福且清闲的晚年。';
+            $this->result .= '在性格上，你的性情温和，胸怀坦荡，具有包容心，有体谅人的雅量，因此你的人缘会比较不错，也有几个关系很好、年头很长的老伙伴，而且年轻人也愿意和你打交道，因此你的晚年生活会丰富多彩，绝不会感到孤独。';
         } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || $this->smile) { //微笑唇 高兴的情绪 有笑容
             $this->result = '你是一个心胸开阔、乐观开朗、心态非常好的人，虽然年龄一年大过一年，但你却从不会为此感到忧虑，因为你深知一个良好的心态的重要性。正是因为如此，你始终能够保持一个健康、状态良好的身心，';
             $this->result .= '让你看起来比同一年龄段的人更加年轻、更加精神、更加有气色。正所谓，年龄虽不少，青春志不小；人老心不老，开心便年少；心态永年轻，青春满怀抱。在以后的日子里，也要继续保持住良好的心态，过一个快乐的晚年。';
-        } elseif () {
-            $this->result = '年纪大了也闲不下来的人';
-            $this->result .= '';
+        } elseif ($this->mouthType == 'thick_lip' || $this->faceupResult == 'faceup_long' || $this->jawType == 'sharp_jaw') { //厚唇 上庭偏长 尖下巴
+            $this->result = '你是一个即使年纪大了，也依旧闲不下来的人。和同年龄段的人相比，你有着更加旺盛的精力。你喜欢追求新鲜事物，平时看到好玩的事情就会去尝试做一做，没事的时候经常会和一群志同道合的老伙伴相聚在一起谈天说地，';
+            $this->result .= '畅谈以前的生活和最近的状况。你绝对不会去过那种墨守陈规、死气成成的日子，你会让自己以后的每一天都过得非常充实。正是因为你是这样的一个人，所以你的晚年生活不会很无聊、寂寞。';
         } else {
-            $this->result = '岁月如飞刀，刀刀催人老';
-            $this->result .= '';
+            $this->result = '岁月如飞刀，刀刀催人老。随着时光地流逝，你的年龄也在一天天地增长，但是岁月却让你拥有了一份非常丰富的人生阅历，这让你的身上时常透露出一股淡定、从容的气息。与年轻人急急燥燥的行事风格不同，你遇事稳重，不慌不忙，';
+            $this->result .= '不急不燥，能够井井有条地把事情处理好，这是长久的岁月磨砺所带来的成果。对于后辈，你有着一颗慈爱、宽厚、懂得包容的心，你愿意把自己的人生经历分享给他们，从而让他们在今后的人生中能够少走弯路。';
         }
 
         return $this->result;
