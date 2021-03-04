@@ -102,7 +102,9 @@ class FaceLogic
 
         if ($this->age <= 10) { //0-10
             return $this->sex == 'Male' ? $this->male10() : $this->female10();
-        } elseif ($this->age <= 19) { //11-19
+        } elseif ($this->age <= 15) { //11-15
+            return $this->sex == 'Male' ? $this->male15() : $this->female15();
+        } elseif ($this->age <= 19) { //16-19
             return $this->sex == 'Male' ? $this->male19() : $this->female19();
         } elseif ($this->age <= 26) { //20-26
             return $this->sex == 'Male' ? $this->male26() : $this->female26();
@@ -151,22 +153,123 @@ class FaceLogic
      */
     protected function female10()
     {
+        if ($this->beauty >= 70) { //颜值高
+            $this->result = '一张可爱白腻的小脸蛋，常常带着俏皮笑容的小嘴巴，以及那双宛若闪亮星星的大眼睛，真是一个人间小精灵，从小就是个美人胚子。你的面相属于福慧双修型，福气会伴随着你的一生。同时你还是个从小就非常聪明的小女孩，你的家长对你期望颇高，';
+            $this->result .= '但是家长要注意，在孩子成长的道路上不要给予太大的压力，家长也不要把孩子当成温室的花朵娇生惯养，要适当地让孩子认识到世间的险恶，让孩子形成正确的人生观与价值观，这样才能在以后的人生中不被别有用心的人所迷惑。';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } else {
+            $this->result = '';
+            $this->result .= '';
+        }
+
         return $this->result;
     }
 
     /**
-     * 男性 11-19
+     * 男性 11-15
+     */
+    protected function male15()
+    {
+        if () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } else {
+            $this->result = '';
+            $this->result .= '';
+        }
+
+        return $this->result;
+    }
+
+    /**
+     * 女性 11-15
+     */
+    protected function female15()
+    {
+        if () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } else {
+            $this->result = '';
+            $this->result .= '';
+        }
+
+        return $this->result;
+    }
+
+    /**
+     * 男性 16-19
      */
     protected function male19()
     {
+        if () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } else {
+            $this->result = '';
+            $this->result .= '';
+        }
+
         return $this->result;
     }
 
     /**
-     * 女性 11-19
+     * 女性 16-19
      */
     protected function female19()
     {
+        if () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } elseif () {
+            $this->result = '';
+            $this->result .= '';
+        } else {
+            $this->result = '';
+            $this->result .= '';
+        }
+
         return $this->result;
     }
 
@@ -336,7 +439,7 @@ class FaceLogic
             $this->result .= '能够一直保持年轻态，对未来乐观，再大的事情也能看开，不放在心里，没有心病。你的子孙后代大都是非常孝顺的，懂得尊老爱老，所以能够享受到天伦之乐，家庭氛围也会非常和乐融融。';
         } elseif ($this->eyebrowType == 'bushy_eyebrows' || $this->noseType == 'thick_nose' || $this->jawType == 'flat_jaw') { //粗眉 宽鼻 圆下巴
             $this->result = '你的面相是个非常有福气的面相，老年运势较好，不会为钱财所困；身体较为健康，可能会偶有不适，却不会有大的疾病；夫妻之间长年恩爱相伴，白头偕老；子女有出息且孝顺，能够享受到含饴弄孙的乐趣，会有一个安逸、幸福且清闲的晚年。';
-            $this->result .= '在性格上，你的性情温和，胸怀坦荡，具有包容心，有体谅人的雅量，因此你的人缘会比较不错，也有几个关系很好、年头很长的老伙伴，而且年轻人也愿意和你打交道，因此你的晚年生活会丰富多彩，绝不会感到孤独。';
+            $this->result .= '在性格上，你的性情温和，胸怀坦荡，具有包容心，有体谅人的雅量，因此你的人缘会比较不错，有几个关系很好、年头很长的老伙伴，而且年轻人也愿意和你打交道，因此你的晚年生活会丰富多彩，绝不会感到孤独。';
         } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || $this->smile) { //微笑唇 高兴的情绪 有笑容
             $this->result = '你是一个心胸开阔、乐观开朗、心态非常好的人，虽然年龄一年大过一年，但你却从不会为此感到忧虑，因为你深知一个良好的心态的重要性。正是因为如此，你始终能够保持一个健康、状态良好的身心，';
             $this->result .= '让你看起来比同一年龄段的人更加年轻、更加精神、更加有气色。正所谓，年龄虽不少，青春志不小；人老心不老，开心便年少；心态永年轻，青春满怀抱。在以后的日子里，也要继续保持住良好的心态，过一个快乐的晚年。';
@@ -359,18 +462,18 @@ class FaceLogic
         if ($this->beauty >= 70) { //颜值高
             $this->result = '惟草木之零落兮，恐美人之迟暮。而你却是美人不迟暮，暮年也芳华。你是那么的与众不同，优雅、端庄、美丽这些词语用来形容你的美，永远都不会过时，你身上的那种美，在历经岁月的沉淀、时光的打磨后，更加地醇厚迷人。';
             $this->result .= '上天对你是那么地偏爱，你的同龄人在你这个年龄段的时候，大多数早已芳华流逝，不余遗香，而你却能够既留下貌美的容颜，又沉淀出岁月的优雅。你会有一个美丽且好运的晚年，这是上天赏赐给你的最好的礼物。';
-        } elseif () {
-            $this->result = '';
-            $this->result .= '';
+        } elseif ($this->skinStatus['health'] >= 60 || $this->eyesType == 'big_eyes' || in_array($this->eyebrowType, ['straight_eyebrows', 'round_eyebrows'])) { //面部特征健康 大眼 一字眉 拱形眉
+            $this->result = '从你的面相特征上来看，你的面相是属于长寿相。你的身体常年都较为健康，基本上不会有大疾大病，子女不用为你的身体健康问题操心。同时也别忘记要养成经常锻炼、定期体检的习惯，遵循良好的生活方式，会让你在长寿之路上越走越远。';
+            $this->result .= '一个健康的身体，绝对离不开一个良好的心态，你是一个心态非常好、不爱与人斤斤计较、不爱攀比的人，遇到不开心的事，碰见不顺眼的人，你总是能够把心放宽，因此你的晚年会比别人活得更加轻松自在。';
         } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || $this->smile) { //微笑唇 高兴的情绪 有笑容
-            $this->result = '';
-            $this->result .= '';
-        } elseif () {
-            $this->result = '';
-            $this->result .= '';
+            $this->result = '常言道：笑一笑，十年少。你是一个心态很好、性格乐观开朗的人。你懂得知足常乐，对物质生活没有过高的要求，是个很容易在物质上得到满足的人。你懂得以豁达的心态去看待世界，不会去做一些毫无意义的妄想，也不爱和他人攀比，';
+            $this->result .= '因为你知道这只会徒增烦恼，因此你始终能够保持着一个健康良好的身心，这让你看起来比同龄人更加年轻、有气色、有活力。在往后的生活中，保持住这份良好的心态，会让你的晚年生活过得轻松、惬意、幸福。';
+        } elseif ($this->facedownResult == 'facedown_long' || $this->faceupResult == 'faceup_long' || $this->eyesType == 'thin_eyes') { //下庭偏长 上庭偏长 细长眼
+            $this->result = '你是个性格温柔善良、并且乐于助人的人。你年轻的时候能够很好地经营自己的家庭，因此你晚年的福气和运势都很好，是属于晚年能够享福的那类人。你基本上不会为钱财发愁，不会被财所困；你的家庭氛围也非常和谐，与丈夫能够相互扶持、白头偕老；';
+            $this->result .= '与后辈能够和睦相处，儿女促膝，子孙围绕，能享受到子孙后代带来的快乐与福气；与邻里之间能够友好共处，互相帮助。你的身体也会健健康康、少生病，与此同时，不要忘记时常保持一副好心态，保持笑口常开哦。';
         } else {
-            $this->result = '';
-            $this->result .= '';
+            $this->result = '你是个很有善心的人，你的身上总是能够让人感受到，从内而外散发出的仁慈祥和的光芒，善良的人，总是受人欢迎，让人尊敬。你也是一个很有耐心的人，随着年龄的增长，有些事情做起来不如年轻的时候那么顺利，你慢慢地学会了遇事不冲动，';
+            $this->result .= '心里不急躁，对待事情，你能够非常耐心地去解决，对自己多一份耐心，是智慧。你还是个能让子女省心的人，你能够很好地照顾好自己和丈夫，不让在外打拼的子女担忧，让他们能够全身心投入到事业中。';
         }
 
         return $this->result;
