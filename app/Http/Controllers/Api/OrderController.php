@@ -112,7 +112,8 @@ class OrderController extends ApiController
     public function actionImg(UploadImg $request)
     {
         try {
-            $path = Storage::putFileAs('imgs', $request->img->path(), $this->fileService->genFileName($request->img));
+            $dir = 'imgs' . (app()->isProduction() ? '' : '-test');
+            $path = Storage::putFileAs($dir, $request->img->path(), $this->fileService->genFileName($request->img));
 
             $order = $request->requestOrder;
             $order->img = $path;
