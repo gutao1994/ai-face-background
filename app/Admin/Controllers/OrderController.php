@@ -10,6 +10,7 @@ use Encore\Admin\Grid\Displayers\Actions;
 use Encore\Admin\Grid\Filter;
 use Encore\Admin\Show\Tools;
 use App\Common\HandyClass;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property \App\Services\FileService $fileService
@@ -107,10 +108,39 @@ class OrderController extends AdminController
 
         $show->panel()->tools(function (Tools $tools) {
             $tools->disableEdit();
-            $tools->disableDelete();
         });
 
         return $show;
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $order = Order::query()->findOrFail($id);
+
+            if ($order->img) {
+                $threePartsFiveEyesPath = $this->drawLogic->threePartsFiveEyesSuffix($order->img);
+                $faceStructurePath = $this->drawLogic->faceStructureSuffix($order->img);
+                $fiveSensePath = $this->drawLogic->fiveSenseSuffix($order->img);
+
+                if (Storage::exists($threePartsFiveEyesPath)) Storage::delete($threePartsFiveEyesPath);
+                if (Storage::exists($faceStructurePath)) Storage::delete($faceStructurePath);
+                if (Storage::exists($fiveSensePath)) Storage::delete($fiveSensePath);
+                if (Storage::exists($order->img)) Storage::delete($order->img);
+            }
+
+            $order->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => '删除成功',
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => false,
+                'message' => $exception->getMessage(),
+            ]);
+        }
     }
 
 
