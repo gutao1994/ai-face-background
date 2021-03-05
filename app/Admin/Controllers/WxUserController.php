@@ -21,7 +21,9 @@ class WxUserController extends AdminController
         $grid = new Grid(new WxUser());
 
         $grid->column('id', 'Id')->sortable();
-        $grid->column('nickname', '昵称');
+        $grid->column('nickname', '昵称')->display(function ($val) {
+            return "<a href='/admin/wx_users/{$this->id}'>{$val}</a>";
+        });
         $grid->column('avatar', '头像')->image('', 50, 40);
         $grid->column('sex', '性别')->using([0 => '未知', 1 => '男', 2 => '女']);
         $grid->column('country', '国家');
