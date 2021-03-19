@@ -20,123 +20,100 @@ class DrawLogic
         $editor = Grafika::createEditor();
         $editor->open($image, $path);
 
-        for ($i = $data['face']['face_hairline_144']['x'] - 120; $i <= $data['face']['face_hairline_0']['x'] + 120; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$i - 1, $data['face']['face_hairline_72']['y'] -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $left = $data['face']['face_hairline_144']['x'] - 120;
+        $right = $data['face']['face_hairline_0']['x'] + 120;
+        $top = $data['face']['face_hairline_72']['y'] - 120;
+        $bottom = $data['face']['face_contour_right_0']['y'] + 120;
 
-        $editor->text($image , 'L1', 26,
-            $data['face']['face_hairline_144']['x'] - 60,
-            $data['face']['face_hairline_72']['y'] + ($data['nose']['nose_midline_0']['y'] - $data['face']['face_hairline_72']['y']) / 2 - 13, new Color("#FF0000")
+        $minHeight = min(
+            $data['nose']['nose_midline_0']['y'] - $data['face']['face_hairline_72']['y'],
+            $data['nose']['nose_right_62']['y'] - $data['nose']['nose_midline_0']['y'],
+            $data['face']['face_contour_right_0']['y'] - $data['nose']['nose_right_62']['y']
+        );
+        $heightSize = $minHeight * 0.4;
+
+        $minWidth = min(
+            $data['left_eye_eyelid']['left_eye_eyelid_0']['x'] - $data['face']['face_contour_left_63']['x'],
+            $data['left_eye_eyelid']['left_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_0']['x'],
+            $data['right_eye_eyelid']['right_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_31']['x'],
+            $data['right_eye_eyelid']['right_eye_eyelid_0']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_31']['x'],
+            $data['face']['face_contour_right_63']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_0']['x']
+        );
+        $widthSize = $minWidth * 0.5;
+
+        $this->drawLine($editor, $image, [$left, $data['face']['face_hairline_72']['y']], [$right, $data['face']['face_hairline_72']['y']]);
+
+        $editor->text($image , 'L1', $heightSize,
+            $data['face']['face_hairline_144']['x'] - $heightSize * 2,
+            $data['face']['face_hairline_72']['y'] + ($data['nose']['nose_midline_0']['y'] - $data['face']['face_hairline_72']['y']) / 2 - $heightSize / 2,
+            new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_hairline_144']['x'] - 120; $i <= $data['face']['face_hairline_0']['x'] + 120; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$i - 1, $data['nose']['nose_midline_0']['y'] -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$left, $data['nose']['nose_midline_0']['y']], [$right, $data['nose']['nose_midline_0']['y']]);
 
-        $editor->text($image , 'L2', 26,
-            $data['face']['face_hairline_144']['x'] - 60,
-            $data['nose']['nose_midline_0']['y'] + ($data['nose']['nose_right_62']['y'] - $data['nose']['nose_midline_0']['y']) / 2 - 13, new Color("#FF0000")
+        $editor->text($image , 'L2', $heightSize,
+            $data['face']['face_hairline_144']['x'] - $heightSize * 2,
+            $data['nose']['nose_midline_0']['y'] + ($data['nose']['nose_right_62']['y'] - $data['nose']['nose_midline_0']['y']) / 2 - $heightSize / 2,
+            new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_hairline_144']['x'] - 120; $i <= $data['face']['face_hairline_0']['x'] + 120; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$i - 1, $data['nose']['nose_right_62']['y'] -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$left, $data['nose']['nose_right_62']['y']], [$right, $data['nose']['nose_right_62']['y']]);
 
-        $editor->text($image , 'L3', 26,
-            $data['face']['face_hairline_144']['x'] - 60,
-            $data['nose']['nose_right_62']['y'] + ($data['face']['face_contour_right_0']['y'] - $data['nose']['nose_right_62']['y']) / 2 - 13, new Color("#FF0000")
+        $editor->text($image , 'L3', $heightSize,
+            $data['face']['face_hairline_144']['x'] - $heightSize * 2,
+            $data['nose']['nose_right_62']['y'] + ($data['face']['face_contour_right_0']['y'] - $data['nose']['nose_right_62']['y']) / 2 - $heightSize / 2,
+            new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_hairline_144']['x'] - 120; $i <= $data['face']['face_hairline_0']['x'] + 120; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$i - 1, $data['face']['face_contour_right_0']['y'] -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$left, $data['face']['face_contour_right_0']['y']], [$right, $data['face']['face_contour_right_0']['y']]);
 
-        for ($i = $data['face']['face_hairline_72']['y'] - 120; $i <= $data['face']['face_contour_right_0']['y'] + 120; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$data['face']['face_contour_left_63']['x'] - 1, $i -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$data['face']['face_contour_left_63']['x'], $top], [$data['face']['face_contour_left_63']['x'], $bottom]);
 
-        $editor->text($image , 'E1', 20,
-            $data['face']['face_contour_left_63']['x'] + ($data['left_eye_eyelid']['left_eye_eyelid_0']['x'] - $data['face']['face_contour_left_63']['x']) / 2 - 11,
-            $data['face']['face_contour_right_0']['y'] + 15, new Color("#FF0000")
+        $editor->text($image , 'E1', $widthSize,
+            $data['face']['face_contour_left_63']['x'] + ($data['left_eye_eyelid']['left_eye_eyelid_0']['x'] - $data['face']['face_contour_left_63']['x']) / 2 - $widthSize / 1.5,
+            $data['face']['face_contour_right_0']['y'] + 13, new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_hairline_72']['y'] - 120; $i <= $data['face']['face_contour_right_0']['y'] + 120; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$data['left_eye_eyelid']['left_eye_eyelid_0']['x'] - 1, $i -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$data['left_eye_eyelid']['left_eye_eyelid_0']['x'], $top], [$data['left_eye_eyelid']['left_eye_eyelid_0']['x'], $bottom]);
 
-        $editor->text($image , 'E2', 20,
-            $data['left_eye_eyelid']['left_eye_eyelid_0']['x'] + ($data['left_eye_eyelid']['left_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_0']['x']) / 2 - 11,
-            $data['face']['face_contour_right_0']['y'] + 15, new Color("#FF0000")
+        $editor->text($image , 'E2', $widthSize,
+            $data['left_eye_eyelid']['left_eye_eyelid_0']['x'] + ($data['left_eye_eyelid']['left_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_0']['x']) / 2 - $widthSize / 1.5,
+            $data['face']['face_contour_right_0']['y'] + 13, new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_hairline_72']['y'] - 120; $i <= $data['face']['face_contour_right_0']['y'] + 120; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$data['left_eye_eyelid']['left_eye_eyelid_31']['x'] - 1, $i -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$data['left_eye_eyelid']['left_eye_eyelid_31']['x'], $top], [$data['left_eye_eyelid']['left_eye_eyelid_31']['x'], $bottom]);
 
-        $editor->text($image , 'E3', 20,
-            $data['left_eye_eyelid']['left_eye_eyelid_31']['x'] + ($data['right_eye_eyelid']['right_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_31']['x']) / 2 - 11,
-            $data['face']['face_contour_right_0']['y'] + 15, new Color("#FF0000")
+        $editor->text($image , 'E3', $widthSize,
+            $data['left_eye_eyelid']['left_eye_eyelid_31']['x'] + ($data['right_eye_eyelid']['right_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_31']['x']) / 2 - $widthSize / 1.5,
+            $data['face']['face_contour_right_0']['y'] + 13, new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_hairline_72']['y'] - 120; $i <= $data['face']['face_contour_right_0']['y'] + 120; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$data['right_eye_eyelid']['right_eye_eyelid_31']['x'] - 1, $i -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$data['right_eye_eyelid']['right_eye_eyelid_31']['x'], $top], [$data['right_eye_eyelid']['right_eye_eyelid_31']['x'], $bottom]);
 
-        $editor->text($image , 'E4', 20,
-            $data['right_eye_eyelid']['right_eye_eyelid_31']['x'] + ($data['right_eye_eyelid']['right_eye_eyelid_0']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_31']['x']) / 2 - 11,
-            $data['face']['face_contour_right_0']['y'] + 15, new Color("#FF0000")
+        $editor->text($image , 'E4', $widthSize,
+            $data['right_eye_eyelid']['right_eye_eyelid_31']['x'] + ($data['right_eye_eyelid']['right_eye_eyelid_0']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_31']['x']) / 2 - $widthSize / 1.5,
+            $data['face']['face_contour_right_0']['y'] + 13, new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_hairline_72']['y'] - 120; $i <= $data['face']['face_contour_right_0']['y'] + 120; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$data['right_eye_eyelid']['right_eye_eyelid_0']['x'] - 1, $i -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$data['right_eye_eyelid']['right_eye_eyelid_0']['x'], $top], [$data['right_eye_eyelid']['right_eye_eyelid_0']['x'], $bottom]);
 
-        $editor->text($image , 'E5', 20,
-            $data['right_eye_eyelid']['right_eye_eyelid_0']['x'] + ($data['face']['face_contour_right_63']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_0']['x']) / 2 - 11,
-            $data['face']['face_contour_right_0']['y'] + 15, new Color("#FF0000")
+        $editor->text($image , 'E5', $widthSize,
+            $data['right_eye_eyelid']['right_eye_eyelid_0']['x'] + ($data['face']['face_contour_right_63']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_0']['x']) / 2 - $widthSize / 1.5,
+            $data['face']['face_contour_right_0']['y'] + 13, new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_hairline_72']['y'] - 120; $i <= $data['face']['face_contour_right_0']['y'] + 120; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$data['face']['face_contour_right_63']['x'] - 1, $i -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$data['face']['face_contour_right_63']['x'], $top], [$data['face']['face_contour_right_63']['x'], $bottom]);
 
-        $editor->draw($image, Grafika::createDrawingObject(
-            'Line',
-            [$data['left_eye']['left_eye_pupil_center']['x'], $data['left_eye']['left_eye_pupil_center']['y']],
-            [$data['right_eye']['right_eye_pupil_center']['x'], $data['right_eye']['right_eye_pupil_center']['y']],
-            1,
-            new Color('#FF0000'))
-        );
+        $this->drawLine($editor, $image, [$data['left_eye']['left_eye_pupil_center']['x'], $data['left_eye']['left_eye_pupil_center']['y']], [$data['right_eye']['right_eye_pupil_center']['x'], $data['right_eye']['right_eye_pupil_center']['y']]);
 
-        $editor->draw($image, Grafika::createDrawingObject(
-            'Line',
-            [$data['left_eye']['left_eye_pupil_center']['x'], $data['left_eye']['left_eye_pupil_center']['y']],
-            [$data['nose']['nose_right_62']['x'], $data['nose']['nose_right_62']['y']],
-            1,
-            new Color('#FF0000'))
-        );
+        $this->drawLine($editor, $image, [$data['left_eye']['left_eye_pupil_center']['x'], $data['left_eye']['left_eye_pupil_center']['y']], [$data['nose']['nose_right_62']['x'], $data['nose']['nose_right_62']['y']]);
 
-        $editor->draw($image, Grafika::createDrawingObject(
-            'Line',
-            [$data['right_eye']['right_eye_pupil_center']['x'], $data['right_eye']['right_eye_pupil_center']['y']],
-            [$data['nose']['nose_right_62']['x'], $data['nose']['nose_right_62']['y']],
-            1,
-            new Color('#FF0000'))
-        );
+        $this->drawLine($editor, $image, [$data['right_eye']['right_eye_pupil_center']['x'], $data['right_eye']['right_eye_pupil_center']['y']], [$data['nose']['nose_right_62']['x'], $data['nose']['nose_right_62']['y']]);
 
-        $editor->text($image , 'W', 24,
-            $data['nose']['nose_right_62']['x'] - 12,
-            $data['nose']['nose_right_62']['y'] + 10, new Color("#FF0000")
+        $wSize = ($data['right_eye_eyelid']['right_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_31']['x']) * 0.5;
+        $editor->text($image , 'W', $wSize,
+            $data['nose']['nose_right_62']['x'] - $wSize / 2,
+            $data['nose']['nose_right_62']['y'] + 8, new Color("#FF0000")
         );
 
         $localTmpFile = $path . '-three-parts-five-eyes';
@@ -155,67 +132,45 @@ class DrawLogic
         $editor = Grafika::createEditor();
         $editor->open($image, $path);
 
-        for ($i = $data['face']['face_hairline_124']['x']; $i <= $data['face']['face_hairline_20']['x']; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$i - 1, $data['face']['face_hairline_124']['y'] -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $minHeight = min(
+            $data['face']['face_contour_left_58']['y'] - $data['face']['face_hairline_123']['y'],
+            $data['face']['face_contour_left_31']['y'] - $data['face']['face_contour_left_58']['y']
+        );
+        $size = $minHeight * 0.5;
 
-        $editor->text($image , 'A', 30,
-            ($data['face']['face_hairline_20']['x'] - $data['face']['face_hairline_124']['x']) / 6 + $data['face']['face_hairline_124']['x'],
-            $data['face']['face_hairline_124']['y'] - 40, new Color("#FF0000")
+        $this->drawLine($editor, $image, [$data['face']['face_hairline_123']['x'], $data['face']['face_hairline_123']['y']], [$data['face']['face_hairline_21']['x'], $data['face']['face_hairline_21']['y']]);
+
+        $editor->text($image , 'A', $size,
+            $data['face']['face_hairline_123']['x'] + ($data['face']['face_hairline_21']['x'] - $data['face']['face_hairline_123']['x']) / 6,
+            $data['face']['face_hairline_123']['y'] - $size - 5, new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_contour_left_58']['x']; $i <= $data['face']['face_contour_right_58']['x']; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$i - 1, $data['face']['face_contour_left_58']['y'] -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$data['face']['face_contour_left_58']['x'], $data['face']['face_contour_left_58']['y']], [$data['face']['face_contour_right_58']['x'], $data['face']['face_contour_right_58']['y']]);
 
-        $editor->text($image , 'B', 30,
-            ($data['face']['face_contour_right_58']['x'] - $data['face']['face_contour_left_58']['x']) / 6 + $data['face']['face_contour_left_58']['x'],
-            $data['face']['face_contour_left_58']['y'] - 40, new Color("#FF0000")
+        $editor->text($image , 'B', $size,
+            $data['face']['face_contour_left_58']['x'] + ($data['face']['face_contour_right_58']['x'] - $data['face']['face_contour_left_58']['x']) / 6,
+            $data['face']['face_contour_left_58']['y'] - $size - 5, new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_contour_left_31']['x']; $i <= $data['face']['face_contour_right_31']['x']; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$i - 1, $data['face']['face_contour_left_31']['y'] -  1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$data['face']['face_contour_left_31']['x'], $data['face']['face_contour_left_31']['y']], [$data['face']['face_contour_right_31']['x'], $data['face']['face_contour_right_31']['y']]);
 
-        $editor->text($image , 'C', 30,
-            ($data['face']['face_contour_right_31']['x'] - $data['face']['face_contour_left_31']['x']) / 6 + $data['face']['face_contour_left_31']['x'],
-            $data['face']['face_contour_left_31']['y'] - 40, new Color("#FF0000")
+        $editor->text($image , 'C', $size,
+            $data['face']['face_contour_left_31']['x'] + ($data['face']['face_contour_right_31']['x'] - $data['face']['face_contour_left_31']['x']) / 6,
+            $data['face']['face_contour_left_31']['y'] - $size - 5, new Color("#FF0000")
         );
 
-        for ($i = $data['face']['face_hairline_72']['y']; $i <= $data['face']['face_contour_right_0']['y']; $i++) {
-            $obj = Grafika::createDrawingObject('Ellipse', 2, 2, [$data['face']['face_hairline_72']['x'] -  1, $i - 1], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
-        }
+        $this->drawLine($editor, $image, [$data['face']['face_hairline_72']['x'], $data['face']['face_hairline_72']['y']], [$data['face']['face_contour_right_0']['x'], $data['face']['face_contour_right_0']['y']]);
 
-        $editor->text($image , 'D', 30,
-            $data['face']['face_hairline_72']['x'] + 10,
-            $data['face']['face_hairline_72']['y'] + 30, new Color("#FF0000")
+        $editor->text($image , 'D', $size,
+            $data['face']['face_hairline_72']['x'] + 8,
+            $data['face']['face_hairline_72']['y'] + $size/1.6, new Color("#FF0000")
         );
 
-        $editor->draw($image,
-            Grafika::createDrawingObject(
-                'Line',
-                [$data['face']['face_contour_right_0']['x'], $data['face']['face_contour_right_0']['y']],
-                [$data['face']['face_contour_right_31']['x'], $data['face']['face_contour_right_31']['y']],
-                1,
-                new Color('#FF0000')
-            )
-        );
+        $this->drawLine($editor, $image, [$data['face']['face_contour_right_0']['x'], $data['face']['face_contour_right_0']['y']], [$data['face']['face_contour_right_31']['x'], $data['face']['face_contour_right_31']['y']]);
 
-        $editor->draw($image,
-            Grafika::createDrawingObject(
-                'Line',
-                [$data['face']['face_contour_right_31']['x'], $data['face']['face_contour_right_31']['y']],
-                [$data['face']['face_contour_right_49']['x'], $data['face']['face_contour_right_49']['y']],
-                1,
-                new Color('#FF0000')
-            )
-        );
+        $this->drawLine($editor, $image, [$data['face']['face_contour_right_31']['x'], $data['face']['face_contour_right_31']['y']], [$data['face']['face_contour_right_49']['x'], $data['face']['face_contour_right_49']['y']]);
 
-        $editor->text($image , 'E', 30,
+        $editor->text($image , 'E', $size,
             $data['face']['face_contour_right_31']['x'] + 2,
             $data['face']['face_contour_right_31']['y'] + 2, new Color("#FF0000")
         );
@@ -236,28 +191,24 @@ class DrawLogic
         $editor = Grafika::createEditor();
         $editor->open($image, $path);
 
-        foreach ($data['right_eye'] as $val) { //右眼
-            if (is_array($val)) {
-                $obj = Grafika::createDrawingObject('Ellipse', 4, 4, [$val['x'] - 2, $val['y'] -  2], 0, new Color('#000000'), new Color('#FF0000'));
-                $editor->draw($image, $obj);
-            }
+        $red = new Color('#FF0000');
+        $size = $this->getLineSize($image);
+
+        foreach ($data['right_eye_eyelid'] as $val) { //右眼
+            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size, $size, [$val['x'] - $size/2, $val['y'] - $size/2], 0, $red, $red));
         }
 
-        foreach ($data['left_eye'] as $val) { //左眼
-            if (is_array($val)) {
-                $obj = Grafika::createDrawingObject('Ellipse', 4, 4, [$val['x'] - 2, $val['y'] -  2], 0, new Color('#000000'), new Color('#FF0000'));
-                $editor->draw($image, $obj);
-            }
+        foreach ($data['left_eye_eyelid'] as $val) { //左眼
+            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size, $size, [$val['x'] - $size/2, $val['y'] - $size/2], 0, $red, $red));
         }
 
+        $eyebrowSize = $size + 1;
         foreach ($data['right_eyebrow'] as $val) { //右眉毛
-            $obj = Grafika::createDrawingObject('Ellipse', 5, 5, [$val['x'] - 2.5, $val['y'] -  2.5], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
+            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $eyebrowSize, $eyebrowSize, [$val['x'] - $eyebrowSize/2, $val['y'] - $eyebrowSize/2], 0, $red, $red));
         }
 
         foreach ($data['left_eyebrow'] as $val) { //左眉毛
-            $obj = Grafika::createDrawingObject('Ellipse', 5, 5, [$val['x'] - 2.5, $val['y'] -  2.5], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
+            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $eyebrowSize, $eyebrowSize, [$val['x'] - $eyebrowSize/2, $val['y'] - $eyebrowSize/2], 0, $red, $red));
         }
 
         foreach ($data['nose'] as $key => $val) { //鼻子
@@ -266,23 +217,23 @@ class DrawLogic
                 strpos($key, 'nose_right') !== false ||
                 $key === 'nose_midline_0'
             ) {
-                $obj = Grafika::createDrawingObject('Ellipse', 4, 4, [$val['x'] - 2, $val['y'] -  2], 0, new Color('#000000'), new Color('#FF0000'));
-                $editor->draw($image, $obj);
+                $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size, $size, [$val['x'] - $size/2, $val['y'] - $size/2], 0, $red, $red));
             }
         }
 
+        $mouthSize = $size + 1;
         foreach ($data['mouth'] as $val) { //嘴巴
-            $obj = Grafika::createDrawingObject('Ellipse', 4, 4, [$val['x'] - 2, $val['y'] -  2], 0, new Color('#000000'), new Color('#FF0000'));
-            $editor->draw($image, $obj);
+            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $mouthSize, $mouthSize, [$val['x'] - $mouthSize/2, $val['y'] - $mouthSize/2], 0, $red, $red));
         }
 
+        $faceSize = $size + 1;
         foreach ($data['face'] as $key => $val) { //面部
             if (
                 strpos($key, 'face_contour_right') !== false ||
-                strpos($key, 'face_contour_left') !== false
+                strpos($key, 'face_contour_left') !== false ||
+                strpos($key, 'face_hairline') !== false
             ){
-                $obj = Grafika::createDrawingObject('Ellipse', 4, 4, [$val['x'] - 2, $val['y'] -  2], 0, new Color('#000000'), new Color('#FF0000'));
-                $editor->draw($image, $obj);
+                $editor->draw($image, Grafika::createDrawingObject('Ellipse', $faceSize, $faceSize, [$val['x'] - $faceSize/2, $val['y'] - $faceSize/2], 0, $red, $red));
             }
         }
 
@@ -333,6 +284,75 @@ class DrawLogic
     public function genOriSuffix($oriImg, $suffix)
     {
         return preg_replace('/(\.(jpg|jpeg|png|bmp|webp))$/i', $suffix . '$1', $oriImg);
+    }
+
+    /**
+     * 根据图片大小得到画线的粗细
+     */
+    protected function getLineSize($image)
+    {
+        $px = min($image->getWidth(), $image->getHeight());
+
+        if ($px <= 300) { //0-300
+            return 1;
+        } elseif ($px <= 700) { //301-700
+            return 2;
+        } elseif ($px <= 900) { //701-900
+            return 3;
+        } elseif ($px <= 1200) { //901-1200
+            return 4;
+        } else { //1201-inf
+            return 5;
+        }
+    }
+
+    /**
+     * 画线段
+     */
+    protected function drawLine($editor, $image, array $start, array $end, $size = null)
+    {
+        $color = new Color('#FF0000');
+        $size = $size ?: $this->getLineSize($image);
+
+        if (abs($start[0] - $end[0]) >= abs($start[1] - $end[1])) { //横斜线
+            $lineType = 1;
+        } elseif (abs($start[0] - $end[0]) < abs($start[1] - $end[1])) { //竖斜线
+            $lineType = 2;
+        }
+
+        $editor->draw($image, Grafika::createDrawingObject('Line', $start, $end, 1, $color));
+
+        if ($size >= 2) {
+            if ($lineType == 1) {
+                $editor->draw($image, Grafika::createDrawingObject('Line', [$start[0], $start[1] + 1], [$end[0], $end[1] + 1], 1, $color));
+            } elseif ($lineType == 2) {
+                $editor->draw($image, Grafika::createDrawingObject('Line', [$start[0] - 1, $start[1]], [$end[0] - 1, $end[1]], 1, $color));
+            }
+        }
+
+        if ($size >= 3) {
+            if ($lineType == 1) {
+                $editor->draw($image, Grafika::createDrawingObject('Line', [$start[0], $start[1] - 1], [$end[0], $end[1] - 1], 1, $color));
+            } elseif ($lineType == 2) {
+                $editor->draw($image, Grafika::createDrawingObject('Line', [$start[0] + 1, $start[1]], [$end[0] + 1, $end[1]], 1, $color));
+            }
+        }
+
+        if ($size >= 4) {
+            if ($lineType == 1) {
+                $editor->draw($image, Grafika::createDrawingObject('Line', [$start[0], $start[1] + 2], [$end[0], $end[1] + 2], 1, $color));
+            } elseif ($lineType == 2) {
+                $editor->draw($image, Grafika::createDrawingObject('Line', [$start[0] - 2, $start[1]], [$end[0] - 2, $end[1]], 1, $color));
+            }
+        }
+
+        if ($size >= 5) {
+            if ($lineType == 1) {
+                $editor->draw($image, Grafika::createDrawingObject('Line', [$start[0], $start[1] - 2], [$end[0], $end[1] - 2], 1, $color));
+            } elseif ($lineType == 2) {
+                $editor->draw($image, Grafika::createDrawingObject('Line', [$start[0] + 2, $start[1]], [$end[0] + 2, $end[1]], 1, $color));
+            }
+        }
     }
 
 
