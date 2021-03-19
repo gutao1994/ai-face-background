@@ -30,16 +30,7 @@ class DrawLogic
             $data['nose']['nose_right_62']['y'] - $data['nose']['nose_midline_0']['y'],
             $data['face']['face_contour_right_0']['y'] - $data['nose']['nose_right_62']['y']
         );
-        $heightSize = $minHeight * 0.4;
-
-        $minWidth = min(
-            $data['left_eye_eyelid']['left_eye_eyelid_0']['x'] - $data['face']['face_contour_left_63']['x'],
-            $data['left_eye_eyelid']['left_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_0']['x'],
-            $data['right_eye_eyelid']['right_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_31']['x'],
-            $data['right_eye_eyelid']['right_eye_eyelid_0']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_31']['x'],
-            $data['face']['face_contour_right_63']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_0']['x']
-        );
-        $widthSize = $minWidth * 0.5;
+        $heightSize = min($minHeight * 0.4, ceil($heightSize = $data['face']['face_hairline_144']['x'] / 2));
 
         $this->drawLine($editor, $image, [$left, $data['face']['face_hairline_72']['y']], [$right, $data['face']['face_hairline_72']['y']]);
 
@@ -67,39 +58,48 @@ class DrawLogic
 
         $this->drawLine($editor, $image, [$left, $data['face']['face_contour_right_0']['y']], [$right, $data['face']['face_contour_right_0']['y']]);
 
+        $minWidth = min(
+            $data['left_eye_eyelid']['left_eye_eyelid_0']['x'] - $data['face']['face_contour_left_63']['x'],
+            $data['left_eye_eyelid']['left_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_0']['x'],
+            $data['right_eye_eyelid']['right_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_31']['x'],
+            $data['right_eye_eyelid']['right_eye_eyelid_0']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_31']['x'],
+            $data['face']['face_contour_right_63']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_0']['x']
+        );
+        $widthSize = $minWidth * 0.5;
+
         $this->drawLine($editor, $image, [$data['face']['face_contour_left_63']['x'], $top], [$data['face']['face_contour_left_63']['x'], $bottom]);
 
         $editor->text($image , 'E1', $widthSize,
             $data['face']['face_contour_left_63']['x'] + ($data['left_eye_eyelid']['left_eye_eyelid_0']['x'] - $data['face']['face_contour_left_63']['x']) / 2 - $widthSize / 1.5,
-            $data['face']['face_contour_right_0']['y'] + 13, new Color("#FF0000")
+            $this->calEY($image->getHeight(), $data, $widthSize), new Color("#FF0000")
         );
 
         $this->drawLine($editor, $image, [$data['left_eye_eyelid']['left_eye_eyelid_0']['x'], $top], [$data['left_eye_eyelid']['left_eye_eyelid_0']['x'], $bottom]);
 
         $editor->text($image , 'E2', $widthSize,
             $data['left_eye_eyelid']['left_eye_eyelid_0']['x'] + ($data['left_eye_eyelid']['left_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_0']['x']) / 2 - $widthSize / 1.5,
-            $data['face']['face_contour_right_0']['y'] + 13, new Color("#FF0000")
+            $this->calEY($image->getHeight(), $data, $widthSize), new Color("#FF0000")
         );
 
         $this->drawLine($editor, $image, [$data['left_eye_eyelid']['left_eye_eyelid_31']['x'], $top], [$data['left_eye_eyelid']['left_eye_eyelid_31']['x'], $bottom]);
 
         $editor->text($image , 'E3', $widthSize,
             $data['left_eye_eyelid']['left_eye_eyelid_31']['x'] + ($data['right_eye_eyelid']['right_eye_eyelid_31']['x'] - $data['left_eye_eyelid']['left_eye_eyelid_31']['x']) / 2 - $widthSize / 1.5,
-            $data['face']['face_contour_right_0']['y'] + 13, new Color("#FF0000")
+            $this->calEY($image->getHeight(), $data, $widthSize), new Color("#FF0000")
         );
 
         $this->drawLine($editor, $image, [$data['right_eye_eyelid']['right_eye_eyelid_31']['x'], $top], [$data['right_eye_eyelid']['right_eye_eyelid_31']['x'], $bottom]);
 
         $editor->text($image , 'E4', $widthSize,
             $data['right_eye_eyelid']['right_eye_eyelid_31']['x'] + ($data['right_eye_eyelid']['right_eye_eyelid_0']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_31']['x']) / 2 - $widthSize / 1.5,
-            $data['face']['face_contour_right_0']['y'] + 13, new Color("#FF0000")
+            $this->calEY($image->getHeight(), $data, $widthSize), new Color("#FF0000")
         );
 
         $this->drawLine($editor, $image, [$data['right_eye_eyelid']['right_eye_eyelid_0']['x'], $top], [$data['right_eye_eyelid']['right_eye_eyelid_0']['x'], $bottom]);
 
         $editor->text($image , 'E5', $widthSize,
             $data['right_eye_eyelid']['right_eye_eyelid_0']['x'] + ($data['face']['face_contour_right_63']['x'] - $data['right_eye_eyelid']['right_eye_eyelid_0']['x']) / 2 - $widthSize / 1.5,
-            $data['face']['face_contour_right_0']['y'] + 13, new Color("#FF0000")
+            $this->calEY($image->getHeight(), $data, $widthSize), new Color("#FF0000")
         );
 
         $this->drawLine($editor, $image, [$data['face']['face_contour_right_63']['x'], $top], [$data['face']['face_contour_right_63']['x'], $bottom]);
@@ -119,6 +119,25 @@ class DrawLogic
         $localTmpFile = $path . '-three-parts-five-eyes';
         $editor->save($image, $localTmpFile);
         return $localTmpFile;
+    }
+
+    protected function calEY($imgHeight, $data, $size)
+    {
+        if ($data['face']['face_contour_right_0']['y'] + 13 + $size >= $imgHeight) {
+            for ($i = 12; $i >= 4; $i--) {
+                if ($i == 4) {
+                    return $data['face']['face_contour_right_0']['y'] + 4;
+                }
+
+                if ($data['face']['face_contour_right_0']['y'] + $i + $size >= $imgHeight) {
+                    continue;
+                } else {
+                    return $data['face']['face_contour_right_0']['y'] + $i;
+                }
+            }
+        }
+
+        return $data['face']['face_contour_right_0']['y'] + 13;
     }
 
     /**
@@ -141,21 +160,21 @@ class DrawLogic
         $this->drawLine($editor, $image, [$data['face']['face_hairline_123']['x'], $data['face']['face_hairline_123']['y']], [$data['face']['face_hairline_21']['x'], $data['face']['face_hairline_21']['y']]);
 
         $editor->text($image , 'A', $size,
-            $data['face']['face_hairline_123']['x'] + ($data['face']['face_hairline_21']['x'] - $data['face']['face_hairline_123']['x']) / 6,
+            $data['face']['face_hairline_123']['x'] + 3,
             $data['face']['face_hairline_123']['y'] - $size - 5, new Color("#FF0000")
         );
 
         $this->drawLine($editor, $image, [$data['face']['face_contour_left_58']['x'], $data['face']['face_contour_left_58']['y']], [$data['face']['face_contour_right_58']['x'], $data['face']['face_contour_right_58']['y']]);
 
         $editor->text($image , 'B', $size,
-            $data['face']['face_contour_left_58']['x'] + ($data['face']['face_contour_right_58']['x'] - $data['face']['face_contour_left_58']['x']) / 6,
+            $data['face']['face_contour_left_58']['x'] + 3,
             $data['face']['face_contour_left_58']['y'] - $size - 5, new Color("#FF0000")
         );
 
         $this->drawLine($editor, $image, [$data['face']['face_contour_left_31']['x'], $data['face']['face_contour_left_31']['y']], [$data['face']['face_contour_right_31']['x'], $data['face']['face_contour_right_31']['y']]);
 
         $editor->text($image , 'C', $size,
-            $data['face']['face_contour_left_31']['x'] + ($data['face']['face_contour_right_31']['x'] - $data['face']['face_contour_left_31']['x']) / 6,
+            $data['face']['face_contour_left_31']['x'] + 3,
             $data['face']['face_contour_left_31']['y'] - $size - 5, new Color("#FF0000")
         );
 
