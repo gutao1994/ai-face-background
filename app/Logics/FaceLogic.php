@@ -203,18 +203,18 @@ class FaceLogic
      */
     protected function female15()
     {
-        if () {
-            $this->result = '';
-            $this->result .= '';
+        if ($this->beauty >= 70) { //颜值高
+            $this->result = '你是个颜值很高的小女孩，在人群中，大家总是能够一眼就注意到你，你从小就是个美人胚子，长大之后更是会成为一个亭亭玉立的大美女。长得漂亮固然是一件好事，但是有些时候会引来一些同龄女生的羡慕与嫉妒，她们可能会在背后说你坏话，';
+            $this->result .= '这可能会给你造成很大的困扰。家长应该多注意观察孩子的情绪，平时与孩子多多交流沟通，如果出现情况要及时合理地处理，这样会让孩子在人生的道路上走得更加顺利，在以后的人生中，更加地开朗乐观与自信。';
+        } elseif ($this->faceType == 'oval_face' || $this->jawType == 'flat_jaw' || $this->eyesType == 'big_eyes' || $this->eyebrowType == 'arch_eyebrows') { //椭圆脸 圆下巴 大眼 柳叶眉
+            $this->result = '你是一个性格乐观开朗、充满自信并且富有同情心的小女孩，你一生的运势会较为不错，尤其是贵人运会很好，未来在工作中比较容易得到同事的帮助和上级的器重，比一般的女生更加容易获得事业上的成功。在学业上，你是一个能让父母省心的孩子，';
+            $this->result .= '你会非常自觉地完成自己的功课，不让家长因为你的功课问题而过多地操心。虽然你的年纪不大，但你却是一个做事情井井有条、进退有度并且懂得分寸的女生，这都得益于你有着一个融洽的家庭氛围以及良好的家庭教育。';
         } elseif () {
             $this->result = '';
             $this->result .= '';
-        } elseif () {
-            $this->result = '';
-            $this->result .= '';
-        } elseif () {
-            $this->result = '';
-            $this->result .= '';
+        } elseif ($this->faceType == 'square_face' || $this->jawType == 'square_jaw' || $this->eyesType == 'thin_eyes' || $this->noseType == 'thick_nose' || $this->mouthType == 'upset_lip') { //方形脸 方下巴 细长眼 宽鼻 态度唇
+            $this->result = '你是一个聪明伶俐且较为独立自主的小女孩，你的自尊心比较强，偶尔也会有点小倔强，做什么事情都不会轻易放弃，对待学习的态度也非常认真且严谨。你还是一个懂得体谅他人的人，你知道父母在外工作的辛苦，所以在家里会帮父母做些力所能及的事情，';
+            $this->result .= '在学校里也是个乐于帮助同学的好孩子。在正值豆蔻年华的年龄，你已经学会不畏惧困难、懂得勇敢地面对一切困难阻力，你这种积极的生活态度会带给你好运，而且很有可能会在三十多岁的时候成就自己的一番事业。';
         } else {
             $this->result = '';
             $this->result .= '';
@@ -228,7 +228,7 @@ class FaceLogic
      */
     protected function male19()
     {
-        if () {
+        if ($this->faceupResult == 'faceup_long') { //上庭偏长
             $this->result = '';
             $this->result .= '';
         } elseif () {
@@ -253,7 +253,7 @@ class FaceLogic
      */
     protected function female19()
     {
-        if () {
+        if ($this->beauty >= 70) { //颜值高
             $this->result = '';
             $this->result .= '';
         } elseif () {
