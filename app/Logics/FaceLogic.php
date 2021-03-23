@@ -179,8 +179,8 @@ class FaceLogic
     protected function male15()
     {
         if ($this->faceupResult == 'faceup_long') { //上庭偏长
-            $this->result = '你是一个非常聪明过人的男生，你的面相是一个具有智慧和好运的面相，而且命中有贵人运，长大之后在事业上会有贵人相助，因此很有可能会成就一番自己的事业。你也是一个爱动脑筋、爱思考的人，而且你的记忆力还特别好，';
-            $this->result .= '这使得你在班上的成绩总是名列前茅，将来也会有很大可能考上一所心仪的高校。总体来说，你一生的运势都会较为不错，在生活上不会经历太多的磨难，会有一个富足且幸福的人生。';
+            $this->result = '你是一个聪明过人且记忆力很好的男生，你的面相是一个具有智慧和好运的面相，而且命中有贵人运，长大之后在事业上会有贵人相助，因此很有可能会成就一番自己的事业。你也是一个爱动脑筋、爱思考的人，当碰到难题的时候，';
+            $this->result .= '你总是能够沉下心来去思考解决方案，这使得你在班上的成绩总是名列前茅，将来也会有很大可能考上你所心仪的大学。总体来说，你一生的运势都会较为不错，在生活上不会经历太多的磨难，会有一个富足且幸福的人生。';
         } elseif ($this->jawType == 'sharp_jaw' || $this->noseType == 'thick_nose') { //尖下巴 宽鼻
             $this->result = '你是一个很活泼机灵、而且比较好动的男生，你的运动细胞很发达，平时比较热爱运动，是班级里的体育担当。你的包容心很强，很多不小心得罪你的人，你都不会放在心上，因此你的人际关系比较好，大家都爱和你交朋友。';
             $this->result .= '你的好奇心也很旺盛，对于很多没见过的东西和事物总是充满好奇心，总是想要亲手去摸一摸、试一试。充满好奇心是探索未知和培养兴趣爱好的最大动力，如果家长能够正确地引导孩子的好奇心，那么对孩子的帮助是终身受益的。';
@@ -229,19 +229,19 @@ class FaceLogic
     protected function male19()
     {
         if ($this->faceupResult == 'faceup_long') { //上庭偏长
-            $this->result = '';
-            $this->result .= '';
+            $this->result = '你是一个头脑聪明灵活、理解能力强、学习能力强的男生，很多东西基本上一教就会，而且能够融会贯通，举一反三，因此在大家的眼里，你是个高智商、非常聪明伶俐的人。而且你的求知欲也很强，当碰到新鲜的事物或者没遇到过的问题，';
+            $this->result .= '你会下意识地去思考其背后的原理，并且会尽全力地去探索其本质。正是因为你有着这种优秀的品质，因此在未来的工作事业当中，你总是能够比别人看得更远，且更加能抓得住机会，因此往往也会取得比别人更大的成就。';
         } elseif () {
-            $this->result = '';
+            $this->result = '兴趣广泛 幽默风趣 人格魅力';
             $this->result .= '';
-        } elseif () {
-            $this->result = '';
+        } elseif ($this->faceType == 'square_face' || $this->faceType == 'long_face' || $this->jawType == 'square_jaw') { //方形脸 长形脸 方下巴
+            $this->result = '意志坚定 做事果断 很有男子气概 心胸宽广 充满侠肝义胆，喜欢打抱不平，只要看到他人需要帮助就会拔刀相助 爱帮助别人';
             $this->result .= '';
-        } elseif () {
-            $this->result = '';
+        } elseif ($this->eyebrowType == 'eight_eyebrows' || $this->eyesType == 'thin_eyes' || $this->nasolabialFold == 1) { //八字眉 细长眼 有法令纹
+            $this->result = '非常理性的人 极少情绪化 重逻辑 善于观察 心思细腻 https://www.zhihu.com/question/26073846/answer/933809691';
             $this->result .= '';
         } else {
-            $this->result = '你未来的感情之路也会较为顺利，能够与一个相爱的人';
+            $this->result = '生活上不会有太多的坎坷 事业上较为平淡 你未来的感情之路也会较为顺利，能够与一个相爱的人';
             $this->result .= '';
         }
 
