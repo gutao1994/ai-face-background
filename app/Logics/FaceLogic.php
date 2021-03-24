@@ -237,9 +237,9 @@ class FaceLogic
         } elseif ($this->faceType == 'square_face' || $this->faceType == 'long_face' || $this->jawType == 'square_jaw') { //方形脸 长形脸 方下巴
             $this->result = '意志坚定 做事果断 很有男子气概 心胸宽广 充满侠肝义胆，喜欢打抱不平，只要看到他人需要帮助就会拔刀相助 爱帮助别人';
             $this->result .= '';
-        } elseif ($this->eyebrowType == 'eight_eyebrows' || $this->eyesType == 'thin_eyes' || $this->nasolabialFold == 1) { //八字眉 细长眼 有法令纹
-            $this->result = '非常理性的人 极少情绪化 重逻辑 善于观察 心思细腻 https://www.zhihu.com/question/26073846/answer/933809691';
-            $this->result .= '';
+        } elseif ($this->eyebrowType == 'eight_eyebrows' || $this->eyesType == 'thin_eyes' || $this->eyesType == 'small_eyes' || $this->nasolabialFold == 1 || $this->jawType == 'sharp_jaw' || $this->mouthType == 'thin_lip') { //八字眉 细长眼 小眼 有法令纹 尖下巴 薄唇
+            $this->result = '你是一个心思细腻、非常善于观察且非常理性的男生，而且具有深度思考的能力。你做事情比较重逻辑，极少会情绪化地去处理事情，而且你可以做到长期地专注于一件事情，知道自己长期投入的结果是什么，不会轻易改变方向和赛道，因此不管是在学业上还是在其他方面，';
+            $this->result .= '你往往会取得比别人更好的成绩。';
         } else {
             $this->result = '生活上不会有太多的坎坷 事业上较为平淡 你未来的感情之路也会较为顺利，能够与一个相爱的人';
             $this->result .= '';
