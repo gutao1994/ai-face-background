@@ -254,19 +254,19 @@ class FaceLogic
     protected function female19()
     {
         if ($this->beauty >= 70) { //颜值高
-            $this->result = '';
+            $this->result = '漂亮 有气质 很有魅力';
             $this->result .= '';
         } elseif () {
-            $this->result = '';
+            $this->result = '带有旺夫运';
             $this->result .= '';
         } elseif () {
-            $this->result = '';
+            $this->result = '财运好';
             $this->result .= '';
         } elseif () {
-            $this->result = '';
+            $this->result = '聪明 学习能力强';
             $this->result .= '';
         } else {
-            $this->result = '';
+            $this->result = '温柔可人 善良大方 心灵手巧';
             $this->result .= '';
         }
 
