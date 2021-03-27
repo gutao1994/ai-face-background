@@ -156,17 +156,17 @@ class FaceLogic
         if ($this->beauty >= 70) { //颜值高
             $this->result = '一张可爱白腻的小脸蛋，常常带着俏皮笑容的小嘴巴，以及那双宛若闪亮星星的大眼睛，真是一个人间小精灵，从小就是个美人胚子。你的面相属于福慧双修型，福气会伴随着你的一生。同时你还是个从小就非常聪明的小女孩，你的家长对你期望颇高，';
             $this->result .= '但是家长要注意，在孩子成长的道路上不要给予太大的压力，家长也不要把孩子当成温室的花朵娇生惯养，要适当地让孩子认识到世间的险恶，让孩子形成正确的人生观与价值观，这样才能在以后的人生中不被别有用心的人所迷惑。';
-        } elseif () {
-            $this->result = '有灵气';
+        } elseif ($this->eyesType == 'big_eyes' || $this->eyebrowType == 'arch_eyebrows' || $this->faceType == 'pointed_face' || $this->jawType == 'sharp_jaw') { //大眼 柳叶眉 瓜子脸 尖下巴
+            $this->result = '你是个娇俏可爱且冰雪聪明的小女孩，你的眼睛清澈明亮，如同一泓透亮的清泉，又像一颗水汪汪的葡萄，让人百看不厌。你是个很有灵气的小女孩 老人家喜欢 在艺术方面比较有天分 一生都会有福气相伴 不会有大灾大难';
             $this->result .= '';
-        } elseif () {
-            $this->result = '';
+        } elseif ($this->mouthType == 'smile_lip' || $this->emotion == 'happiness' || $this->smile || $this->noseType == 'thick_nose') { //微笑唇 高兴的情绪 有笑容 宽鼻
+            $this->result = '活泼好动 反应敏捷 性格外向 笑容具有感染力 父母辛苦劳累一天，看到你的的笑容，身上的疲劳一扫而空 对未知事物有着强烈的好奇心';
             $this->result .= '';
-        } elseif () {
-            $this->result = '';
-            $this->result .= '';
+        } elseif ($this->faceupResult == 'faceup_long' || $this->eyebrowType == 'thin_eyebrows' || $this->faceType == 'square_face' || $this->jawType == 'square_jaw' || $this->eyesType == 'thin_eyes') { //上庭偏长 细眉 方形脸 方下巴 细长眼
+            $this->result = '你是一个头脑灵活且聪明过人的小女孩，你在学习上有着比一般人更好的天赋。你有着很强的学习能力与理解能力，而且你的悟性也很高，对于新知识的接受能力强，很多东西往往只需要向你讲解一遍，你就能够理解掌握，并且融会贯通，';
+            $this->result .= '因此你未来能够在学业上取得不错的成绩。如果家长肯在孩子的学业上付出比一般人更多的投入，孩子未来甚至能够取得更高的学位等级。你未来的事业运势会较为不错，在事业上的发展会比较顺利，有很大的可能性能够在自己的专业领域内取得不凡的成就。';
         } else {
-            $this->result = '';
+            $this->result = '温柔细腻 乖巧伶俐 天真无邪 很有礼貌 孝顺 懂得与小朋友一起分享自己的玩具 偶尔会闹闹小脾气';
             $this->result .= '';
         }
 
@@ -309,7 +309,7 @@ class FaceLogic
         if ($this->beauty >= 70) { //颜值高
             $this->result = '你是个魅力十足的女生，你的颜值高，容易让人过目不忘，对异性有很大的吸引力和杀伤力，很多异性会主动接近你，身边从来都不乏追求者。你的感情生活比较丰富，在挑选男朋友时会比较小心谨慎，会考察对方的各种条件。';
             $this->result .= '一旦与异性交往时，也能够做到专一与一心一意，对于其他异性的邀约，也会合理地拒绝。你的婚姻也会比较幸福，能够和一个爱你、懂得呵护、疼惜你的人结婚，婚姻生活会过得甜甜蜜蜜，令人羡慕。';
-        } elseif ($this->nasolabialFold == 1 || $this->faceType == 'square_face' || $this->eyebrowType == 'bushy_eyebrows' || $this->jawType == 'square_jaw') { //有法令纹 方形脸 粗眉 方下巴
+        } elseif ($this->nasolabialFold == 1 || $this->faceType == 'square_face' || $this->jawType == 'square_jaw' || $this->noseType == 'thick_nose') { //有法令纹 方形脸 方下巴 宽鼻
             $this->result = '你是个性格沉稳，略微带点强势的女生。在工作事业上，你有自己的想法，有自己的目标。你的办事能力较强，做事总是有条不紊，对于工作勇于负责，肯吃苦耐劳，未来在事业上能够做出一番成就，很多男性都比不过你。';
             $this->result .= '在婚姻上，建议你找一个顾家、有家庭责任感、老实本分的男人结婚，这样你们在性格上就能够做到相互弥补，你们的家庭生活就会过得和和美美，小日子也会越来越滋润。';
         } elseif ($this->faceupResult == 'faceup_long' || in_array($this->eyebrowType, ['straight_eyebrows', 'arch_eyebrows']) || $this->eyesType == 'big_eyes') { //上庭偏长 一字眉 柳叶眉 大眼
