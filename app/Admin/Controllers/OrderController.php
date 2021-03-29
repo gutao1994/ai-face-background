@@ -83,7 +83,7 @@ class OrderController extends AdminController
         $show->field('amount', '金额')->money();
         $show->field('status', '订单状态')->using($this->status);
         $show->field('api_error_count', 'API调用错误次数');
-        $show->field('img', '照片')->image();
+        $show->field('img', '照片')->as(fn($val) => $val ? $that->fileService->genOssUrl($val) : '')->image();
 
         if ($order->status == 60) {
             $show->field('img-three-parts-five-eyes', '三庭五眼照片')->as(function () use ($that) {
