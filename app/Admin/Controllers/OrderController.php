@@ -35,6 +35,7 @@ class OrderController extends AdminController
 
     protected function grid()
     {
+        $that = $this;
         $grid = new Grid(new Order());
 
         $grid->column('id', 'Id')->sortable();
@@ -44,7 +45,7 @@ class OrderController extends AdminController
         $grid->column('user.nickname', '订单用户');
         $grid->column('shareUser.nickname', '分享者用户');
         $grid->column('amount', '金额')->money();
-        $grid->column('img', '照片')->image('', 50, 40);
+        $grid->column('img', '照片')->display(fn($val) => $that->fileService->genOssUrl($val))->image('', 50, 40);
         $grid->column('api_error_count', 'API调用错误次数');
         $grid->column('status', '订单状态')->using($this->status);
         $grid->column('created_at', '创建时间');
