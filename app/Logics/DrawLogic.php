@@ -211,23 +211,22 @@ class DrawLogic
         $editor->open($image, $path);
 
         $red = new Color('#FF0000');
-        $size = $this->getLineSize($image);
+        $size = $this->getEllipseSize($image);
 
         foreach ($data['right_eye_eyelid'] as $val) { //右眼
-            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size, $size, [$val['x'] - $size/2, $val['y'] - $size/2], 0, $red, $red));
+            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size['min'], $size['min'], [$val['x'] - $size['min'] / 2, $val['y'] - $size['min'] / 2], 0, $red, $red));
         }
 
         foreach ($data['left_eye_eyelid'] as $val) { //左眼
-            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size, $size, [$val['x'] - $size/2, $val['y'] - $size/2], 0, $red, $red));
+            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size['min'], $size['min'], [$val['x'] - $size['min'] / 2, $val['y'] - $size['min'] / 2], 0, $red, $red));
         }
 
-        $eyebrowSize = $size + 1;
         foreach ($data['right_eyebrow'] as $val) { //右眉毛
-            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $eyebrowSize, $eyebrowSize, [$val['x'] - $eyebrowSize/2, $val['y'] - $eyebrowSize/2], 0, $red, $red));
+            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size['max'], $size['max'], [$val['x'] - $size['max'] / 2, $val['y'] - $size['max'] / 2], 0, $red, $red));
         }
 
         foreach ($data['left_eyebrow'] as $val) { //左眉毛
-            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $eyebrowSize, $eyebrowSize, [$val['x'] - $eyebrowSize/2, $val['y'] - $eyebrowSize/2], 0, $red, $red));
+            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size['max'], $size['max'], [$val['x'] - $size['max'] / 2, $val['y'] - $size['max'] / 2], 0, $red, $red));
         }
 
         foreach ($data['nose'] as $key => $val) { //鼻子
@@ -236,23 +235,21 @@ class DrawLogic
                 strpos($key, 'nose_right') !== false ||
                 $key === 'nose_midline_0'
             ) {
-                $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size, $size, [$val['x'] - $size/2, $val['y'] - $size/2], 0, $red, $red));
+                $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size['min'], $size['min'], [$val['x'] - $size['min'] / 2, $val['y'] - $size['min'] / 2], 0, $red, $red));
             }
         }
 
-        $mouthSize = $size + 1;
         foreach ($data['mouth'] as $val) { //嘴巴
-            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $mouthSize, $mouthSize, [$val['x'] - $mouthSize/2, $val['y'] - $mouthSize/2], 0, $red, $red));
+            $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size['max'], $size['max'], [$val['x'] - $size['max'] / 2, $val['y'] - $size['max'] / 2], 0, $red, $red));
         }
 
-        $faceSize = $size + 1;
         foreach ($data['face'] as $key => $val) { //面部
             if (
                 strpos($key, 'face_contour_right') !== false ||
                 strpos($key, 'face_contour_left') !== false ||
                 strpos($key, 'face_hairline') !== false
             ){
-                $editor->draw($image, Grafika::createDrawingObject('Ellipse', $faceSize, $faceSize, [$val['x'] - $faceSize/2, $val['y'] - $faceSize/2], 0, $red, $red));
+                $editor->draw($image, Grafika::createDrawingObject('Ellipse', $size['max'], $size['max'], [$val['x'] - $size['max'] / 2, $val['y'] - $size['max'] / 2], 0, $red, $red));
             }
         }
 
@@ -323,6 +320,35 @@ class DrawLogic
         } else { //1201-inf
             return 5;
         }
+    }
+
+    /**
+     * 根据图片大小得到画圆的粗细
+     */
+    protected function getEllipseSize($image)
+    {
+        $iWidth = $image->getWidth();
+        $iHeight = $image->getHeight();
+
+        $px = min($iWidth, $iHeight);
+
+        $min = $max = 0;
+
+        if ($px <= 400) {
+            $min = 1;
+            $max = 1;
+        } else {
+            $min = ceil( ($px - 400) / 200 ) + 1;
+            $max = $min + 1;
+
+            if (max($iWidth, $iHeight) / $px >= 2)
+                $max += 1;
+        }
+
+        return [
+            'min' => $min,
+            'max' => $max,
+        ];
     }
 
     /**
