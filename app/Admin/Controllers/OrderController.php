@@ -191,9 +191,14 @@ class OrderController extends AdminController
             });
 
             $show->field('eyebrow_type', '眉型判断结果')->as(function () {
+                $eyebrowType = $this->facialfeatures_data['result']['eyebrow']['eyebrow_type'];
+
+                if (empty($eyebrowType))
+                    return '无法判断';
+
                 return [
                     'bushy_eyebrows' => '粗眉', 'eight_eyebrows' => '八字眉', 'raise_eyebrows' => '上挑眉', 'straight_eyebrows' => '一字眉', 'round_eyebrows' => '拱形眉', 'arch_eyebrows' => '柳叶眉', 'thin_eyebrows' => '细眉'
-                ][$this->facialfeatures_data['result']['eyebrow']['eyebrow_type']];
+                ][$eyebrowType];
             });
 
             $show->field('eyes_type', '眼型判断结果')->as(function () {
