@@ -88,87 +88,90 @@ closedir ( $handle );
 
 账号: 17681825727 chenchen520 火狐
 
-小组: 化妆品测评|美容护肤               https://www.douban.com/group/blackeye/
+小组: 化妆品测评|美容护肤
 帖子: https://www.douban.com/group/topic/219152108/
 
-小组: 就是喜欢看手相                   https://www.douban.com/group/shouxiang/
+小组: 就是喜欢看手相
 帖子: https://www.douban.com/group/topic/219031458/
 
-小组: 奇门遁甲算命馆                   https://www.douban.com/group/152205/
+小组: 奇门遁甲算命馆
 帖子: https://www.douban.com/group/topic/218966518/
 
-小组: 星象研究资料室                   https://www.douban.com/group/turedream/
+小组: 星象研究资料室
 帖子: https://www.douban.com/group/topic/218921630/
 
-小组: 塔罗牌占卜占星(星座星盘周易算命)   https://www.douban.com/group/558673/
+小组: 塔罗牌占卜占星(星座星盘周易算命)
 帖子: https://www.douban.com/group/topic/218893313/
 
-小组: 未卜先知-星座预测心理周易国学      https://www.douban.com/group/cast_lots/
+小组: 未卜先知-星座预测心理周易国学
 帖子: https://www.douban.com/group/topic/218832705/
 
-小组: 形象八卦～搭配减肥               https://www.douban.com/group/Appearance/
+小组: 形象八卦～搭配减肥
 帖子: https://www.douban.com/group/topic/218830455/
 
-小组: 紫薇八字命理预测                 https://www.douban.com/group/463178/
+小组: 紫薇八字命理预测
 帖子: https://www.douban.com/group/topic/218828409/
 
-小组: 我们就是爱算命                  https://www.douban.com/group/cxg/
+小组: 我们就是爱算命
 帖子: https://www.douban.com/group/topic/218828276/
 
-小组: ★占星疯人院★                  https://www.douban.com/group/astrologylilith/
+小组: ★占星疯人院★
 帖子: https://www.douban.com/group/topic/218822892/
 
-小组: 面相测试馆                     https://www.douban.com/group/mianxiang/
+小组: 面相测试馆
 帖子: https://www.douban.com/group/topic/218816722/
 
 ################################################################
 
 账号: 13697933269 chenchen520 chrome
 
-小组: 周易算命馆                     https://www.douban.com/group/97924/
+小组: 周易算命馆
 帖子: https://www.douban.com/group/topic/219560790/
+
+小组: 来自星星的我们—译典园翻译小组
+帖子: https://www.douban.com/group/topic/219679734/
 
 ################################################################
 
 账号: 15807030559 chenchen520 360浏览器
 
-小组: 星座情感研究                   https://www.douban.com/group/xingzuo/
+小组: 星座情感研究
 帖子: https://www.douban.com/group/topic/219561471/
 
-小组: 安坏关系-星宿恋爱               https://www.douban.com/group/anhuai/
+小组: 安坏关系-星宿恋爱
 帖子: https://www.douban.com/group/topic/219561308/
 
 ################################################################
 
 账号: 13958084445 chenchen520 qq浏览器
 
-小组: 算命                          https://www.douban.com/group/427749/
+小组: 算命
 帖子: https://www.douban.com/group/topic/219604741/
 
-小组: 星座 看相 占星 四柱八字预测推运程 https://www.douban.com/group/506967/
+小组: 星座 看相 占星 四柱八字预测推运程
 帖子: https://www.douban.com/group/topic/219575415/
 
 ################################################################
 
 账号: 18967194283 chenchen520 opera浏览器
 
-小组: 天蝎男                        https://www.douban.com/group/384770/
+小组: 天蝎男
 帖子: https://www.douban.com/group/topic/219585159/
 
-小组: 北交占星社                     https://www.douban.com/group/108314/
+小组: 北交占星社
 帖子: https://www.douban.com/group/topic/219575051/
 
-小组: 占星与玛法达星座运势星宿讨论分组  https://www.douban.com/group/369881/
+小组: 占星与玛法达星座运势星宿讨论分组
 帖子: https://www.douban.com/group/topic/219567505/
 
 ################################################################
 
 账号: 18954583337 chenchen520 vivaldi浏览器
 
-小组: 业胎                          https://www.douban.com/group/598654/
+小组: 业胎
 帖子: https://www.douban.com/group/topic/219575616/
 
-小组: 27星宿                        https://www.douban.com/group/591630/
+小组: 27星宿
 帖子: https://www.douban.com/group/topic/219567220/
 
 ##########################################################################################################################
