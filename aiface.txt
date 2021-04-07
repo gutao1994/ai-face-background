@@ -1,0 +1,227 @@
+
+//小程序分享图片更换
+
+面相分析 概率微调 20-26 女性 mysql正则匹配分析
+
+面相分析 分析结果微调
+
+面相分析 增加更多选项 20-26 颜值>=80
+
+豆瓣刷评论脚本
+
+订单列表不显示图片(手动显示) 节省流量
+
+后台图片放大功能
+
+
+select face_result,count(1) as c from orders
+where face_result is not NULL and
+face_result != "性格上，你为人较聪明，做任何事情都能有把握，游刃有余。说话直爽，胸怀坦荡，具有包容心，对于一些事情，能够采取宽宏的态度，富有同情心。经常会路见不平，拔刀相助，侠义心肠浓厚。"
+and face_result != "性格上，你是个做事容易操之过急的人，往往会招来措手不及的失败。由于肚量不够宽大，会经常把一些小事放在心上，造成精神上的忧患，情绪容易紧张。所以，要学会放松，放松心胸，才能让心情愉快，保持平常心是关键。"
+group by face_result
+order by c desc
+;
+
+
+
+insert into `orders`
+
+(`no`, `user_id`, `status`)
+
+values (
+
+substring(md5(rand()), 1, 20), 1, 10
+
+);
+
+###############################################################
+
+https://zx.jinhuirr.cn/mianxiangpeidui/index
+https://zx.jinhuirr.cn/shouxiangkancaiyun/index
+
+###############################################################
+
+set_time_limit(0);
+
+$dir = 'e:/a';
+$handle = opendir ($dir);
+
+while ( false !== ( $file = readdir( $handle ) ) ) {
+    $tmp = $dir . '/' . $file;
+
+    if (is_file($tmp)) {
+
+        $data = $this->facePlusPlusService->facialfeatures([
+            'image_file' => $tmp
+        ])->getBody()->getContents();
+
+        $this->drawLogic->fiveSense($tmp, $data);
+
+        sleep(1);
+    }
+}
+
+closedir ( $handle );
+
+##########################################################################################################################
+
+一个可以分析皮肤状态、分析面部数据、判断颜值、分析面相的小程序，欢迎大家来体验
+
+一个可以通过照片分析皮肤状态、分析面部数据、判断颜值、分析面相、解说人生运势的小程序，欢迎大家来体验。
+
+皮肤分析、颜值分析、面部数据、运势分析，这里都有，欢迎大家来体验
+
+################################################################
+
+给大家分享一个通过人工智能技术来测面相的小程序，欢迎来体验
+
+这是一个通过深度机器学习技术来分析面部数据、解析面相、解说人生运势的小程序，欢迎大家来体验。
+
+################################################################
+
+有需要测颜值 看面相 分析运势的可以联系我只需2元即可
+
+##########################################################################################################################
+
+豆瓣
+
+
+账号: 17681825727 chenchen520 火狐
+
+小组: 化妆品测评|美容护肤               https://www.douban.com/group/blackeye/
+帖子: https://www.douban.com/group/topic/219152108/
+
+小组: 就是喜欢看手相                   https://www.douban.com/group/shouxiang/
+帖子: https://www.douban.com/group/topic/219031458/
+
+小组: 奇门遁甲算命馆                   https://www.douban.com/group/152205/
+帖子: https://www.douban.com/group/topic/218966518/
+
+小组: 星象研究资料室                   https://www.douban.com/group/turedream/
+帖子: https://www.douban.com/group/topic/218921630/
+
+小组: 塔罗牌占卜占星(星座星盘周易算命)   https://www.douban.com/group/558673/
+帖子: https://www.douban.com/group/topic/218893313/
+
+小组: 未卜先知-星座预测心理周易国学      https://www.douban.com/group/cast_lots/
+帖子: https://www.douban.com/group/topic/218832705/
+
+小组: 形象八卦～搭配减肥               https://www.douban.com/group/Appearance/
+帖子: https://www.douban.com/group/topic/218830455/
+
+小组: 紫薇八字命理预测                 https://www.douban.com/group/463178/
+帖子: https://www.douban.com/group/topic/218828409/
+
+小组: 我们就是爱算命                  https://www.douban.com/group/cxg/
+帖子: https://www.douban.com/group/topic/218828276/
+
+小组: ★占星疯人院★                  https://www.douban.com/group/astrologylilith/
+帖子: https://www.douban.com/group/topic/218822892/
+
+小组: 面相测试馆                     https://www.douban.com/group/mianxiang/
+帖子: https://www.douban.com/group/topic/218816722/
+
+################################################################
+
+账号: 13697933269 chenchen520 chrome
+
+小组: 周易算命馆                     https://www.douban.com/group/97924/
+帖子: https://www.douban.com/group/topic/219560790/
+
+################################################################
+
+账号: 15807030559 chenchen520 360浏览器
+
+小组: 星座情感研究                   https://www.douban.com/group/xingzuo/
+帖子: https://www.douban.com/group/topic/219561471/
+
+小组: 安坏关系-星宿恋爱               https://www.douban.com/group/anhuai/
+帖子: https://www.douban.com/group/topic/219561308/
+
+################################################################
+
+账号: 13958084445 chenchen520 qq浏览器
+
+小组: 算命                          https://www.douban.com/group/427749/
+帖子: https://www.douban.com/group/topic/219604741/
+
+小组: 星座 看相 占星 四柱八字预测推运程 https://www.douban.com/group/506967/
+帖子: https://www.douban.com/group/topic/219575415/
+
+################################################################
+
+账号: 18967194283 chenchen520 opera浏览器
+
+小组: 天蝎男                        https://www.douban.com/group/384770/
+帖子: https://www.douban.com/group/topic/219585159/
+
+小组: 北交占星社                     https://www.douban.com/group/108314/
+帖子: https://www.douban.com/group/topic/219575051/
+
+小组: 占星与玛法达星座运势星宿讨论分组  https://www.douban.com/group/369881/
+帖子: https://www.douban.com/group/topic/219567505/
+
+################################################################
+
+账号: 18954583337 chenchen520 vivaldi浏览器
+
+小组: 业胎                          https://www.douban.com/group/598654/
+帖子: https://www.douban.com/group/topic/219575616/
+
+小组: 27星宿                        https://www.douban.com/group/591630/
+帖子: https://www.douban.com/group/topic/219567220/
+
+##########################################################################################################################
+
+百度贴吧
+
+
+账号: 17879313312 chenchen520
+贴吧:
+帖子:
+回复:
+
+##########################################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
