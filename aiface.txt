@@ -141,6 +141,15 @@ closedir ( $handle );
 小组: 安坏关系-星宿恋爱
 帖子: https://www.douban.com/group/topic/219561308/
 
+小组: 评价长相小组
+帖子: https://www.douban.com/group/topic/219791197/
+
+小组: p图大师诞生地
+帖子: https://www.douban.com/group/topic/219798484/
+
+小组: 朋友圈自拍审核大会
+帖子: https://www.douban.com/group/topic/219799846/
+
 ################################################################
 
 账号: 13958084445 chenchen520 qq浏览器
@@ -150,6 +159,9 @@ closedir ( $handle );
 
 小组: 星座 看相 占星 四柱八字预测推运程
 帖子: https://www.douban.com/group/topic/219575415/
+
+小组: 占星俱乐部
+帖子: https://www.douban.com/group/topic/219755732/
 
 ################################################################
 
@@ -167,9 +179,6 @@ closedir ( $handle );
 ################################################################
 
 账号: 18954583337 chenchen520 vivaldi浏览器
-
-小组: 业胎
-帖子: https://www.douban.com/group/topic/219575616/
 
 小组: 27星宿
 帖子: https://www.douban.com/group/topic/219567220/
