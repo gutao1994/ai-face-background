@@ -1,5 +1,5 @@
 
-//小程序分享图片更换
+小程序分享图片更换
 
 面相分析 概率微调 20-26 女性 mysql正则匹配分析
 
@@ -18,6 +18,8 @@ select face_result,count(1) as c from orders
 where face_result is not NULL and
 face_result != "性格上，你为人较聪明，做任何事情都能有把握，游刃有余。说话直爽，胸怀坦荡，具有包容心，对于一些事情，能够采取宽宏的态度，富有同情心。经常会路见不平，拔刀相助，侠义心肠浓厚。"
 and face_result != "性格上，你是个做事容易操之过急的人，往往会招来措手不及的失败。由于肚量不够宽大，会经常把一些小事放在心上，造成精神上的忧患，情绪容易紧张。所以，要学会放松，放松心胸，才能让心情愉快，保持平常心是关键。"
+and detect_data regexp '"age":\\{"value":2[0-6]'
+and detect_data regexp '"gender":\\{"value":"Female"\\}'
 group by face_result
 order by c desc
 ;
@@ -86,105 +88,65 @@ closedir ( $handle );
 豆瓣
 
 
-账号: 17681825727 chenchen520 火狐
+账号: 17681825727 chenchen520 火狐 被停用
 
-小组: 化妆品测评|美容护肤
-帖子: https://www.douban.com/group/topic/219152108/
-
-小组: 就是喜欢看手相
-帖子: https://www.douban.com/group/topic/219031458/
-
-小组: 奇门遁甲算命馆
-帖子: https://www.douban.com/group/topic/218966518/
-
-小组: 星象研究资料室
-帖子: https://www.douban.com/group/topic/218921630/
-
-小组: 塔罗牌占卜占星(星座星盘周易算命)
-帖子: https://www.douban.com/group/topic/218893313/
-
-小组: 未卜先知-星座预测心理周易国学
-帖子: https://www.douban.com/group/topic/218832705/
-
-小组: 形象八卦～搭配减肥
-帖子: https://www.douban.com/group/topic/218830455/
-
-小组: 紫薇八字命理预测
-帖子: https://www.douban.com/group/topic/218828409/
-
-小组: 我们就是爱算命
-帖子: https://www.douban.com/group/topic/218828276/
-
-小组: ★占星疯人院★
-帖子: https://www.douban.com/group/topic/218822892/
-
-小组: 面相测试馆
-帖子: https://www.douban.com/group/topic/218816722/
+小组:
+    化妆品测评|美容护肤
+    奇门遁甲算命馆
+    星象研究资料室
+    塔罗牌占卜占星(星座星盘周易算命)
+    未卜先知-星座预测心理周易国学
+    形象八卦～搭配减肥
+    紫薇八字命理预测
+    我们就是爱算命
+    ★占星疯人院★
 
 ################################################################
 
-账号: 13697933269 chenchen520 chrome
+账号: 13697933269 chenchen520 chrome 被停用
 
-小组: 周易算命馆
-帖子: https://www.douban.com/group/topic/219560790/
-
-小组: 来自星星的我们—译典园翻译小组
-帖子: https://www.douban.com/group/topic/219679734/
+小组:
+    周易算命馆
+    来自星星的我们—译典园翻译小组
 
 ################################################################
 
-账号: 15807030559 chenchen520 360浏览器
+账号: 15807030559 chenchen520 360浏览器 被停用
 
-小组: 星座情感研究
-帖子: https://www.douban.com/group/topic/219561471/
-
-小组: 安坏关系-星宿恋爱
-帖子: https://www.douban.com/group/topic/219561308/
-
-小组: 评价长相小组
-帖子: https://www.douban.com/group/topic/219791197/
-
-小组: p图大师诞生地
-帖子: https://www.douban.com/group/topic/219798484/
-
-小组: 朋友圈自拍审核大会
-帖子: https://www.douban.com/group/topic/219799846/
+小组:
+    星座情感研究
+    安坏关系-星宿恋爱
+    评价长相小组
+    p图大师诞生地
+    朋友圈自拍审核大会
 
 ################################################################
 
 账号: 13958084445 chenchen520 qq浏览器
 
-小组: 算命
-帖子: https://www.douban.com/group/topic/219604741/
-
-小组: 星座 看相 占星 四柱八字预测推运程
-帖子: https://www.douban.com/group/topic/219575415/
-
-小组: 占星俱乐部
-帖子: https://www.douban.com/group/topic/219755732/
+小组:
+    算命
+    星座 看相 占星 四柱八字预测推运程
+    占星俱乐部
+    算命兴趣爱好小组
 
 ################################################################
 
-账号: 18967194283 chenchen520 opera浏览器
+账号: 18967194283 chenchen520 opera浏览器 被停用
 
-小组: 天蝎男
-帖子: https://www.douban.com/group/topic/219585159/
-
-小组: 北交占星社
-帖子: https://www.douban.com/group/topic/219575051/
-
-小组: 占星与玛法达星座运势星宿讨论分组
-帖子: https://www.douban.com/group/topic/219567505/
+小组:
+    天蝎男
+    北交占星社
+    占星与玛法达星座运势星宿讨论分组
 
 ################################################################
 
 账号: 18954583337 chenchen520 vivaldi浏览器
 
-小组: 27星宿
-帖子: https://www.douban.com/group/topic/219567220/
-
-小组: 人人都有好头发 - 一起怼脱发！
-帖子: https://www.douban.com/group/topic/219685216/
+小组:
+    人人都有好头发 - 一起怼脱发！
+    面相测试馆
+    就是喜欢看手相
 
 ##########################################################################################################################
 
