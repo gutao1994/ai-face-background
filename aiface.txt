@@ -25,6 +25,24 @@ order by c desc
 ;
 
 
+select
+
+greatest(
+json_extract(detect_data, '$.faces[0].attributes.beauty.male_score'),
+json_extract(detect_data, '$.faces[0].attributes.beauty.female_score')
+) as c
+
+from orders
+
+where face_result=
+
+"你是个魅力十足的女生，你的颜值高，容易让人过目不忘，对异性有很大的吸引力和杀伤力，很多异性会主动接近你，身边从来都不乏追求者。你的感情生活比较丰富，在挑选男朋友时会比较小心谨慎，会考察对方的各种条件。一旦与异性交往时，也能够做到专一与一心一意，对于其他异性的邀约，也会合理地拒绝。你的婚姻也会比较幸福，能够和一个爱你、懂得呵护、疼惜你的人结婚，婚姻生活会过得甜甜蜜蜜，令人羡慕。"
+
+HAVING c > 80
+
+
+;
+
 
 insert into `orders`
 
