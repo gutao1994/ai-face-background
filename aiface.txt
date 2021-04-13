@@ -39,10 +39,34 @@ where face_result=
 "你是个魅力十足的女生，你的颜值高，容易让人过目不忘，对异性有很大的吸引力和杀伤力，很多异性会主动接近你，身边从来都不乏追求者。你的感情生活比较丰富，在挑选男朋友时会比较小心谨慎，会考察对方的各种条件。一旦与异性交往时，也能够做到专一与一心一意，对于其他异性的邀约，也会合理地拒绝。你的婚姻也会比较幸福，能够和一个爱你、懂得呵护、疼惜你的人结婚，婚姻生活会过得甜甜蜜蜜，令人羡慕。"
 
 HAVING c > 80
-
-
 ;
 
+###############################################################
+
+detect_data regexp '"age":\\{"value":2[0-6]'
+detect_data regexp '"age":\\{"value":(2[7-9]|3[0-5])'
+detect_data regexp '"age":\\{"value":(3[6-9]|4[0-9]|50)'
+detect_data regexp '"gender":\\{"value":"Male"\\}'
+detect_data regexp '"gender":\\{"value":"Female"\\}'
+
+
+json_extract(detect_data, '$.faces[0].attributes.age.value') as age
+json_extract(detect_data, '$.faces[0].attributes.gender.value') as gender
+greatest(
+    json_extract(detect_data, '$.faces[0].attributes.beauty.male_score'),
+    json_extract(detect_data, '$.faces[0].attributes.beauty.female_score')
+) as beauty
+json_extract(facialfeatures_data, '$.result.three_parts.one_part.faceup_result') as faceup_result
+json_extract(facialfeatures_data, '$.result.three_parts.three_part.facedown_result') as facedown_result
+json_extract(facialfeatures_data, '$.result.face.face_type') as face_type
+json_extract(facialfeatures_data, '$.result.jaw.jaw_type') as jaw_type
+json_extract(facialfeatures_data, '$.result.eyebrow.eyebrow_type') as eyebrow_type
+json_extract(facialfeatures_data, '$.result.eyes.eyes_type') as eyes_type
+json_extract(facialfeatures_data, '$.result.nose.nose_type') as nose_type
+json_extract(facialfeatures_data, '$.result.mouth.mouth_type') as mouth_type
+json_extract(skinanalyze_data, '$.result.nasolabial_fold.value') as nasolabial_fold
+
+###############################################################
 
 insert into `orders`
 
@@ -201,10 +225,58 @@ closedir ( $handle );
 
 
 
+select face_result,count(1) as c from orders
+where face_result is not NULL
+and face_result != "性格上，你为人较聪明，做任何事情都能有把握，游刃有余。说话直爽，胸怀坦荡，具有包容心，对于一些事情，能够采取宽宏的态度，富有同情心。经常会路见不平，拔刀相助，侠义心肠浓厚。"
+and face_result != "性格上，你是个做事容易操之过急的人，往往会招来措手不及的失败。由于肚量不够宽大，会经常把一些小事放在心上，造成精神上的忧患，情绪容易紧张。所以，要学会放松，放松心胸，才能让心情愉快，保持平常心是关键。"
+and face_result != "你是个魅力十足的女生，你的颜值高，容易让人过目不忘，对异性有很大的吸引力和杀伤力，很多异性会主动接近你，身边从来都不乏追求者。你的感情生活比较丰富，在挑选男朋友时会比较小心谨慎，会考察对方的各种条件。一旦与异性交往时，也能够做到专一与一心一意，对于其他异性的邀约，也会合理地拒绝。你的婚姻也会比较幸福，能够和一个爱你、懂得呵护、疼惜你的人结婚，婚姻生活会过得甜甜蜜蜜，令人羡慕。"
+and face_result != "你是个性格沉稳，略微带点强势的女生。在工作事业上，你有自己的想法，有自己的目标。你的办事能力较强，做事总是有条不紊，对于工作勇于负责，肯吃苦耐劳，未来在事业上能够做出一番成就，很多男性都比不过你。在婚姻上，建议你找一个顾家、有家庭责任感、老实本分的男人结婚，这样你们在性格上就能够做到相互弥补，你们的家庭生活就会过得和和美美，小日子也会越来越滋润。"
+and face_result != "你是一个心灵手巧、聪慧知礼、有教养有担当、富有爱心和正义感的女生。你的面相看起来比较有贵气，是属于富贵好命的面相。在感情上，你年轻时可能会遇人不淑，感情经历可能会比较坎坷不顺，但是最终能够与你步入婚姻殿堂的，必是一个值得你托付终身的人。你们会有一个充满幸福与爱的小家庭，生活上不会有太多的忧愁烦恼，基本不会为钱财发愁。除此之外，你会有几个关系一直都很好的闺蜜，在以后的人生中能够相互陪伴、相互扶持。"
+and face_result != "你的面相贵气逼人，属于雍容富贵之相，并且天生就带有旺夫运。你的财运会特别好，也愿意用自己的财力帮助他人，因此平时人缘也特别好。性格上，你非常地善解人意，别人和你相处的时候，会感觉轻松自在。你以后的人生也会较为地顺风顺水，身体上也会很少生病，会有一个安逸、幸福且快乐的人生。而且你带有多子多福之相，在后代生养问题上，你是可以少操心的，孩子也会聪明，健康，乖顺，懂事，成长顺利，学业也不错。"
+and face_result != "你是一个有智慧、有头脑、有才华的女人。你为人处事大方得体，做事认真负责，聪明能干，学习能力强，既有实力又有能力。你擅长与人沟通交流，通常人际关系不错，身边贵人也多，财运也较好。你的事业心比较强，无论是自己创业还是打工上班，都是很有成绩和成就的，属于女强人类型。你的性格略微强势，无论是在感情方面还是在职场中，都喜欢占据主导地位，不喜欢被人约束和管制，人生会比较自在与精彩。"
+and face_result != "你是一个做事能够果断、专注，办事效率高，并且不会轻言放弃的人，无论什么事情，只要去做，就不会轻易地放弃，会坚持到底。在工作上是如此，在感情上更是如此。在感情上，你是一个对待感情认真且非常执着的人，与人交往不会轻易地说分手；婚后，对婚姻的忠诚度很高，你要的是天长地久，而不仅仅只是曾经拥有。性格上，你是一个比较外向、开朗、随和、待人热情的人，因此你的人缘也比较不错，是一个比较受欢迎的人。"
+and face_result != "你是一个性格较为随和的人，你为人忠厚老实并且待人诚恳，做事情能够一步一个脚印，让人感觉非常踏实。你的个人运势也比较不错，到中年或者中晚年的时候，能够厚积薄发，在事业上取得一定的成绩。更令人羡慕的是，你还是个旺妻命。在你结婚之后，你会给你的妻子带来很多帮助和好运。嫁给你这样的男人，你的妻子在以后的日子里，会过得富裕、舒心、且幸福。"
+and face_result != "从你的面相上来看，你中年的运势会很好，事业上会比较成功。你很明确自己的目标，能把握自己未来的方向，知道自己想要什么。你也特别懂得如何去跟别人打交道，人际关系好，会遇到贵人相助。在个人感情上，你的情感道路会比较一帆风顺，会与你相爱的人有一个幸福的家庭。你的妻子会是你的贤内助，在你打拼事业的路上，默默地支持你，做你背后的女人。"
+and face_result != "你是个很能理解和体谅别人、没什么心机、性格豁达且淡然的人。在生活中，你是个很好相处，并且相处起来能够令人感到很舒服的人。你待人热情大方，愿意与朋友分享自己的喜乐，因此身边总是会有很多玩得好的闺蜜朋友。在家庭上，你是个热爱家庭、肯为了家庭的安稳和幸福做出牺牲的人，因此你的家庭生活能够较为和美，夫妻之间能够互相恩爱、敬重，在往后的漫漫岁月里，过着一个幸福、安稳、有乐趣的人生。"
+and face_result != "你是一个性格随和、宽厚的人。在与人相处时，你总是能够做到真诚以待，因此你的人际关系也比较好。在对待自己的事业上，你是一个努力奋斗、积极向上、踏实肯干的人，因此你的工作伙伴都很乐意与你一起共事。你中晚年的运势会很好，是属于晚年大发的类型，届时将会时来运转，迎来自己事业上的巅峰。你的家庭生活会和和美美，你与你爱人的关系也是较为和睦，不会在感情上有太多坎坷磨难。"
+group by face_result
+order by c desc
+;
 
 
+select face_result,count(1) as c from orders
+where face_result is not NULL
+and detect_data regexp '"age":\\{"value":(3[6-9]|4[0-9]|50)'
+and detect_data regexp '"gender":\\{"value":"Male"\\}'
+group by face_result
+order by c desc
+;
 
 
+select
+json_extract(detect_data, '$.faces[0].attributes.age.value') as age,
+json_extract(detect_data, '$.faces[0].attributes.gender.value') as gender,
+greatest(
+    json_extract(detect_data, '$.faces[0].attributes.beauty.male_score'),
+    json_extract(detect_data, '$.faces[0].attributes.beauty.female_score')
+) as beauty,
+json_extract(facialfeatures_data, '$.result.three_parts.one_part.faceup_result') as faceup_result,
+json_extract(facialfeatures_data, '$.result.three_parts.three_part.facedown_result') as facedown_result,
+json_extract(facialfeatures_data, '$.result.face.face_type') as face_type,
+json_extract(facialfeatures_data, '$.result.jaw.jaw_type') as jaw_type,
+json_extract(facialfeatures_data, '$.result.eyebrow.eyebrow_type') as eyebrow_type,
+json_extract(facialfeatures_data, '$.result.eyes.eyes_type') as eyes_type,
+json_extract(facialfeatures_data, '$.result.nose.nose_type') as nose_type,
+json_extract(facialfeatures_data, '$.result.mouth.mouth_type') as mouth_type,
+json_extract(skinanalyze_data, '$.result.nasolabial_fold.value') as nasolabial_fold
+from orders
+WHERE
+detect_data regexp '"age":\\{"value":(3[6-9]|4[0-9]|50)'
+and detect_data regexp '"gender":\\{"value":"Male"\\}'
+-- face_result = "你是个很能理解和体谅别人、没什么心机、性格豁达且淡然的人。在生活中，你是个很好相处，并且相处起来能够令人感到很舒服的人。你待人热情大方，愿意与朋友分享自己的喜乐，因此身边总是会有很多玩得好的闺蜜朋友。在家庭上，你是个热爱家庭、肯为了家庭的安稳和幸福做出牺牲的人，因此你的家庭生活能够较为和美，夫妻之间能够互相恩爱、敬重，在往后的漫漫岁月里，过着一个幸福、安稳、有乐趣的人生。"
+having (
+				mouth_type = 'thick_lip'
+);
 
 
 
