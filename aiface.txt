@@ -11,6 +11,8 @@
 
 订单列表、详情 用户链接
 
+订单按日期筛选
+
 代理商功能设计
 
 
@@ -43,15 +45,18 @@ HAVING c > 80
 
 ###############################################################
 
+detect_data regexp '"age":\\{"value":1[6-9]'
 detect_data regexp '"age":\\{"value":2[0-6]'
 detect_data regexp '"age":\\{"value":(2[7-9]|3[0-5])'
 detect_data regexp '"age":\\{"value":(3[6-9]|4[0-9]|50)'
+detect_data regexp '"age":\\{"value":(5[1-9]|[6-9][0-9])'
 detect_data regexp '"gender":\\{"value":"Male"\\}'
 detect_data regexp '"gender":\\{"value":"Female"\\}'
 
 
 json_extract(detect_data, '$.faces[0].attributes.age.value') as age
 json_extract(detect_data, '$.faces[0].attributes.gender.value') as gender
+json_extract(detect_data, '$.faces[0].attributes.skinstatus') as skinstatus
 greatest(
     json_extract(detect_data, '$.faces[0].attributes.beauty.male_score'),
     json_extract(detect_data, '$.faces[0].attributes.beauty.female_score')
