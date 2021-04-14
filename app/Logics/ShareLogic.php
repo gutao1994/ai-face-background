@@ -14,32 +14,23 @@ class ShareLogic
      */
     public function shareCommission($shareUser, $lowUserId, $order)
     {
-        $result = ShareCommissionLog::query()
-            ->where('user_id', $shareUser->id)
-            ->where('lower_user_id', $lowUserId)
-            ->first();
+        DB::beginTransaction();
 
-        if (empty($result)) { //之前没有分享记录
-            DB::beginTransaction();
+        $shareUser->share_commission += $shareUser->share_per_price;
+        $shareUser->share_total_commission += $shareUser->share_per_price;
+        $shareUser->share_order_num += 1;
+        $shareUser->save();
 
-            $commissionPrice = config('aiface.share_commission_price') * 100;
+        ShareCommissionLog::query()->create([
+            'user_id' => $shareUser->id,
+            'type' => 1,
+            'lower_user_id' => $lowUserId,
+            'lower_user_nickname' => WxUser::query()->find($lowUserId)->nickname,
+            'lower_order_id' => $order->id,
+            'amount' => $shareUser->share_per_price,
+        ]);
 
-            $shareUser->share_commission += $commissionPrice;
-            $shareUser->share_total_commission += $commissionPrice;
-            $shareUser->share_order_num += 1;
-            $shareUser->save();
-
-            ShareCommissionLog::query()->create([
-                'user_id' => $shareUser->id,
-                'type' => 1,
-                'lower_user_id' => $lowUserId,
-                'lower_user_nickname' => WxUser::query()->find($lowUserId)->nickname,
-                'lower_order_id' => $order->id,
-                'amount' => $commissionPrice,
-            ]);
-
-            DB::commit();
-        }
+        DB::commit();
     }
 
 

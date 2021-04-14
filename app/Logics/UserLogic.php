@@ -18,6 +18,7 @@ class UserLogic
             $user = new WxUser();
             $user->openid = $data['openId'];
             $user->share_permission = 1;
+            $user->share_per_price = config('aiface.share_commission_price.default') * 100;
         }
 
         $user->nickname = $data['nickName'];
