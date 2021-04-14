@@ -42,8 +42,8 @@ class OrderController extends AdminController
         $grid->column('no', '订单号')->display(function ($val) {
             return "<a href='/admin/order/{$this->id}'>{$val}</a>";
         });
-        $grid->column('user.nickname', '订单用户');
-        $grid->column('shareUser.nickname', '分享者用户');
+        $grid->column('user.nickname', '订单用户')->display(fn($val) => "<a target='_blank' href='/admin/wx_users/{$this->user_id}'>{$val}</a>");
+        $grid->column('shareUser.nickname', '分享者用户')->display(fn($val) => "<a target='_blank' href='/admin/wx_users/{$this->share_user_id}'>{$val}</a>");
         $grid->column('amount', '金额')->money();
         $grid->column('img', '照片')->display(fn($val) => $val ? $that->fileService->genOssUrl($val) : '')->image('', 50, 40);
         $grid->column('api_error_count', 'API调用错误次数');
@@ -65,6 +65,7 @@ class OrderController extends AdminController
             $filter->equal('share_user_id', '分享者Id');
             $filter->equal('user_id', '订单用户Id');
             $filter->equal('status', '订单状态')->select($this->status);
+            $filter->between('created_at', '创建时间')->datetime();
         });
 
         return $grid;
@@ -78,8 +79,8 @@ class OrderController extends AdminController
 
         $show->field('id', 'Id');
         $show->field('no', '订单号');
-        $show->field('user.nickname', '订单用户');
-        $show->field('shareUser.nickname', '分享者用户');
+        $show->field('user.nickname', '订单用户')->unescape()->as(fn($val) => "<a target='_blank' href='/admin/wx_users/{$this->user_id}'>{$val}</a>");
+        $show->field('shareUser.nickname', '分享者用户')->unescape()->as(fn($val) => "<a target='_blank' href='/admin/wx_users/{$this->share_user_id}'>{$val}</a>");
         $show->field('amount', '金额')->money();
         $show->field('status', '订单状态')->using($this->status);
         $show->field('api_error_count', 'API调用错误次数');
