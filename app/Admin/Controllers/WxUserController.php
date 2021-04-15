@@ -10,6 +10,10 @@ use Encore\Admin\Grid\Filter;
 use Encore\Admin\Grid\Displayers\Actions;
 use App\Admin\Actions\User\ShareSetting;
 use Encore\Admin\Show\Tools;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use EasyWeChat\Kernel\Http\StreamResponse;
+use Illuminate\Support\Facades\Log;
 
 class WxUserController extends AdminController
 {
@@ -61,7 +65,7 @@ class WxUserController extends AdminController
         $user = WxUser::query()->findOrFail($id);
         $show = new Show($user);
 
-        $show->field('id', 'Id');
+        $show->field('id', 'Id')->unescape()->as(fn($val) => "<span style='margin-right: 10px;'>{$val}</span><a target='_blank' href='/admin/wx_users/{$this->id}/share/mini_program/code/1280'>查看专属分享小程序码</a>");
         $show->field('nickname', '昵称');
         $show->field('avatar', '头像')->image();
         $show->field('sex', '性别')->using([0 => '未知', 1 => '男', 2 => '女']);
@@ -85,6 +89,43 @@ class WxUserController extends AdminController
         });;
 
         return $show;
+    }
+
+    /**
+     * 用户的 分享 小程序码
+     */
+    public function miniProgramCode($userId, $size, Request $request)
+    {
+        $size = (int)$size;
+        $user = WxUser::query()->findOrFail($userId);
+
+        if ($size < 280 || $size > 1280)
+            throw new \Exception('不合法的二维码尺寸');
+
+        $dir = 'share' . (app()->isProduction() ? '' : '-test');
+        $fileName = "{$user->id}-{$size}.png";
+        $fullName = $dir . '/' . $fileName;
+
+        if (!Storage::exists($fullName)) { //不存在分享的小程序码
+
+            Log::debug("开始生成分享的小程序码: $fullName");
+
+            $app = \EasyWeChat::miniProgram();
+
+            $res = $app->app_code->get("pages/index/index?share_user_id={$user->id}", [
+                'width' => $size,
+            ]);
+
+            if ($res instanceof StreamResponse) {
+                Storage::put($fullName, $res->getBodyContents());
+            } else {
+                dd($res);
+            }
+        }
+
+        $content = Storage::get($fullName);
+        header('Content-type: image/png');
+        echo $content;
     }
 
 

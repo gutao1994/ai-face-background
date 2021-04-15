@@ -15,6 +15,8 @@ Route::group([
 
     $router->resource('wx_users', 'WxUserController');
 
+    $router->get('wx_users/{user_id}/share/mini_program/code/{size}', 'WxUserController@miniProgramCode');
+
     $router->resource('order', 'OrderController');
 
     $router->resource('share_commission_log', 'ShareCommissionLogController');
