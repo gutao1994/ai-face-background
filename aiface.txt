@@ -7,8 +7,6 @@
 
 后台图片放大功能
 
-代理商功能设计
-
 
 select face_result,count(1) as c from orders
 where face_result is not NULL and
