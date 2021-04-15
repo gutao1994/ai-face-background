@@ -19,9 +19,9 @@ class ShareCommissionLogController extends AdminController
         $grid = new Grid(new ShareCommissionLog());
 
         $grid->column('id', 'Id')->sortable();
-        $grid->column('user.nickname', '分享者');
+        $grid->column('user.nickname', '分享者')->display(fn($val) => "<a target='_blank' href='/admin/wx_users/{$this->user_id}'>{$val}</a>");
         $grid->column('type', '记录类型')->using([1 => '获得分享佣金', 2 => '提现分享佣金']);
-        $grid->column('lower_user_nickname', '被分享者');
+        $grid->column('lower_user_nickname', '被分享者')->display(fn($val) => $this->lower_user_id ? "<a target='_blank' href='/admin/wx_users/{$this->lower_user_id}'>{$val}</a>" : "");
         $grid->column('lower_order_id', '被分享者订单')->display(function ($val) {
             return $val ? '<a href="/admin/order/' . $val . '">查看</a>' : '';
         });
