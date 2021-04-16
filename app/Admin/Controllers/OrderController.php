@@ -45,7 +45,7 @@ class OrderController extends AdminController
         $grid->column('user.nickname', '订单用户')->display(fn($val) => "<a target='_blank' href='/admin/wx_users/{$this->user_id}'>{$val}</a>");
         $grid->column('shareUser.nickname', '分享者用户')->display(fn($val) => "<a target='_blank' href='/admin/wx_users/{$this->share_user_id}'>{$val}</a>");
         $grid->column('amount', '金额')->money();
-        $grid->column('img', '照片')->display(fn($val) => $val ? $that->fileService->genOssUrl($val) : '')->image('', 50, 40);
+//        $grid->column('img', '照片')->display(fn($val) => $val ? $that->fileService->genOssUrl($val) : '')->image('', 50, 40);
         $grid->column('api_error_count', 'API调用错误次数');
         $grid->column('status', '订单状态')->using($this->status);
         $grid->column('created_at', '创建时间');
@@ -84,20 +84,20 @@ class OrderController extends AdminController
         $show->field('amount', '金额')->money();
         $show->field('status', '订单状态')->using($this->status);
         $show->field('api_error_count', 'API调用错误次数');
-        $show->field('img', '照片')->as(fn($val) => $val ? $that->fileService->genOssUrl($val) : '')->image();
+        $show->field('img', '照片')->as(fn($val) => $val ? $that->fileService->genOssUrl($val) : '')->zoom();
 
         if ($order->status == 60) {
             $show->field('img-three-parts-five-eyes', '三庭五眼照片')->as(function () use ($that) {
                 return $that->fileService->genOssUrl($that->drawLogic->threePartsFiveEyesSuffix($this->img));
-            })->image();
+            })->zoom();
 
             $show->field('img-face-structure', '脸部结构照片')->as(function () use ($that) {
                 return $that->fileService->genOssUrl($that->drawLogic->faceStructureSuffix($this->img));
-            })->image();
+            })->zoom();
 
             $show->field('img-five-sense', '五官照片')->as(function () use ($that) {
                 return $that->fileService->genOssUrl($that->drawLogic->fiveSenseSuffix($this->img));
-            })->image();
+            })->zoom();
         }
 
         $show->field('face_result', '面相分析结果');

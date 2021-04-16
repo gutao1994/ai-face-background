@@ -20,9 +20,11 @@
 
 use Encore\Admin\Grid\Column;
 use Encore\Admin\Show;
+use Encore\Admin\Admin;
 use App\Admin\Extensions\Displayer\Money;
 use App\Admin\Extensions\Displayer\StringMaxLength;
 use App\Admin\Extensions\Show\Money as SMoney;
+use App\Admin\Extensions\Show\Zoom;
 
 Encore\Admin\Form::forget(['map', 'editor', 'DateMultiple']);
 
@@ -30,7 +32,9 @@ Column::extend('money', Money::class);
 Column::extend('stringMaxLength', StringMaxLength::class);
 
 Show::extend('money', SMoney::class);
+Show::extend('zoom', Zoom::class);
 
+Admin::js('/js/libs/zooming/zooming.min.js');
 
 
 
