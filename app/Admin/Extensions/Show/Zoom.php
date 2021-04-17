@@ -14,7 +14,7 @@ class Zoom extends AbstractField
     public function render($arg = '')
     {
         if ($this->value) {
-            $class = Str::random(10);
+            $class = 'zoom' . Str::random(10);
 
             Admin::script(<<<SCRIPT
 new Zooming({

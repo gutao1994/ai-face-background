@@ -45,7 +45,7 @@ class OrderController extends AdminController
         $grid->column('user.nickname', '订单用户')->display(fn($val) => "<a target='_blank' href='/admin/wx_users/{$this->user_id}'>{$val}</a>");
         $grid->column('shareUser.nickname', '分享者用户')->display(fn($val) => "<a target='_blank' href='/admin/wx_users/{$this->share_user_id}'>{$val}</a>");
         $grid->column('amount', '金额')->money();
-//        $grid->column('img', '照片')->display(fn($val) => $val ? $that->fileService->genOssUrl($val) : '')->image('', 50, 40);
+        $grid->column('img', '照片')->display(fn($val) => $val ? $that->fileService->genOssUrl($val) : '')->zoom();
         $grid->column('api_error_count', 'API调用错误次数');
         $grid->column('status', '订单状态')->using($this->status);
         $grid->column('created_at', '创建时间');

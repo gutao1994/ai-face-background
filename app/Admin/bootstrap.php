@@ -25,11 +25,13 @@ use App\Admin\Extensions\Displayer\Money;
 use App\Admin\Extensions\Displayer\StringMaxLength;
 use App\Admin\Extensions\Show\Money as SMoney;
 use App\Admin\Extensions\Show\Zoom;
+use App\Admin\Extensions\Displayer\Zoom as DZoom;
 
 Encore\Admin\Form::forget(['map', 'editor', 'DateMultiple']);
 
 Column::extend('money', Money::class);
 Column::extend('stringMaxLength', StringMaxLength::class);
+Column::extend('zoom', DZoom::class);
 
 Show::extend('money', SMoney::class);
 Show::extend('zoom', Zoom::class);
