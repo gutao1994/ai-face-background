@@ -3,38 +3,6 @@
 
 豆瓣刷评论脚本
 
-订单列表不显示图片(手动显示) 节省流量
-
-后台图片放大功能
-
-
-select face_result,count(1) as c from orders
-where face_result is not NULL and
-face_result != "性格上，你为人较聪明，做任何事情都能有把握，游刃有余。说话直爽，胸怀坦荡，具有包容心，对于一些事情，能够采取宽宏的态度，富有同情心。经常会路见不平，拔刀相助，侠义心肠浓厚。"
-and face_result != "性格上，你是个做事容易操之过急的人，往往会招来措手不及的失败。由于肚量不够宽大，会经常把一些小事放在心上，造成精神上的忧患，情绪容易紧张。所以，要学会放松，放松心胸，才能让心情愉快，保持平常心是关键。"
-and detect_data regexp '"age":\\{"value":2[0-6]'
-and detect_data regexp '"gender":\\{"value":"Female"\\}'
-group by face_result
-order by c desc
-;
-
-
-select
-
-greatest(
-json_extract(detect_data, '$.faces[0].attributes.beauty.male_score'),
-json_extract(detect_data, '$.faces[0].attributes.beauty.female_score')
-) as c
-
-from orders
-
-where face_result=
-
-"你是个魅力十足的女生，你的颜值高，容易让人过目不忘，对异性有很大的吸引力和杀伤力，很多异性会主动接近你，身边从来都不乏追求者。你的感情生活比较丰富，在挑选男朋友时会比较小心谨慎，会考察对方的各种条件。一旦与异性交往时，也能够做到专一与一心一意，对于其他异性的邀约，也会合理地拒绝。你的婚姻也会比较幸福，能够和一个爱你、懂得呵护、疼惜你的人结婚，婚姻生活会过得甜甜蜜蜜，令人羡慕。"
-
-HAVING c > 80
-;
-
 ###############################################################
 
 detect_data regexp '"age":\\{"value":1[6-9]'
@@ -65,15 +33,7 @@ json_extract(skinanalyze_data, '$.result.nasolabial_fold.value') as nasolabial_f
 
 ###############################################################
 
-insert into `orders`
-
-(`no`, `user_id`, `status`)
-
-values (
-
-substring(md5(rand()), 1, 20), 1, 10
-
-);
+insert into `orders` (`no`, `user_id`, `status`) values (substring(md5(rand()), 1, 20), 1, 10);
 
 ###############################################################
 
@@ -199,29 +159,6 @@ closedir ( $handle );
 
 ##########################################################################################################################
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 select face_result,count(1) as c from orders
 where face_result is not NULL
 and face_result != "性格上，你为人较聪明，做任何事情都能有把握，游刃有余。说话直爽，胸怀坦荡，具有包容心，对于一些事情，能够采取宽宏的态度，富有同情心。经常会路见不平，拔刀相助，侠义心肠浓厚。"
@@ -276,7 +213,15 @@ having (
 );
 
 
-
+select face_result,count(1) as c from orders
+where face_result is not NULL and
+face_result != "性格上，你为人较聪明，做任何事情都能有把握，游刃有余。说话直爽，胸怀坦荡，具有包容心，对于一些事情，能够采取宽宏的态度，富有同情心。经常会路见不平，拔刀相助，侠义心肠浓厚。"
+and face_result != "性格上，你是个做事容易操之过急的人，往往会招来措手不及的失败。由于肚量不够宽大，会经常把一些小事放在心上，造成精神上的忧患，情绪容易紧张。所以，要学会放松，放松心胸，才能让心情愉快，保持平常心是关键。"
+and detect_data regexp '"age":\\{"value":2[0-6]'
+and detect_data regexp '"gender":\\{"value":"Female"\\}'
+group by face_result
+order by c desc
+;
 
 
 
