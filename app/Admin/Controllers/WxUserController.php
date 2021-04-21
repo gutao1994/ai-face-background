@@ -23,6 +23,7 @@ class WxUserController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new WxUser());
+        $grid->model()->withCount('orders');
 
         $grid->column('id', 'Id')->sortable();
         $grid->column('nickname', '昵称')->display(function ($val) {
@@ -34,11 +35,12 @@ class WxUserController extends AdminController
         $grid->column('province', '省份');
         $grid->column('city', '城市');
         $grid->column('language', '语言');
+        $grid->column('orders_count', '订单数')->display(fn($val) => "<a target='_blank' href='/admin/order?_sort[column]=id&_sort[type]=desc&user_id={$this->id}'>{$val}</a>");
         $grid->column('share_permission', '分享返现权限')->using([0 => '没有', 1 => '有']);
         $grid->column('share_per_price', '每单返现金额')->sortable()->money();
         $grid->column('share_commission', '分享佣金')->sortable()->money();
         $grid->column('share_total_commission', '分享总佣金')->sortable()->money();
-        $grid->column('share_order_num', '分享订单数')->sortable();
+        $grid->column('share_order_num', '分享订单数')->sortable()->display(fn($val) => "<a target='_blank' href='/admin/order?_sort[column]=id&_sort[type]=desc&share_user_id={$this->id}'>{$val}</a>");
         $grid->column('remark', '备注')->stringMaxLength(8);
         $grid->column('created_at', '创建时间');
 
@@ -63,6 +65,7 @@ class WxUserController extends AdminController
     protected function detail($id)
     {
         $user = WxUser::query()->findOrFail($id);
+        $user->loadCount('orders');
         $show = new Show($user);
 
         $show->field('id', 'Id')->unescape()->as(fn($val) => "<span style='margin-right: 10px;'>{$val}</span><a target='_blank' href='/admin/wx_users/{$this->id}/share/mini_program/code/1280'>查看专属分享小程序码</a>");
@@ -73,11 +76,12 @@ class WxUserController extends AdminController
         $show->field('province', '省份');
         $show->field('city', '城市');
         $show->field('language', '语言');
+        $show->field('orders_count', '订单数')->unescape()->as(fn($val) => "<a target='_blank' href='/admin/order?_sort[column]=id&_sort[type]=desc&user_id={$this->id}'>{$val}</a>");
         $show->field('share_permission', '分享返现权限')->using([0 => '没有', 1 => '有']);
         $show->field('share_per_price', '每单返现金额')->money();
         $show->field('share_commission', '分享佣金')->money();
         $show->field('share_total_commission', '分享总佣金')->money();
-        $show->field('share_order_num', '分享订单数');
+        $show->field('share_order_num', '分享订单数')->unescape()->as(fn($val) => "<a target='_blank' href='/admin/order?_sort[column]=id&_sort[type]=desc&share_user_id={$this->id}'>{$val}</a>");
         $show->field('remark', '备注')->unescape()->as(fn($val) => "<pre>{$val}</pre>");
         $show->field('created_at', '创建时间');
         $show->field('updated_at', '最近更新时间');
