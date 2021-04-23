@@ -26,10 +26,8 @@ class WxUserController extends AdminController
         $grid->model()->withCount('orders');
 
         $grid->column('id', 'Id')->sortable();
-        $grid->column('nickname', '昵称')->display(function ($val) {
-            return "<a href='/admin/wx_users/{$this->id}'>{$val}</a>";
-        });
-        $grid->column('avatar', '头像')->image('', 50, 40);
+        $grid->column('nickname', '昵称')->display(fn($val) => "<a href='/admin/wx_users/{$this->id}'>{$val}</a>");
+        $grid->column('avatar', '头像')->zoom();
         $grid->column('sex', '性别')->using([0 => '未知', 1 => '男', 2 => '女']);
         $grid->column('country', '国家');
         $grid->column('province', '省份');
@@ -70,7 +68,7 @@ class WxUserController extends AdminController
 
         $show->field('id', 'Id')->unescape()->as(fn($val) => "<span style='margin-right: 10px;'>{$val}</span><a target='_blank' href='/admin/wx_users/{$this->id}/share/mini_program/code/1280'>查看专属分享小程序码</a>");
         $show->field('nickname', '昵称');
-        $show->field('avatar', '头像')->image();
+        $show->field('avatar', '头像')->zoom();
         $show->field('sex', '性别')->using([0 => '未知', 1 => '男', 2 => '女']);
         $show->field('country', '国家');
         $show->field('province', '省份');
