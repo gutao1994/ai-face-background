@@ -29,6 +29,7 @@ json_extract(facialfeatures_data, '$.result.eyebrow.eyebrow_type') as eyebrow_ty
 json_extract(facialfeatures_data, '$.result.eyes.eyes_type') as eyes_type
 json_extract(facialfeatures_data, '$.result.nose.nose_type') as nose_type
 json_extract(facialfeatures_data, '$.result.mouth.mouth_type') as mouth_type
+json_extract(skinanalyze_data, '$.result.glabella_wrinkle.value') as glabella_wrinkle
 json_extract(skinanalyze_data, '$.result.nasolabial_fold.value') as nasolabial_fold
 
 ###############################################################
