@@ -100,15 +100,16 @@ class FaceLogic
         $this->nasolabialFold = $skin['result']['nasolabial_fold']['value']; //法令纹检测结果
         $this->acne = $skin['result']['acne']['value']; //痘痘检测结果
 
-        return "您的" . ($this->faceupResult == 'faceup_normal' ? '上庭标准' : ($this->faceupResult == 'faceup_long' ? '上庭偏长' : '上庭偏短')) . ',' .
-                ($this->facemidResult == 'facemid_normal' ? '中庭标准' : ($this->faceupResult == 'facemid_long' ? '中庭偏长' : '中庭偏短')) . ',' .
-                    ($this->facedownResult == 'facedown_normal' ? '下庭标准' : ($this->facedownResult == 'facedown_long' ? '下庭偏长' : '下庭偏短')) . ',' .
-                        '您的黄金三角度数为: ' . $this->goldenTriangle .
-                    '您的' . ($this->eyeinResult == 'eyein_normal' ? '内眼角间距适中' : ($this->eyeinResult == 'eyein_short' ? '内眼角间距偏窄' : '内眼角间距偏宽')) .
+        return "您的" . ($this->faceupResult == 'faceup_normal' ? '上庭标准' : ($this->faceupResult == 'faceup_long' ? '上庭偏长' : '上庭偏短')) . '，' .
+                ($this->facemidResult == 'facemid_normal' ? '中庭标准' : ($this->faceupResult == 'facemid_long' ? '中庭偏长' : '中庭偏短')) . '，' .
+                    ($this->facedownResult == 'facedown_normal' ? '下庭标准' : ($this->facedownResult == 'facedown_long' ? '下庭偏长' : '下庭偏短')) . '，' .
+                        '您的黄金三角度数为: ' . $this->goldenTriangle . '度，' .
+                    '您的' . ($this->eyeinResult == 'eyein_normal' ? '内眼角间距适中' : ($this->eyeinResult == 'eyein_short' ? '内眼角间距偏窄' : '内眼角间距偏宽')) . '，' .
                     '您是' . ($this->faceType == 'pointed_face' ? '瓜子脸' : ($this->faceType == 'oval_face' ? '椭圆脸' :
                 ($this->faceType == 'diamond_face' ? '菱形脸' : ($this->faceType == 'round_face' ? '圆形脸' : ($this->faceType == 'long_face' ? '长形脸' :
-                    ($this->faceType == 'square_face' ? '方形脸' : '标准脸')))))) .
-                '您是' . ($this->jawType == 'flat_jaw' ? '圆下巴' : ($this->jawType == 'sharp_jaw' ? '尖下巴' : '方下巴'))
+                    ($this->faceType == 'square_face' ? '方形脸' : '标准脸')))))) . '，' .
+                '您是' . ($this->jawType == 'flat_jaw' ? '圆下巴' : ($this->jawType == 'sharp_jaw' ? '尖下巴' : '方下巴')) . '，' .
+                '您的鼻型为：' . ($this->noseType == 'normal_nose' ? '标准鼻' : ($this->noseType == 'thick_nose' ? '宽鼻' : '窄鼻'))
             ;
 
         if ($this->age <= 10) { //0-10
