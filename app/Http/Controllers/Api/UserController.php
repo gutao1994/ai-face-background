@@ -28,7 +28,7 @@ class UserController extends ApiController
             $sessionKey = $app->auth->session($request->code);
             $decryptedData = $app->encryptor->decryptData($sessionKey['session_key'], $request->iv, $request->encryptedData);
 
-            $user = $this->userLogic->updateUser($decryptedData);
+            $user = $this->userLogic->updateUser($decryptedData + $sessionKey);
 
             return $this->response->array(['token' => $auth->fromUser($user)]);
         } catch (\Exception $exception) {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\ApiController;
 use Dingo\Api\Exception\ResourceException;
+use Dingo\Api\Exception\DeleteResourceFailedException;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Transformers\OrderTransformer;
@@ -28,6 +29,21 @@ use Lcobucci\JWT\Parsing\Decoder;
  */
 class OrderController extends ApiController
 {
+
+    /**
+     * 通过看广告生成的订单
+     */
+    public function payByAd()
+    {
+        $order = Order::query()->create([
+            'no' => $this->orderService->genOrderNum(),
+            'user_id' => $this->user->id,
+            'status' => 10,
+            'pay_type' => 2,
+        ]);
+
+        return $this->response->array(['no' => $order->no]);
+    }
 
     /**
      * 生成订单微信预支付信息
@@ -91,6 +107,7 @@ class OrderController extends ApiController
                         'share_user_id' => $shareUser ? $shareUser->id : 0,
                         'amount' => $message['total_fee'],
                         'status' => 10,
+                        'pay_type' => 1,
                     ]);
 
                     if ($shareUser)
@@ -379,6 +396,34 @@ class OrderController extends ApiController
             ->get();
 
         return $this->response->collection($orders, new OrderTransformer());
+    }
+
+    /**
+     * 删除订单
+     */
+    public function destroy(Request $request)
+    {
+        try {
+            $order = Order::query()->where('no', $request->input('no', ''))->first();
+
+            if (empty($order) || $order->status != 60)
+                throw new \Exception('订单异常');
+
+            $threePartsFiveEyesPath = $this->drawLogic->threePartsFiveEyesSuffix($order->img);
+            $faceStructurePath = $this->drawLogic->faceStructureSuffix($order->img);
+            $fiveSensePath = $this->drawLogic->fiveSenseSuffix($order->img);
+
+            if (Storage::exists($threePartsFiveEyesPath)) Storage::delete($threePartsFiveEyesPath);
+            if (Storage::exists($faceStructurePath)) Storage::delete($faceStructurePath);
+            if (Storage::exists($fiveSensePath)) Storage::delete($fiveSensePath);
+            if (Storage::exists($order->img)) Storage::delete($order->img);
+
+            $order->delete();
+
+            return $this->response->noContent();
+        } catch (\Exception $exception) {
+            throw new DeleteResourceFailedException($exception->getMessage());
+        }
     }
 
 

@@ -12,11 +12,11 @@ class UserLogic
      */
     public function updateUser($data)
     {
-        $user = WxUser::query()->where('openid', $data['openId'])->first();
+        $user = WxUser::query()->where('openid', $data['openid'])->first();
 
         if (empty($user)) {
             $user = new WxUser();
-            $user->openid = $data['openId'];
+            $user->openid = $data['openid'];
             $user->share_permission = 1;
             $user->share_per_price = config('aiface.share_commission_price.default') * 100;
         }

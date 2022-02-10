@@ -28,6 +28,8 @@ $api->version('v1', [
 
     $api->group(['middleware' => 'api.auth'], function ($api) {
 
+        $api->post('order/pay/by_ad', 'OrderController@payByAd'); //通过看广告生成的订单
+
         $api->post('order/pay/wx/prepay', 'OrderController@wxPrepay'); //生成订单微信预支付信息
 
         $api->post('order/action/img', 'OrderController@actionImg'); //上传头像图片
@@ -43,6 +45,8 @@ $api->version('v1', [
         $api->get('order/detail', 'OrderController@orderDetail'); //订单详情
 
         $api->get('order/list', 'OrderController@orderList'); //订单列表
+
+        $api->delete('order', 'OrderController@destroy'); //删除订单
 
         $api->get('user/detail', 'UserController@userDetail'); //用户详情
 
